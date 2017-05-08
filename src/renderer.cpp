@@ -10,13 +10,18 @@ Renderer::Renderer()
 	}
 
 	tiles.resize(screen_height_tiles*screen_width_tiles);
+	tiles_colors.resize(screen_height_tiles*screen_width_tiles);
 	clear();
 }
 
 void Renderer::clear()
 {
-	for (auto&& tile : tiles)
-		tile = 0;
+	for (int i = 0; i < tiles.size(); i++) 
+	{
+		tiles[i] = 0;
+		tiles_colors[i] = sf::Color::White;
+	}
+		
 }
 
 
@@ -28,34 +33,40 @@ void Renderer::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	{
 		for (int j = 0; j < screen_width_tiles; j++)
 		{
-			unsigned char current = tiles[j + i*screen_width_tiles];
-			int x_index = current % tileset_width;
-			int y_index = current / tileset_height;
+			unsigned char current_tile = tiles[j + i*screen_width_tiles];
+			int x_index = current_tile % tileset_width;
+			int y_index = current_tile / tileset_height;
+
 			sf::IntRect rect;
 			rect.left = x_index * tile_size;
 			rect.width = tile_size;
 			rect.top = y_index * tile_size;
 			rect.height = tile_size;
 			sprite.setTextureRect(rect);
+
 			sprite.setPosition(j*tile_size, i*tile_size);
+
+			sf::Color current_color = tiles_colors[j + i*screen_width_tiles];
+			sprite.setColor(current_color);
 			target.draw(sprite);
 		}
 	}
 }
 
-void Renderer::drawTile(int x, int y, unsigned char symbol)
+void Renderer::drawTile(int x, int y, unsigned char symbol, sf::Color color)
 {
 	if (x < 0 || x >= screen_width_tiles || y < 0 || y >= screen_height_tiles)
 	{
 		return;
 	}
 	tiles[x + y*screen_width_tiles] = symbol;
+	tiles_colors[x + y*screen_width_tiles] = color;
 }
 
-void Renderer::drawString(int x, int y, const std::string & str)
+void Renderer::drawString(int x, int y, const std::string & str, sf::Color color)
 {
 	for (int i = 0; i < str.size(); i++)
 	{
-		drawTile(x + i, y, str[i]);
+		drawTile(x + i, y, str[i], color);
 	}
 }

@@ -19,6 +19,7 @@ class Renderer : public sf::Drawable
 	sf::Texture tileset;
 
 	std::vector<unsigned char> tiles;
+	std::vector<sf::Color> tiles_colors;
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 public:
@@ -27,8 +28,8 @@ public:
 
 	void clear();
 
-	void drawTile(int x, int y, unsigned char symbol);
+	void drawTile(int x, int y, unsigned char symbol, sf::Color color = sf::Color::White);
 
-	void drawString(int x, int y, const std::string& str);
+	void drawString(int x, int y, const std::string& str, sf::Color color = sf::Color::White);
 
 };
