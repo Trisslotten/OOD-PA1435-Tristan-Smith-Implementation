@@ -18,9 +18,24 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="server.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="networking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="server.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="client.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="networking.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="world.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
