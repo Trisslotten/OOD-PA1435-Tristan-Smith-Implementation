@@ -1,10 +1,13 @@
 #include <SFML/Graphics.hpp>
 
+#include "engine.hpp"
+
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(200, 200), "Hello World!");
-	sf::CircleShape shape(50.f);
-	shape.setFillColor(sf::Color::Green);
+	Engine engine;
+
+	sf::RenderWindow window(sf::VideoMode(1280, 720), "Hello World!");
+
 
 	while (window.isOpen())
 	{
@@ -14,9 +17,10 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
+		engine.update();
 
 		window.clear();
-		window.draw(shape);
+		engine.render(window);
 		window.display();
 	}
 
