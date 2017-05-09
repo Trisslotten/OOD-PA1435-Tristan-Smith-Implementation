@@ -124,8 +124,8 @@
     <ClCompile Include="server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\shared\definitions.hpp" />
     <ClInclude Include="client.hpp" />
-    <ClInclude Include="definitions.hpp" />
     <ClInclude Include="networking.hpp" />
     <ClInclude Include="packet.hpp" />
     <ClInclude Include="packetparser.hpp" />

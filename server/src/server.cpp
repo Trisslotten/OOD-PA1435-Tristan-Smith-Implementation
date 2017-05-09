@@ -5,18 +5,16 @@
 
 void Server::update()
 {
+	
+	networking.sendSnapshot(world);
 
-	std::shared_ptr< std::vector<Packet> > packets = networking.receive();
+}
 
+void Server::receive(sf::Time receive_time)
+{
+	std::shared_ptr< std::vector<Packet> > packets = networking.receive(receive_time);
 	if (!packets->empty())
 	{
-		Packet p = packets->at(0);
-		std::string str;
-		p.packet >> str;
-		std::cout << str << "\n";
+		packet_parser.parse(packets, networking, world);
 	}
-
-	packet_parser.parse(packets, networking, world);
-
-
 }

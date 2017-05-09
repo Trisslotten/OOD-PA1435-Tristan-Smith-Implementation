@@ -6,9 +6,12 @@ int main()
 {
 	Engine engine;
 
+	float fps = 60.f;
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "Hello World!");
 
 
+	sf::Clock timer;
+	timer.restart();
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -18,6 +21,9 @@ int main()
 				window.close();
 		}
 		engine.update();
+
+		engine.receive(sf::seconds(1 / fps) - timer.getElapsedTime());
+		timer.restart();
 
 		window.clear();
 		engine.render(window);

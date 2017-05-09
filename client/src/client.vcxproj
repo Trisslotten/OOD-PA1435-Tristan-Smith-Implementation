@@ -120,15 +120,20 @@
   <ItemGroup>
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="networking.cpp" />
+    <ClCompile Include="packetparser.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="uielement.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\server\src\definitions.hpp" />
+    <ClInclude Include="..\..\shared\definitions.hpp" />
     <ClInclude Include="engine.hpp" />
+    <ClInclude Include="networking.hpp" />
+    <ClInclude Include="packetparser.hpp" />
     <ClInclude Include="renderer.hpp" />
     <ClInclude Include="textlistener.hpp" />
     <ClInclude Include="uielement.h" />
+    <ClInclude Include="world.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

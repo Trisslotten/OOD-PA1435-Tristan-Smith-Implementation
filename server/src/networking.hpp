@@ -5,7 +5,7 @@
 #include <memory>
 #include "client.hpp"
 #include "world.hpp"
-#include "definitions.hpp"
+#include "../../shared/definitions.hpp"
 #include "packet.hpp"
 
 class Networking
@@ -16,12 +16,13 @@ class Networking
 
 	sf::UdpSocket socket;
 
+	void send(sf::Packet, Client client);
 public:
 
 	Networking(Port port); 
 	Networking() = delete;
 
-	std::shared_ptr< std::vector<Packet> > receive();
+	std::shared_ptr< std::vector<Packet> > receive(sf::Time receive_time);
 
 	void sendSnapshot(World& world);
 

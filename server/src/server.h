@@ -16,4 +16,6 @@ public:
 
 	void update();
 
+	void receive(sf::Time receive_time);
+
 };

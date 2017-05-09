@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\network">
+      <UniqueIdentifier>{7e921f31-35ca-4133-979b-32e95358bb4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -26,6 +29,12 @@
     </ClCompile>
     <ClCompile Include="uielement.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="networking.cpp">
+      <Filter>Source Files\network</Filter>
+    </ClCompile>
+    <ClCompile Include="packetparser.cpp">
+      <Filter>Source Files\network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -41,7 +50,16 @@
     <ClInclude Include="uielement.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\server\src\definitions.hpp">
+    <ClInclude Include="world.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="networking.hpp">
+      <Filter>Source Files\network</Filter>
+    </ClInclude>
+    <ClInclude Include="packetparser.hpp">
+      <Filter>Source Files\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\shared\definitions.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

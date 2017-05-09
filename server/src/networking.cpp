@@ -4,7 +4,12 @@
 
 #include <SFML/Network.hpp>
 #include <memory>
-#include "definitions.hpp"
+#include "../../shared/definitions.hpp"
+
+void Networking::send(sf::Packet packet, Client client)
+{
+	socket.send(packet, client.address, client.port);
+}
 
 Networking::Networking(Port port)
 {
@@ -12,29 +17,39 @@ Networking::Networking(Port port)
 	socket.setBlocking(true);
 }
 
-std::shared_ptr< std::vector<Packet> > Networking::receive()
+std::shared_ptr< std::vector<Packet> > Networking::receive(sf::Time receive_time)
 {
-	std::shared_ptr< std::vector<Packet> > packets = std::make_shared<std::vector<Packet>>();
+	auto packets = std::make_shared<std::vector<Packet>>();
 
 	sf::Clock clock;
 	clock.restart();
-	// TODO: set time as parameter
-	while (clock.getElapsedTime() < sf::seconds(1.0 / 15))
+	while (clock.getElapsedTime() < receive_time)
 	{
 		Packet packet;
-		socket.receive(packet.packet, packet.address, packet.port);
-
-		// maybe add ip and port
-		packets->push_back(packet);
+		sf::Socket::Status status = socket.receive(packet.packet, packet.address, packet.port);
+		if (status == sf::Socket::Done)
+		{
+			unsigned int program_id;
+			packet.packet >> program_id;
+			if (program_id == PROGRAM_ID)
+				packets->push_back(packet);
+		}
 	}
-
-
 	return packets;
 }
 
 void Networking::sendSnapshot(World & world)
 {
+	sf::Packet packet;
+	packet << PROGRAM_ID << TC_DEBUG_SET_POS;
+	packet << world.test_pos.x << world.test_pos.y;
 
+	std::cout << "SENDING: world snapshot\n";
+	for (auto&& map_elem : clients)
+	{
+		Client client = map_elem.second;
+		send(packet, client);
+	}
 }
 
 void Networking::addClient(ID mob_id, sf::IpAddress ip, Port port)
@@ -52,3 +67,5 @@ void Networking::addClient(ID mob_id, sf::IpAddress ip, Port port)
 
 	std::cout << "Client added\n\tid: " << client.id << "\n\tip: " << client.address << "\n\tport: " << client.port << "\n";
 }
+
+
