@@ -2,14 +2,16 @@
 
 
 #include "networking.hpp"
+#include "packetparser.hpp"
 
 class Server
 {
 	Networking networking;
-	
+	PacketParser packet_parser;
+	World world;
 public: 
 
-	Server(unsigned short port) : networking(port) 
+	Server(Port port) : networking(port) 
 	{}
 
 	void update();

@@ -1,13 +1,12 @@
 #pragma once
 
 #include <SFML/Network.hpp>
+
 #include "definitions.hpp"
 
-
-struct Client
+struct Packet
 {
-	ID id;
-	ID mob_id;
+	sf::Packet packet;
 	sf::IpAddress address;
 	Port port;
 };

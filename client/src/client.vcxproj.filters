@@ -41,5 +41,8 @@
     <ClInclude Include="uielement.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\server\src\definitions.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

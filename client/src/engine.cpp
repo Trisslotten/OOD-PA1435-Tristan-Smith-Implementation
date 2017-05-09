@@ -1,23 +1,26 @@
+
 #include "engine.hpp"
+
+#include "../../server/src/definitions.hpp"
 
 
 Engine::Engine()
 {
 	test.bind(test.AnyPort);
+
+
+	sf::IpAddress ip = "localhost";
+	Port port = 8778;
+
+	sf::Packet packet;
+	packet << TS_JOIN_SERVER;
+
+	test.send(packet, ip, port);
 }
 
 void Engine::update()
 {
 	
-	sf::IpAddress ip = "localhost";
-	unsigned short port = 8778;
-
-	std::string message = "NU SKICKAR VI HÄR JA";
-
-	sf::Packet packet;
-	packet << message;
-
-	test.send(packet, ip, port);
 
 }
 

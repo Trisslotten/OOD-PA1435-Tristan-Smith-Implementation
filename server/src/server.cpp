@@ -6,16 +6,17 @@
 void Server::update()
 {
 
-	std::shared_ptr< std::vector<sf::Packet> > packets = networking.receive();
+	std::shared_ptr< std::vector<Packet> > packets = networking.receive();
 
 	if (!packets->empty())
 	{
-		sf::Packet p = packets->at(0);
+		Packet p = packets->at(0);
 		std::string str;
-		p >> str;
+		p.packet >> str;
 		std::cout << str << "\n";
 	}
-	
+
+	packet_parser.parse(packets, networking, world);
 
 
 }

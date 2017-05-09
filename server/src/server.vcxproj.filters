@@ -24,6 +24,9 @@
     <ClCompile Include="networking.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="packetparser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="server.h">
@@ -36,6 +39,15 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="world.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="definitions.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="packetparser.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="packet.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -124,6 +124,7 @@
     <ClCompile Include="uielement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\server\src\definitions.hpp" />
     <ClInclude Include="engine.hpp" />
     <ClInclude Include="renderer.hpp" />
     <ClInclude Include="textlistener.hpp" />
