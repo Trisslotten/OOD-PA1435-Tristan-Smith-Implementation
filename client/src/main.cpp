@@ -6,7 +6,7 @@ int main()
 {
 	Engine engine;
 
-	float fps = 60.f;
+	float fps = 60;
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "Hello World!");
 
 

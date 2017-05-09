@@ -35,7 +35,7 @@ std::shared_ptr<std::vector<sf::Packet>> Networking::receive(sf::Time receive_ti
 	sf::Clock clock;
 	clock.restart();
 	// TODO: set time as parameter
-	while (clock.getElapsedTime() < receive_time)
+	do
 	{
 		sf::Packet packet;
 		sf::IpAddress address;
@@ -48,7 +48,7 @@ std::shared_ptr<std::vector<sf::Packet>> Networking::receive(sf::Time receive_ti
 			if (program_id == PROGRAM_ID)
 				packets->push_back(packet);
 		}
-	}
+	} while (clock.getElapsedTime() < receive_time);
 
 	return packets;
 }

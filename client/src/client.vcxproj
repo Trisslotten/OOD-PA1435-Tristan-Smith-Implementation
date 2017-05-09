@@ -132,7 +132,7 @@
     <ClInclude Include="packetparser.hpp" />
     <ClInclude Include="renderer.hpp" />
     <ClInclude Include="textlistener.hpp" />
-    <ClInclude Include="uielement.h" />
+    <ClInclude Include="uielement.hpp" />
     <ClInclude Include="world.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

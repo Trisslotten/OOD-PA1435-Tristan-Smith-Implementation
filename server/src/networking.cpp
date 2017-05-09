@@ -14,7 +14,7 @@ void Networking::send(sf::Packet packet, Client client)
 Networking::Networking(Port port)
 {
 	socket.bind(port);
-	socket.setBlocking(true);
+	socket.setBlocking(false);
 }
 
 std::shared_ptr< std::vector<Packet> > Networking::receive(sf::Time receive_time)
@@ -23,7 +23,7 @@ std::shared_ptr< std::vector<Packet> > Networking::receive(sf::Time receive_time
 
 	sf::Clock clock;
 	clock.restart();
-	while (clock.getElapsedTime() < receive_time)
+	do
 	{
 		Packet packet;
 		sf::Socket::Status status = socket.receive(packet.packet, packet.address, packet.port);
@@ -34,7 +34,7 @@ std::shared_ptr< std::vector<Packet> > Networking::receive(sf::Time receive_time
 			if (program_id == PROGRAM_ID)
 				packets->push_back(packet);
 		}
-	}
+	} while (clock.getElapsedTime() < receive_time);
 	return packets;
 }
 
