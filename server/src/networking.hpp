@@ -28,4 +28,6 @@ public:
 
 	void addClient(ID mob_id, sf::IpAddress ip, Port port);
 
+	void removeClient(ID client_id, World& world);
+
 };

@@ -7,7 +7,7 @@
 #include "engine.hpp"
 #include "world.hpp"
 
-void PacketParser::parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engine & engine, World & world)
+void PacketParser::parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engine & engine)
 {
 	for (auto&& packet : *packets)
 	{
@@ -19,8 +19,7 @@ void PacketParser::parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engin
 		switch (action)
 		{
 		case TC_CONFIRM_JOIN:
-			
-
+			confirmJoin(packet, engine);
 			break;
 		case TC_DEBUG_SEND_STRING:
 			packet >> msg;
@@ -31,7 +30,7 @@ void PacketParser::parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engin
 
 			break;
 		case TC_DEBUG_SET_POS:
-			debugMove(packet, engine, world);
+			debugMove(packet, engine);
 			break;
 		default:
 			// error message?
@@ -41,10 +40,19 @@ void PacketParser::parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engin
 }
 
 
-void PacketParser::debugMove(sf::Packet & packet, Engine & engine, World & world)
+void PacketParser::debugMove(sf::Packet & packet, Engine & engine)
 {
 	packet >> engine.test_pos.x >> engine.test_pos.y;
 
+	//std::cout << "RECEIVE: test move" << engine.test_pos.x << " " << engine.test_pos.y << "\n";
+}
 
-	std::cout << "RECEIVE: test move" << engine.test_pos.x << " " << engine.test_pos.y << "\n";
+void PacketParser::confirmJoin(sf::Packet & packet, Engine & engine)
+{
+	ID client_id;
+	packet >> client_id;
+	engine.getNetworking().setID(client_id);
+
+	std::cout << "RECEIVE: confirm join, client_id: " << client_id << "\n";
+	// parse map data here?
 }

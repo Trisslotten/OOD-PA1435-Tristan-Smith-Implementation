@@ -19,7 +19,7 @@ void PacketParser::parse(std::shared_ptr<std::vector<Packet>> packets, Networkin
 			joinServer(p, networking, world);
 			break;
 		case TS_DISCONNECT:
-
+			disconnectClient(p, networking, world);
 			break;
 		case TS_DEBUG_MOVE:
 			debugMove(p, networking, world);
@@ -35,8 +35,14 @@ void PacketParser::parse(std::shared_ptr<std::vector<Packet>> packets, Networkin
 void PacketParser::joinServer(Packet& packet, Networking & networking, World & world)
 {
 	//ID mob_id = world.createPlayer();
-
 	networking.addClient(0, packet.address, packet.port);
+}
+
+void PacketParser::disconnectClient(Packet & packet, Networking & networking, World & world)
+{
+	ID client_id;
+	packet.packet >> client_id;
+	networking.removeClient(client_id, world);
 }
 
 

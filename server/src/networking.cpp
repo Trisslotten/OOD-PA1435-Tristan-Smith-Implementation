@@ -44,7 +44,7 @@ void Networking::sendSnapshot(World & world)
 	packet << PROGRAM_ID << TC_DEBUG_SET_POS;
 	packet << world.test_pos.x << world.test_pos.y;
 
-	std::cout << "SENDING: world snapshot\n";
+	//std::cout << "SENDING: world snapshot\n";
 	for (auto&& map_elem : clients)
 	{
 		Client client = map_elem.second;
@@ -66,6 +66,24 @@ void Networking::addClient(ID mob_id, sf::IpAddress ip, Port port)
 	clients[new_id] = client;
 
 	std::cout << "Client added\n\tid: " << client.id << "\n\tip: " << client.address << "\n\tport: " << client.port << "\n";
+
+	sf::Packet packet;
+	packet << PROGRAM_ID << TC_CONFIRM_JOIN;
+	packet << client.id;
+	// also add map data here?
+
+	send(packet, client);
+}
+
+void Networking::removeClient(ID client_id, World & world)
+{
+	Client client = clients[client_id];
+
+	// world.removeMob(client.mob_id);
+
+	std::cout << "Removing client with id: " << client_id << "\n";
+
+	clients.erase(client_id);
 }
 
 

@@ -17,6 +17,7 @@ enum PacketAction
 	TS_DEBUG_SEND_STRING,
 	TS_DEBUG_MOVE,
 
+
 	// TC: to client
 	TC_CONFIRM_JOIN,
 	TC_SERVER_SHUTDOWN,

@@ -10,9 +10,10 @@ class World;
 class PacketParser
 {
 
-	void debugMove(sf::Packet & packet, Engine & engine, World& world);
+	void debugMove(sf::Packet & packet, Engine & engine);
+	void confirmJoin(sf::Packet & packet, Engine & engine);
 public:
 
-	void parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engine & engine, World & world);
+	void parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engine & engine);
 
 };

@@ -20,6 +20,9 @@ class Engine
 
 public:
 
+	World& getWorld();
+	Networking& getNetworking();
+
 	sf::Vector2i test_pos;
 
 	Engine();

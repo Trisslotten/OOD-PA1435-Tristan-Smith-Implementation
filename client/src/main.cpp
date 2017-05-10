@@ -6,7 +6,7 @@ int main()
 {
 	Engine engine;
 
-	float fps = 60;
+	float fps = 30;
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "Hello World!");
 
 
@@ -29,6 +29,7 @@ int main()
 		engine.render(window);
 		window.display();
 	}
+	engine.getNetworking().disconnect();
 
 	return 0;
 }

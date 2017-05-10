@@ -4,6 +4,16 @@
 #include "../../shared/definitions.hpp"
 #include <sstream>
 
+World & Engine::getWorld()
+{
+	return world;
+}
+
+Networking & Engine::getNetworking()
+{
+	return networking;
+}
+
 Engine::Engine()
 {
 
@@ -30,7 +40,7 @@ void Engine::update()
 void Engine::receive(sf::Time receive_time)
 {
 	auto packets = networking.receive(receive_time);
-	packet_parser.parse(packets, *this, world);
+	packet_parser.parse(packets, *this);
 }
 
 void Engine::render(sf::RenderTarget & target)
@@ -43,7 +53,7 @@ void Engine::render(sf::RenderTarget & target)
 
 	
 
-	std::string text = "             #\n             #   ###\n        #### #  #####\n        ###C # #######S###T##TT#T##\n        #### #D#######\n        #### # #######\n#####     D  #  #####\n#####D########   ###\n#####";
+	std::string text = " ######           ###################\n##....##          #.................#\n#......############.................#\n#...................................#\n#......############.................#\n##....##          #.............#####\n ######           #.............#\n                  #.............#\n                  ###############";
 	std::stringstream sstream(text);
 	std::string line;
 	int i = 0;

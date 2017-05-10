@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 
 
 
-	float tick_rate = 15;
+	float tick_rate = 10;
 
 	Server server{ 8778 };
 

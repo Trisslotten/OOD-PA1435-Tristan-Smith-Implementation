@@ -7,10 +7,18 @@
 Networking::Networking()
 {}
 
-void Networking::connect(sf::IpAddress server_ip, Port server_port)
+Networking::~Networking()
+{}
+
+void Networking::setID(ID _client_id)
 {
-	server.ip = server_ip;
-	server.port = server_port;
+	client_id = _client_id;
+}
+
+void Networking::connect(sf::IpAddress _server_ip, Port _server_port)
+{
+	server_ip = _server_ip;
+	server_port = _server_port;
 
 	socket.bind(socket.AnyPort);
 	socket.setBlocking(false);
@@ -20,9 +28,22 @@ void Networking::connect(sf::IpAddress server_ip, Port server_port)
 	send(packet);
 }
 
+void Networking::disconnect()
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TS_DISCONNECT;
+	packet << client_id;
+
+	send(packet);
+}
+
+
+
+
+
 void Networking::send(sf::Packet packet)
 {
-	socket.send(packet, server.ip, server.port);
+	socket.send(packet, server_ip, server_port);
 }
 
 

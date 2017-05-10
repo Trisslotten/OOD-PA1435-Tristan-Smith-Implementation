@@ -6,20 +6,22 @@
 
 class Networking
 {
-	struct Server
-	{
-		sf::IpAddress ip;
-		Port port;
-	} server;
-	
+	sf::IpAddress server_ip;
+	Port server_port;
+
+	// id assigned to this client from the server
+	ID client_id;
 
 	sf::UdpSocket socket;
-
 public:
 
 	Networking();
+	~Networking();
+
+	void setID(ID _client_id);
 
 	void connect(sf::IpAddress server_ip, Port server_port);
+	void disconnect();
 
 	void send(sf::Packet packet);
 
