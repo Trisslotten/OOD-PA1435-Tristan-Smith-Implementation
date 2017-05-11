@@ -28,8 +28,10 @@ public:
 
 	void clear();
 
-	void drawTile(int x, int y, unsigned char symbol, sf::Color color = sf::Color::White);
+	void drawChar(int x, int y, unsigned char symbol, sf::Color color = sf::Color::White);
+	void drawChar(sf::Vector2i pos, unsigned char symbol, sf::Color color = sf::Color::White);
 
 	void drawString(int x, int y, const std::string& str, sf::Color color = sf::Color::White);
+	void drawString(sf::Vector2i pos, const std::string& str, sf::Color color = sf::Color::White);
 
 };

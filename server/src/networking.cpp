@@ -4,7 +4,9 @@
 
 #include <SFML/Network.hpp>
 #include <memory>
+
 #include "../../shared/definitions.hpp"
+#include "world.hpp"
 
 void Networking::send(sf::Packet packet, Client client)
 {
@@ -19,6 +21,8 @@ Networking::Networking(Port port)
 
 std::shared_ptr< std::vector<Packet> > Networking::receive(sf::Time receive_time)
 {
+
+	// memo: use sfml selector for timeout
 	auto packets = std::make_shared<std::vector<Packet>>();
 
 	sf::Clock clock;
@@ -40,9 +44,11 @@ std::shared_ptr< std::vector<Packet> > Networking::receive(sf::Time receive_time
 
 void Networking::sendSnapshot(World & world)
 {
+	// TODO: change
 	sf::Packet packet;
 	packet << PROGRAM_ID << TC_DEBUG_SET_POS;
-	packet << world.test_pos.x << world.test_pos.y;
+	
+	world.serializeSnapshot(packet);
 
 	//std::cout << "SENDING: world snapshot\n";
 	for (auto&& map_elem : clients)
@@ -52,7 +58,27 @@ void Networking::sendSnapshot(World & world)
 	}
 }
 
-void Networking::addClient(ID mob_id, sf::IpAddress ip, Port port)
+void Networking::sendAddMob(ID mob_id, World & world)
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TC_ADD_MOB << mob_id;
+	for (auto&& map_elem : clients)
+	{
+		send(packet, map_elem.second);
+	}
+}
+
+
+void Networking::sendWorldState(World & world, Client client)
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TC_WORLD_STATE;
+	world.serializeWorldState(packet);
+
+	send(packet, client);
+}
+
+Client Networking::addClient(ID mob_id, sf::IpAddress ip, Port port)
 {
 	ID new_id = client_id_counter;
 	client_id_counter++;
@@ -65,25 +91,43 @@ void Networking::addClient(ID mob_id, sf::IpAddress ip, Port port)
 
 	clients[new_id] = client;
 
-	std::cout << "Client added\n\tid: " << client.id << "\n\tip: " << client.address << "\n\tport: " << client.port << "\n";
+	std::cout << "Client added\n\tid: " << client.id << "\n\tmob_id: " << client.mob_id << "\n\tip: " << client.address << "\n\tport: " << client.port << "\n";
 
 	sf::Packet packet;
 	packet << PROGRAM_ID << TC_CONFIRM_JOIN;
 	packet << client.id;
-	// also add map data here?
 
 	send(packet, client);
+
+	return client;
 }
 
 void Networking::removeClient(ID client_id, World & world)
 {
-	Client client = clients[client_id];
+	if (clients.count(client_id) > 0)
+	{
+		Client client = clients[client_id];
 
-	// world.removeMob(client.mob_id);
+		// world.removeMob(client.mob_id);
 
-	std::cout << "Removing client with id: " << client_id << "\n";
+		std::cout << "Removing client with id: " << client_id << "\n";
 
-	clients.erase(client_id);
+		clients.erase(client_id);
+	}
+	else
+	{
+		std::cout << "Could not remove client with id: " << client_id << ", id not found\n";
+	}
 }
 
-
+ID Networking::mobIDFromClientID(ID client_id)
+{
+	if (clients.count(client_id) > 0)
+	{
+		return clients[client_id].mob_id;
+	}
+	else
+	{
+		return ID_NOT_FOUND;
+	}
+}

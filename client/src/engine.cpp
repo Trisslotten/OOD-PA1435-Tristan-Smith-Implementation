@@ -17,11 +17,13 @@ Networking & Engine::getNetworking()
 Engine::Engine()
 {
 
-	networking.connect("localhost", SERVER_PORT);
+	auto packets = networking.connect("localhost", SERVER_PORT);
+	packet_parser.parse(packets, *this);
 }
 
 void Engine::update()
 {
+	
 	sf::Vector2i vel;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		vel.x += 1;
@@ -45,25 +47,12 @@ void Engine::receive(sf::Time receive_time)
 
 void Engine::render(sf::RenderTarget & target)
 {
-	int x = test_pos.x;
-	int y = test_pos.y;
-	renderer.drawString(x, y, "Hello", sf::Color::Red);
-	renderer.drawString(x+6, y, "World", sf::Color::Green);
-	renderer.drawString(x+11, y, "!", sf::Color::Blue);
-
-	
-
-	std::string text = " ######           ###################\n##....##          #.................#\n#......############.................#\n#...................................#\n#......############.................#\n##....##          #.............#####\n ######           #.............#\n                  #.............#\n                  ###############";
-	std::stringstream sstream(text);
-	std::string line;
-	int i = 0;
-	while (std::getline(sstream, line, '\n'))
+	for (auto&& map_elem : world.test_mobs)
 	{
-		renderer.drawString(x, y + i + 2, line);
-		i++;
+		sf::Vector2i pos = map_elem.second.pos;
+		renderer.drawChar(pos, '@', sf::Color::White);
 	}
 	
-
 	target.draw(renderer);
 	renderer.clear();
 }

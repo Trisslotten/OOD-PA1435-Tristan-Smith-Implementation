@@ -30,11 +30,11 @@
     <ClCompile Include="packetparser.cpp">
       <Filter>Source Files\network</Filter>
     </ClCompile>
+    <ClCompile Include="world.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="server.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="world.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -51,6 +51,15 @@
       <Filter>Source Files\network</Filter>
     </ClInclude>
     <ClInclude Include="..\..\shared\definitions.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mob.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="player.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="server.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -26,8 +26,15 @@ public:
 
 	void sendSnapshot(World& world);
 
-	void addClient(ID mob_id, sf::IpAddress ip, Port port);
+	void sendAddMob(ID mob_id, World& world);
+
+	void sendWorldState(World& world, Client client);
+
+	// add a client to the map and return it
+	Client addClient(ID mob_id, sf::IpAddress ip, Port port);
 
 	void removeClient(ID client_id, World& world);
+
+	ID mobIDFromClientID(ID client_id);
 
 };

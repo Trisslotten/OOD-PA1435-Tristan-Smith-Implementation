@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "server.h"
+#include "server.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 
 
 
-	float tick_rate = 10;
+	float tick_rate = 30;
 
 	Server server{ 8778 };
 

@@ -20,7 +20,9 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-		engine.update();
+		// TODO: create seperate handleInput function
+		if(window.hasFocus())
+			engine.update();
 
 		engine.receive(sf::seconds(1 / fps) - timer.getElapsedTime());
 		timer.restart();

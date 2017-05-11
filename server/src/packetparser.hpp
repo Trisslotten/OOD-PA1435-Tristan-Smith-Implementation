@@ -11,7 +11,7 @@
 class PacketParser
 {
 
-
+	//TODO: change parameters to Server and add getters for networking and world
 	void joinServer(Packet& packet, Networking& networking, World& world);
 	void disconnectClient(Packet& packet, Networking& networking, World& world);
 

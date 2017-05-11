@@ -11,7 +11,7 @@ void PacketParser::parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engin
 {
 	for (auto&& packet : *packets)
 	{
-		unsigned int action;
+		int action;
 		packet >> action;
 
 
@@ -27,7 +27,12 @@ void PacketParser::parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engin
 			break;
 		case TC_SERVER_SHUTDOWN:
 
-
+			break;
+		case TC_ADD_MOB:
+			addMob(packet, engine);
+			break;
+		case TC_WORLD_STATE:
+			parseWorldState(packet, engine);
 			break;
 		case TC_DEBUG_SET_POS:
 			debugMove(packet, engine);
@@ -42,8 +47,15 @@ void PacketParser::parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engin
 
 void PacketParser::debugMove(sf::Packet & packet, Engine & engine)
 {
-	packet >> engine.test_pos.x >> engine.test_pos.y;
-
+	size_t num_players;
+	packet >> num_players;
+	for (int i = 0; i < num_players; i++)
+	{
+		ID mob_id;
+		sf::Vector2i pos;
+		packet >> mob_id >> pos.x >> pos.y;
+		engine.getWorld().test_mobs[mob_id].pos = pos;
+	}
 	//std::cout << "RECEIVE: test move" << engine.test_pos.x << " " << engine.test_pos.y << "\n";
 }
 
@@ -55,4 +67,30 @@ void PacketParser::confirmJoin(sf::Packet & packet, Engine & engine)
 
 	std::cout << "RECEIVE: confirm join, client_id: " << client_id << "\n";
 	// parse map data here?
+}
+
+void PacketParser::addMob(sf::Packet packet, Engine & engine)
+{
+	ID mob_id;
+	packet >> mob_id;
+	engine.getWorld().test_mobs[mob_id].id = mob_id;
+	engine.getWorld().test_mobs[mob_id].pos = sf::Vector2i();
+	std::cout << "Adding mob:\n\tmob_id: " << mob_id << "\n\tpos: " << 0 << ", " << 0 << "\n";
+}
+
+void PacketParser::parseWorldState(sf::Packet packet, Engine & engine)
+{
+	size_t num_players;
+	packet >> num_players;
+	std::cout << "Mobs to add: " << num_players << "\n";
+	for (int i = 0; i < num_players; i++)
+	{
+		ID mob_id;
+		sf::Vector2i pos;
+		packet >> mob_id;
+		packet >> pos.x >> pos.y;
+		engine.getWorld().test_mobs[mob_id].id = mob_id;
+		engine.getWorld().test_mobs[mob_id].pos = pos;
+		std::cout << "Adding mob:\n\tmob_id: " << mob_id << "\n\tpos: " << pos.x << ", " << pos.y << "\n";
+	}
 }

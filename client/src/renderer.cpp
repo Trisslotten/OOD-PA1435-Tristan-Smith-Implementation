@@ -53,7 +53,7 @@ void Renderer::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	}
 }
 
-void Renderer::drawTile(int x, int y, unsigned char symbol, sf::Color color)
+void Renderer::drawChar(int x, int y, unsigned char symbol, sf::Color color)
 {
 	if (x < 0 || x >= screen_width_tiles || y < 0 || y >= screen_height_tiles)
 	{
@@ -63,10 +63,20 @@ void Renderer::drawTile(int x, int y, unsigned char symbol, sf::Color color)
 	tiles_colors[x + y*screen_width_tiles] = color;
 }
 
+void Renderer::drawChar(sf::Vector2i pos, unsigned char symbol, sf::Color color)
+{
+	drawChar(pos.x, pos.y, symbol, color);
+}
+
 void Renderer::drawString(int x, int y, const std::string & str, sf::Color color)
 {
 	for (int i = 0; i < str.size(); i++)
 	{
-		drawTile(x + i, y, str[i], color);
+		drawChar(x + i, y, str[i], color);
 	}
+}
+
+void Renderer::drawString(sf::Vector2i pos, const std::string & str, sf::Color color)
+{
+	drawString(pos.x, pos.y, str, color);
 }

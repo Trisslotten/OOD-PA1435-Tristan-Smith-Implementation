@@ -34,23 +34,38 @@ void PacketParser::parse(std::shared_ptr<std::vector<Packet>> packets, Networkin
 
 void PacketParser::joinServer(Packet& packet, Networking & networking, World & world)
 {
-	//ID mob_id = world.createPlayer();
-	networking.addClient(0, packet.address, packet.port);
+	ID mob_id = world.createPlayer();
+
+	networking.sendAddMob(mob_id, world);
+
+	Client client = networking.addClient(mob_id, packet.address, packet.port);
+	networking.sendWorldState(world, client);
 }
 
 void PacketParser::disconnectClient(Packet & packet, Networking & networking, World & world)
 {
 	ID client_id;
 	packet.packet >> client_id;
-	networking.removeClient(client_id, world);
+	ID mob_id = networking.mobIDFromClientID(client_id);
+	if (mob_id != ID_NOT_FOUND)
+	{
+		world.removePlayer(mob_id);
+		networking.removeClient(client_id, world);
+	}
 }
 
 
 void PacketParser::debugMove(Packet & packet, Networking & networking, World & world)
 {
+	ID client_id;
 	sf::Vector2i vel;
-	packet.packet >> vel.x >> vel.y;
-	std::cout << "RECEIVE: test move " << vel.x << " " << vel.y << "\n";
+	packet.packet >> client_id >> vel.x >> vel.y;
+	std::cout << "RECEIVE: test move id: " << client_id << ", " << vel.x << " " << vel.y << "\n";
 
-	world.test_pos += vel;
+	ID mob_id = networking.mobIDFromClientID(client_id);
+	if (mob_id != ID_NOT_FOUND)
+	{
+		world.movePlayer(mob_id, vel);
+	}
+	
 }
