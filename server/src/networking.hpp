@@ -17,6 +17,9 @@ class Networking
 	sf::UdpSocket socket;
 
 	void send(sf::Packet, Client client);
+
+	// use this instead of socket.receive(...)
+	sf::Socket::Status receiveTimeout(Packet& packet, sf::Time timeout);
 public:
 
 	Networking(Port port); 

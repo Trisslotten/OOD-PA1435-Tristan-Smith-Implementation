@@ -15,6 +15,7 @@ void Server::receive(sf::Time receive_time)
 	std::shared_ptr< std::vector<Packet> > packets = networking.receive(receive_time);
 	if (!packets->empty())
 	{
+		std::cout << "Num packets: " << packets->size() << "\n";
 		packet_parser.parse(packets, networking, world);
 	}
 }

@@ -13,6 +13,16 @@ void Networking::send(sf::Packet packet, Client client)
 	socket.send(packet, client.address, client.port);
 }
 
+sf::Socket::Status Networking::receiveTimeout(Packet& packet, sf::Time timeout)
+{
+	sf::SocketSelector selector;
+	selector.add(socket);
+	if (selector.wait(timeout))
+		return socket.receive(packet.packet, packet.address, packet.port);
+	else
+		return sf::Socket::NotReady;
+}
+
 Networking::Networking(Port port)
 {
 	socket.bind(port);
@@ -21,16 +31,13 @@ Networking::Networking(Port port)
 
 std::shared_ptr< std::vector<Packet> > Networking::receive(sf::Time receive_time)
 {
-
-	// memo: use sfml selector for timeout
-	auto packets = std::make_shared<std::vector<Packet>>();
-
 	sf::Clock clock;
 	clock.restart();
+	auto packets = std::make_shared<std::vector<Packet>>();
 	do
 	{
 		Packet packet;
-		sf::Socket::Status status = socket.receive(packet.packet, packet.address, packet.port);
+		sf::Socket::Status status = receiveTimeout(packet, receive_time - clock.getElapsedTime());
 		if (status == sf::Socket::Done)
 		{
 			unsigned int program_id;

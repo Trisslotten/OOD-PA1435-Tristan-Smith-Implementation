@@ -5,6 +5,16 @@
 #include <iostream>
 
 
+sf::Socket::Status Networking::receiveTimeout(sf::Packet & packet, sf::IpAddress & ip, Port & port, sf::Time timeout)
+{
+	sf::SocketSelector selector;
+	selector.add(socket);
+	if (selector.wait(timeout))
+		return socket.receive(packet, ip, port);
+	else
+		return sf::Socket::NotReady;
+}
+
 Networking::Networking()
 {}
 
@@ -36,11 +46,15 @@ std::shared_ptr<std::vector<sf::Packet>> Networking::connect(sf::IpAddress _serv
 	socket.setBlocking(true);
 	auto packets = std::make_shared<std::vector<sf::Packet>>();
 	unsigned int num_packets = 0;
+
+	// possibly wrong: could receive snapshot or other non init packets because of udp, works for now :^)
 	while(num_packets < WORLD_STATE_PACKET_COUNT)
 	{
 		sf::Packet packet;
 		sf::IpAddress address;
 		Port port;
+		// use normal since time isnt important on connect
+		// maybe change if client wait too long
 		sf::Socket::Status status = socket.receive(packet, address, port);
 		if (status == sf::Socket::Done)
 		{
@@ -90,7 +104,7 @@ std::shared_ptr<std::vector<sf::Packet>> Networking::receive(sf::Time receive_ti
 		sf::Packet packet;
 		sf::IpAddress address;
 		Port port;
-		sf::Socket::Status status = socket.receive(packet, address, port);
+		sf::Socket::Status status = receiveTimeout(packet, address, port, receive_time - clock.getElapsedTime());
 		if (status == sf::Socket::Done)
 		{
 			unsigned int program_id;

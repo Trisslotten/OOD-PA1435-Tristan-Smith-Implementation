@@ -13,6 +13,10 @@ class Networking
 	ID client_id;
 
 	sf::UdpSocket socket;
+
+
+	// use this instead of socket.receive(...)
+	sf::Socket::Status receiveTimeout(sf::Packet& packet, sf::IpAddress& ip, Port& port, sf::Time timeout);
 public:
 
 	Networking();
