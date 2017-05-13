@@ -75,6 +75,17 @@ void Networking::sendAddMob(ID mob_id, World & world)
 	}
 }
 
+void Networking::sendDropItem(Item item)
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TC_DROP_ITEM << item.getItemId() << item.getName() << item.getDescription()
+		<< item.getSymbol();
+	for (auto&& map_elem : clients)
+	{
+		send(packet, map_elem.second);
+	}
+}
+
 
 void Networking::sendWorldState(World & world, Client client)
 {

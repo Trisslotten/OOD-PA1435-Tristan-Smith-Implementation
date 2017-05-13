@@ -24,6 +24,9 @@ void PacketParser::parse(std::shared_ptr<std::vector<Packet>> packets, Networkin
 		case TS_DEBUG_MOVE:
 			debugMove(p, networking, world);
 			break;
+		case TS_DROP_ITEM:
+			dropItem(p, networking, world);
+			break;
 		default:
 			// error message?
 			break;
@@ -67,5 +70,21 @@ void PacketParser::debugMove(Packet & packet, Networking & networking, World & w
 	{
 		world.movePlayer(mob_id, vel);
 	}
-	
+}
+
+void PacketParser::dropItem(Packet& packet, Networking & networking, World & world)
+{
+	ID client_id;
+	ID item_id;
+	packet.packet >> client_id >> item_id;
+	std::cout << "RECEIVE: drop item id: " << client_id << "\n";
+	ID mob_id = networking.mobIDFromClientID(client_id);
+	if (mob_id != ID_NOT_FOUND)
+	{
+		Player* player = world.getPlayerById(mob_id);
+		player->removeItem(item_id);
+		Item theitem = player->getItemById(item_id);
+		world.placeItemOnGround(theitem);
+		networking.sendDropItem(theitem);
+	}
 }
