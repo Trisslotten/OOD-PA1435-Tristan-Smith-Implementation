@@ -31,6 +31,9 @@ public:
 
 	void sendAddMob(ID mob_id, World& world);
 
+	void sendAddItem();
+	void sendDropItem(Item item);
+
 	void sendWorldState(World& world, Client client);
 
 	// add a client to the map and return it

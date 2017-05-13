@@ -15,11 +15,13 @@ ID World::createPlayer()
 	ID new_id = players_id_counter;
 	players_id_counter++;
 
+	Player new_player(new_id);
 
-	Mob mob;
+	/*
+	Player mob;
 	mob.id = new_id;
-	mob.pos = sf::Vector2i();
-	players[new_id] = mob;
+	mob.pos = sf::Vector2i();*/
+	players[new_id] = new_player;
 	return new_id;
 }
 
@@ -48,4 +50,17 @@ void World::serializeSnapshot(sf::Packet & to_append)
 		Mob p = map_elem.second;
 		to_append << p.id << p.pos.x << p.pos.y;
 	}
+}
+
+Player* World::getPlayerById(ID id)
+{
+	if (players.count(id) > 0)
+	{
+		return &players[id];
+	}
+}
+
+void World::placeItemOnGround(Item item)
+{
+	this->items_on_ground[item.getItemId()] = item;
 }

@@ -18,5 +18,6 @@ public:
 
 	sf::Vector2i pos;
 
-
+	Mob();
+	Mob(ID id);
 };
