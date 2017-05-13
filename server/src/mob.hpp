@@ -7,7 +7,6 @@
 
 class Mob
 {
-// TODO: change to protected or private
 private:
 	ID id;
 	std::string name;
@@ -34,7 +33,7 @@ public:
 	{
 		return symbol;	
 	}
-	inline sf::color getColor()
+	inline sf::Color getColor()
 	{
 		return color;	
 	}
@@ -46,7 +45,7 @@ public:
 	{
 		return max_health;	
 	}
-	inline sf::vector2i getPos()
+	inline sf::Vector2i getPos()
 	{
 		return pos;	
 	}
@@ -66,7 +65,7 @@ public:
 	{
 		symbol = sym;	
 	}
-	inline void setColor(sf::color col)
+	inline void setColor(sf::Color col)
 	{
 		color = col;	
 	}
@@ -78,7 +77,7 @@ public:
 	{
 		max_health = max;	
 	}
-	inline void setPos(sf::vector2i p)
+	inline void setPos(sf::Vector2i p)
 	{
 		pos = p;	
 	}
