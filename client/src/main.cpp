@@ -6,8 +6,10 @@ int main()
 {
 	Engine engine;
 
+	sf::Vector2i size = engine.getRenderer().getScreenSize();
+
 	float fps = 60;
-	sf::RenderWindow window(sf::VideoMode(1280, 720), "Hello World!");
+	sf::RenderWindow window(sf::VideoMode(size.x, size.y), "Hello World!");
 
 
 	sf::Clock timer;
@@ -21,7 +23,7 @@ int main()
 				window.close();
 		}
 		// TODO: create seperate handleInput function
-		//if(window.hasFocus())
+		if(window.hasFocus())
 			engine.update();
 
 		engine.receive(sf::seconds(1 / fps) - timer.getElapsedTime());
@@ -31,7 +33,7 @@ int main()
 		engine.render(window);
 		window.display();
 	}
-	engine.getNetworking().disconnect();
+	//engine.getNetworking().disconnect();
 
 	return 0;
 }

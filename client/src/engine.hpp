@@ -22,6 +22,7 @@ public:
 
 	World& getWorld();
 	Networking& getNetworking();
+	const Renderer& getRenderer() const;
 
 	Engine();
 

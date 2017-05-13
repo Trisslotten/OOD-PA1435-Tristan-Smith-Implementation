@@ -27,11 +27,22 @@ public:
 	Renderer();
 
 	void clear();
-
+	void clear(char symbol);
+	
 	void drawChar(int x, int y, unsigned char symbol, sf::Color color = sf::Color::White);
 	void drawChar(sf::Vector2i pos, unsigned char symbol, sf::Color color = sf::Color::White);
 
 	void drawString(int x, int y, const std::string& str, sf::Color color = sf::Color::White);
 	void drawString(sf::Vector2i pos, const std::string& str, sf::Color color = sf::Color::White);
 
+
+	inline sf::Vector2i getScreenSize() const
+	{
+		return int(tile_size)*sf::Vector2i(screen_width_tiles, screen_height_tiles);
+	}
+
+	inline sf::Vector2i getScreenSizeTiles() const
+	{
+		return sf::Vector2i(screen_width_tiles, screen_height_tiles);
+	}
 };

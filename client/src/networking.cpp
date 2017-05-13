@@ -19,7 +19,9 @@ Networking::Networking()
 {}
 
 Networking::~Networking()
-{}
+{
+	disconnect();
+}
 
 void Networking::setID(ID _client_id)
 {
@@ -41,7 +43,6 @@ std::shared_ptr<std::vector<sf::Packet>> Networking::connect(sf::IpAddress _serv
 	sf::Packet packet;
 	packet << PROGRAM_ID << TS_JOIN_SERVER;
 	send(packet);
-
 
 	socket.setBlocking(true);
 	auto packets = std::make_shared<std::vector<sf::Packet>>();

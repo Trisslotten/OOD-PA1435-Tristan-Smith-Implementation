@@ -5,20 +5,19 @@
 #include <SFML/Network.hpp>
 #include "mob.hpp"
 #include "player.hpp"
+#include "idcreator.hpp"
 #include <unordered_map>
 
 class World
 {
 
 	std::unordered_map<ID, Mob> npcs;
-	ID npcs_id_counter = 0;
-
-	// maybe change to own class for inventory etc
 	std::unordered_map<ID, Player> players;
-	ID players_id_counter = 0;
+	// one for both since one list on client
+	IDCreator mob_ids;
 
 	std::unordered_map<ID, Item> items_on_ground;
-	ID items_id_counter = 0;
+	IDCreator item_ids;
 	
 public:
 

@@ -17,9 +17,7 @@ protected:
 
 	sf::Vector2i pos;
 public:
-
-	Mob(ID _id);
-	Mob() {}
+	Mob();
 
 	inline ID getID() const
 	{
@@ -84,5 +82,9 @@ public:
 	inline void setPos(sf::Vector2i p)
 	{
 		pos = p;
+	}
+	inline void move(sf::Vector2i vel)
+	{
+		pos += vel;
 	}
 };

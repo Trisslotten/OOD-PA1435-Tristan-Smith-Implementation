@@ -14,15 +14,11 @@ void World::movePlayer(ID mob_id, sf::Vector2i vel)
 
 ID World::createPlayer()
 {
-	ID new_id = players_id_counter;
-	players_id_counter++;
+	ID new_id = mob_ids.newID();
 
 	Player new_player(new_id);
 
-	Mob mob;
-	mob.setID(new_id);
-	mob.setPos(sf::Vector2i());
-	players[new_id] = mob;
+	players[new_id] = new_player;
 	return new_id;
 }
 
@@ -31,7 +27,7 @@ void World::removePlayer(ID mob_id)
 	players.erase(mob_id);
 }
 
-// for when client joins
+// when client joins
 // append map and mob data to packet
 void World::serializeWorldState(sf::Packet& to_append)
 {	// maybe split into different functions for each list (players, npcs, tiles etc)
@@ -40,12 +36,12 @@ void World::serializeWorldState(sf::Packet& to_append)
 	{
 		Mob p = map_elem.second;
 		sf::Vector2i pos = p.getPos();
-		std::cout << "Appending id: " << map_elem.second.getID() << "\n";
+		//std::cout << "Appending id: " << map_elem.second.getID() << "\n";
 		to_append << p.getID() << pos.x << pos.y;
 	}
 }
 
-// for each frame
+// each frame
 void World::serializeSnapshot(sf::Packet & to_append)
 {
 	to_append << players.size();

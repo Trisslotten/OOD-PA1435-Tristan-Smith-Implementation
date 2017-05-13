@@ -24,6 +24,7 @@ public:
 
 	Networking(Port port); 
 	Networking() = delete;
+	~Networking();
 
 	std::shared_ptr< std::vector<Packet> > receive(sf::Time receive_time);
 

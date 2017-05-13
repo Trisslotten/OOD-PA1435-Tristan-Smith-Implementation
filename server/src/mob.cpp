@@ -1,10 +1,5 @@
 #include "mob.hpp"
 
-Mob::Mob()
-{
-
-}
-
 Mob::Mob(ID id)
 {
 	this->id = id;

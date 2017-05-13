@@ -29,6 +29,16 @@ Networking::Networking(Port port)
 	socket.setBlocking(false);
 }
 
+Networking::~Networking()
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TC_SERVER_SHUTDOWN;
+	for (auto map_elem : clients)
+	{
+		send(packet, map_elem.second);
+	}
+}
+
 std::shared_ptr< std::vector<Packet> > Networking::receive(sf::Time receive_time)
 {
 	sf::Clock clock;
@@ -113,7 +123,7 @@ Client Networking::addClient(ID mob_id, sf::IpAddress ip, Port port)
 
 	sf::Packet packet;
 	packet << PROGRAM_ID << TC_CONFIRM_JOIN;
-	packet << client.id;
+	packet << client.id << client.mob_id;
 
 	send(packet, client);
 
@@ -131,6 +141,14 @@ void Networking::removeClient(ID client_id, World & world)
 		std::cout << "Removing client with id: " << client_id << "\n";
 
 		clients.erase(client_id);
+
+		sf::Packet packet;
+		packet << PROGRAM_ID << TC_REMOVE_MOB;
+		packet << client.mob_id;
+		for (auto map_elem : clients)
+		{
+			send(packet, map_elem.second);
+		}
 	}
 	else
 	{

@@ -14,6 +14,11 @@ Networking & Engine::getNetworking()
 	return networking;
 }
 
+const Renderer & Engine::getRenderer() const
+{
+	return renderer;
+}
+
 Engine::Engine()
 {
 
@@ -47,11 +52,8 @@ void Engine::receive(sf::Time receive_time)
 
 void Engine::render(sf::RenderTarget & target)
 {
-	for (auto&& map_elem : world.test_mobs)
-	{
-		sf::Vector2i pos = map_elem.second.pos;
-		renderer.drawChar(pos, '@', sf::Color::White);
-	}
+
+	world.render(renderer);
 	
 	target.draw(renderer);
 	renderer.clear();

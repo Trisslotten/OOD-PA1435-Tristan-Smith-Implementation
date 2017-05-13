@@ -26,7 +26,10 @@ void PacketParser::parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engin
 			std::cout << msg << "\n";
 			break;
 		case TC_SERVER_SHUTDOWN:
-
+			serverShutdown(engine);
+			break;
+		case TC_REMOVE_MOB:
+			removeMob(packet, engine);
 			break;
 		case TC_ADD_MOB:
 			addMob(packet, engine);
@@ -54,28 +57,34 @@ void PacketParser::debugMove(sf::Packet & packet, Engine & engine)
 		ID mob_id;
 		sf::Vector2i pos;
 		packet >> mob_id >> pos.x >> pos.y;
-		engine.getWorld().test_mobs[mob_id].pos = pos;
+		engine.getWorld().setMobPos(mob_id, pos);
 	}
 	//std::cout << "RECEIVE: test move" << engine.test_pos.x << " " << engine.test_pos.y << "\n";
 }
 
 void PacketParser::confirmJoin(sf::Packet & packet, Engine & engine)
 {
-	ID client_id;
-	packet >> client_id;
+	ID client_id, mob_id;
+	packet >> client_id >> mob_id;
 	engine.getNetworking().setID(client_id);
+	engine.getWorld().setPlayerID(mob_id);
 
 	std::cout << "RECEIVE: confirm join, client_id: " << client_id << "\n";
-	// parse map data here?
 }
 
 void PacketParser::addMob(sf::Packet packet, Engine & engine)
 {
 	ID mob_id;
 	packet >> mob_id;
-	engine.getWorld().test_mobs[mob_id].id = mob_id;
-	engine.getWorld().test_mobs[mob_id].pos = sf::Vector2i();
+	engine.getWorld().addMob(mob_id, sf::Vector2i());
 	std::cout << "Adding mob:\n\tmob_id: " << mob_id << "\n\tpos: " << 0 << ", " << 0 << "\n";
+}
+
+void PacketParser::removeMob(sf::Packet packet, Engine & engine)
+{
+	ID mob_id;
+	packet >> mob_id;
+	engine.getWorld().removeMob(mob_id);
 }
 
 void PacketParser::parseWorldState(sf::Packet packet, Engine & engine)
@@ -89,8 +98,13 @@ void PacketParser::parseWorldState(sf::Packet packet, Engine & engine)
 		sf::Vector2i pos;
 		packet >> mob_id;
 		packet >> pos.x >> pos.y;
-		engine.getWorld().test_mobs[mob_id].id = mob_id;
-		engine.getWorld().test_mobs[mob_id].pos = pos;
-		std::cout << "Adding mob:\n\tmob_id: " << mob_id << "\n\tpos: " << pos.x << ", " << pos.y << "\n";
+		engine.getWorld().addMob(mob_id, pos);
+
+		//std::cout << "Adding mob:\n\tmob_id: " << mob_id << "\n\tpos: " << pos.x << ", " << pos.y << "\n";
 	}
+}
+
+void PacketParser::serverShutdown(Engine & engine)
+{
+	// show disconnect message or something
 }

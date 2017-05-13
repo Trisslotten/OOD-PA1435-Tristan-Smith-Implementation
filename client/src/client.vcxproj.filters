@@ -36,6 +36,12 @@
     <ClCompile Include="packetparser.cpp">
       <Filter>Source Files\network</Filter>
     </ClCompile>
+    <ClCompile Include="mob.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="world.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine.hpp">
@@ -60,6 +66,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="uielement.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mob.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

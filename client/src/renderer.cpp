@@ -16,12 +16,16 @@ Renderer::Renderer()
 
 void Renderer::clear()
 {
-	for (int i = 0; i < tiles.size(); i++) 
+	clear(0);
+}
+
+void Renderer::clear(char symbol)
+{
+	for (int i = 0; i < tiles.size(); i++)
 	{
-		tiles[i] = 0;
+		tiles[i] = symbol;
 		tiles_colors[i] = sf::Color::White;
 	}
-		
 }
 
 

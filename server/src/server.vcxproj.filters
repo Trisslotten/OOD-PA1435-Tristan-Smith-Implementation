@@ -71,5 +71,8 @@
     <ClInclude Include="item.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="idcreator.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
