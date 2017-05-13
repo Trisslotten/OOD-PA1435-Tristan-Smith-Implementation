@@ -50,4 +50,36 @@ public:
 	{
 		return pos;	
 	}
+	inline void setID(ID _id)
+	{
+		id = _id;	
+	}
+	inline void setName(std::string n)
+	{
+		name = n;	
+	}
+	inline void setDescription(std::string desc)
+	{
+		description = desc;
+	}
+	inline void setSymbol(char sym)
+	{
+		symbol = sym;	
+	}
+	inline void setColor(sf::color col)
+	{
+		color = col;	
+	}
+	inline void setHealth(int i)
+	{
+		health = i;	
+	}
+	inline void setMaxHealth(int max)
+	{
+		max_health = max;	
+	}
+	inline void setPos(sf::vector2i p)
+	{
+		pos = p;	
+	}
 };
