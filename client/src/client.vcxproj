@@ -120,6 +120,7 @@
   <ItemGroup>
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="map.cpp" />
     <ClCompile Include="mob.cpp" />
     <ClCompile Include="networking.cpp" />
     <ClCompile Include="packetparser.cpp" />
@@ -130,6 +131,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\shared\definitions.hpp" />
     <ClInclude Include="engine.hpp" />
+    <ClInclude Include="map.hpp" />
     <ClInclude Include="mob.hpp" />
     <ClInclude Include="networking.hpp" />
     <ClInclude Include="packetparser.hpp" />

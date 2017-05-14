@@ -4,6 +4,7 @@
 
 #include <SFML/Network.hpp>
 #include "../../shared/definitions.hpp"
+#include "renderer.hpp"
 
 class Map
 {
@@ -12,8 +13,11 @@ class Map
 	std::vector<Tile> tiles;
 
 public:
-	Map(int _width, int _height);
-	Map() = delete;
+	Map() {}
+
+	void setSize(int _width, int _height);
+
+	void render(Renderer& renderer, sf::Vector2i offset);
 
 	Tile tileAt(sf::Vector2i pos);
 	Tile tileAt(int x, int y);
@@ -29,7 +33,5 @@ public:
 	{
 		return height;
 	}
-
-	void serialize(sf::Packet& to_append);
 
 };

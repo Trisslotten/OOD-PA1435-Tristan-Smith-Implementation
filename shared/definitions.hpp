@@ -2,6 +2,8 @@
 
 #include <limits>
 
+#include <SFML/System.hpp>
+
 #define ID unsigned int
 #define Port unsigned short
 
@@ -14,7 +16,7 @@ const unsigned int PROGRAM_ID = 2874393505;
 // number of packets the server sends to a joining client
 const unsigned int WORLD_STATE_PACKET_COUNT = 2;
 
-enum Tile
+enum Tile : sf::Int8
 {
 	TILE_NOTHING,
 	TILE_GROUND,

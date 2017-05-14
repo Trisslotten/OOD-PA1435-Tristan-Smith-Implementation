@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "../../shared/definitions.hpp"
-
+#include <SFML/Network.hpp>
 #include "engine.hpp"
 #include "world.hpp"
 
@@ -101,6 +101,20 @@ void PacketParser::parseWorldState(sf::Packet packet, Engine & engine)
 		engine.getWorld().addMob(mob_id, pos);
 
 		//std::cout << "Adding mob:\n\tmob_id: " << mob_id << "\n\tpos: " << pos.x << ", " << pos.y << "\n";
+	}
+
+	Map& map = engine.getWorld().getMap();
+	int width, height;
+	packet >> width >> height;
+	map.setSize(width, height);
+	for (int i = 0; i < height; i++)
+	{
+		for (int j = 0; j < width; j++)
+		{
+			Tile t;
+			packet >> (sf::Int8&)t;
+			map.setTileAt(j, i, t);
+		}
 	}
 }
 

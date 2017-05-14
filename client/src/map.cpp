@@ -1,13 +1,33 @@
 #include "map.hpp"
 
-Map::Map(int _width, int _height)
+
+
+
+void Map::setSize(int _width, int _height)
 {
 	width = _width;
 	height = _height;
 	tiles.resize(width*height);
-	for (auto&& t : tiles)
+}
+
+void Map::render(Renderer & renderer, sf::Vector2i offset)
+{
+	for (int i = 0; i < width*height; i++)
 	{
-		t = TILE_NOTHING;
+		int x = i % width;
+		int y = i / width;
+		char symbol = 0;
+		switch (tiles[i])
+		{
+		case TILE_GROUND:
+			symbol = '.';
+			break;
+		case TILE_WALL:
+			symbol = '#';
+			break;
+		}
+		sf::Vector2i pos(x, y);
+		renderer.drawChar(pos - offset, symbol, sf::Color(125,125,125));
 	}
 }
 
@@ -38,14 +58,3 @@ void Map::setTileAt(int x, int y, Tile tile)
 	if (x >= 0 && x < width && y >= 0 && y < height)
 		tiles[x + y*width] = tile;
 }
-
-void Map::serialize(sf::Packet & to_append)
-{
-	to_append << width << height;
-	for (auto t : tiles)
-	{
-		to_append << (sf::Int8)t;
-	}
-}
-
-

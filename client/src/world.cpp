@@ -8,6 +8,8 @@ void World::render(Renderer & renderer)
 	if(mobs.count(player_id) > 0)
 		offset = mobs[player_id].getPos() - renderer.getScreenSizeTiles()/2;
 
+	map.render(renderer, offset);
+
 	for (auto&& map_elem : mobs)
 	{
 		Mob mob = map_elem.second;

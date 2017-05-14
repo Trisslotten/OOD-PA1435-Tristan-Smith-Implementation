@@ -70,6 +70,7 @@ void World::serializeWorldState(sf::Packet& to_append)
 		//std::cout << "Appending id: " << map_elem.second.getID() << "\n";
 		to_append << p.getID() << pos.x << pos.y;
 	}
+	map.serialize(to_append);
 }
 
 // each frame
