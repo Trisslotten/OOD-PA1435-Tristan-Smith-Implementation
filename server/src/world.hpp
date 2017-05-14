@@ -6,10 +6,13 @@
 #include "mob.hpp"
 #include "player.hpp"
 #include "idcreator.hpp"
+#include "map.hpp"
+#include "mapgenerator.hpp"
 #include <unordered_map>
 
 class World
 {
+	Map map{ 30,30 };
 
 	std::unordered_map<ID, Mob> npcs;
 	std::unordered_map<ID, Player> players;
@@ -20,6 +23,8 @@ class World
 	IDCreator item_ids;
 	
 public:
+
+	void init();
 
 	void movePlayer(ID mob_id, sf::Vector2i vel);
 

@@ -14,6 +14,8 @@ public:
 	Server(Port port) : networking(port) 
 	{}
 
+	void init();
+
 	void update();
 
 	void receive(sf::Time receive_time);

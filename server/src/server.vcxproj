@@ -119,6 +119,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="map.cpp" />
+    <ClCompile Include="mapgenerator.cpp" />
     <ClCompile Include="mob.cpp" />
     <ClCompile Include="networking.cpp" />
     <ClCompile Include="packetparser.cpp" />
@@ -131,6 +133,8 @@
     <ClInclude Include="client.hpp" />
     <ClInclude Include="idcreator.hpp" />
     <ClInclude Include="item.hpp" />
+    <ClInclude Include="map.hpp" />
+    <ClInclude Include="mapgenerator.hpp" />
     <ClInclude Include="mob.hpp" />
     <ClInclude Include="networking.hpp" />
     <ClInclude Include="packet.hpp" />

@@ -3,6 +3,11 @@
 #include <iostream>
 #include <string>
 
+void Server::init()
+{
+	world.init();
+}
+
 void Server::update()
 {
 	networking.sendSnapshot(world);

@@ -1,6 +1,37 @@
 #include "world.hpp"
 
 #include <iostream>
+#include <memory>
+
+void World::init()
+{
+	std::shared_ptr<MapGenerator> generator = std::make_shared<TestGenerator>();
+	generator->generateMap(map);
+
+
+	// debug
+	for (int i = 0; i < map.getHeight(); i++)
+	{
+		for (int j = 0; j < map.getWidth(); j++)
+		{
+			Tile t = map.tileAt(i, j);
+
+			switch (t)
+			{
+			case TILE_NOTHING:
+				std::cout << ' ';
+				break;
+			case TILE_WALL:
+				std::cout << '#';
+				break;
+			case TILE_GROUND:
+				std::cout << '.';
+				break;
+			}
+		}
+		std::cout << '\n';
+	}
+}
 
 void World::movePlayer(ID mob_id, sf::Vector2i vel)
 {

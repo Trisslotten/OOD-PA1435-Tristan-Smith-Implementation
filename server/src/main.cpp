@@ -16,6 +16,8 @@ int main(int argc, char *argv[])
 
 	Server server{ 8778 };
 
+	server.init();
+
 	sf::Clock debug_timer;
 
 	sf::Clock timer;

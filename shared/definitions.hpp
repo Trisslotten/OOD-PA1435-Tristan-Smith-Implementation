@@ -14,6 +14,13 @@ const unsigned int PROGRAM_ID = 2874393505;
 // number of packets the server sends to a joining client
 const unsigned int WORLD_STATE_PACKET_COUNT = 2;
 
+enum Tile
+{
+	TILE_NOTHING,
+	TILE_GROUND,
+	TILE_WALL,
+};
+
 enum PacketAction
 {
 	// TS: to server
@@ -37,7 +44,6 @@ enum PacketAction
 
 	TC_DEBUG_SEND_STRING,
 	TC_DEBUG_SET_POS,
-
-
-
 };
+
+
