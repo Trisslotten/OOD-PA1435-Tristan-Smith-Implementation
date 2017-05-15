@@ -85,6 +85,32 @@ void Networking::sendAddMob(ID mob_id, World & world)
 	}
 }
 
+void Networking::sendMap(const Map & map, Client client)
+{
+	int chunk_size = 10;
+	sf::Packet packet;
+	packet << PROGRAM_ID << TC_MAP_SIZE;
+	packet << map.getWidth() << map.getHeight();
+	packet << chunk_size;
+	send(packet, client);
+	
+	for (int cy = 0; cy*chunk_size < map.getHeight(); cy++)
+	{
+		for (int cx = 0; cx*chunk_size < map.getWidth(); cx++)
+		{
+			packet.clear();
+			packet << PROGRAM_ID << TC_MAP_CHUNK;
+			int x_start = cx*chunk_size;
+			int x_end = (cx+1)*chunk_size;
+			int y_start = cy*chunk_size;
+			int y_end = (cy+1)*chunk_size;
+			map.serializeChunk(packet, x_start, x_end, y_start, y_end);
+			send(packet, client);
+		}
+	}
+
+}
+
 void Networking::sendDropItem(Item item)
 {
 	sf::Packet packet;

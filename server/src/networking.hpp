@@ -32,6 +32,8 @@ public:
 
 	void sendAddMob(ID mob_id, World& world);
 
+	void sendMap(const Map& map, Client client);
+
 	void sendAddItem();
 	void sendDropItem(Item item);
 

@@ -21,6 +21,7 @@ enum Tile : sf::Int8
 	TILE_NOTHING,
 	TILE_GROUND,
 	TILE_WALL,
+	NUM_TILES,
 };
 
 enum PacketAction
@@ -42,7 +43,8 @@ enum PacketAction
 	TC_REMOVE_MOB,
 	TC_WORLD_STATE,
 	TC_DROP_ITEM,
-	
+	TC_MAP_SIZE,
+	TC_MAP_CHUNK,
 
 	TC_DEBUG_SEND_STRING,
 	TC_DEBUG_SET_POS,

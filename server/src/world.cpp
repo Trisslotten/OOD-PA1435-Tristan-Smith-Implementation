@@ -8,13 +8,13 @@ void World::init()
 	std::shared_ptr<MapGenerator> generator = std::make_shared<TestGenerator>();
 	generator->generateMap(map);
 
-
+	/*
 	// debug
 	for (int i = 0; i < map.getHeight(); i++)
 	{
 		for (int j = 0; j < map.getWidth(); j++)
 		{
-			Tile t = map.tileAt(i, j);
+			sf::Int8 t = map.tileAt(i, j);
 
 			switch (t)
 			{
@@ -31,6 +31,7 @@ void World::init()
 		}
 		std::cout << '\n';
 	}
+	*/
 }
 
 void World::movePlayer(ID mob_id, sf::Vector2i vel)
@@ -70,7 +71,6 @@ void World::serializeWorldState(sf::Packet& to_append)
 		//std::cout << "Appending id: " << map_elem.second.getID() << "\n";
 		to_append << p.getID() << pos.x << pos.y;
 	}
-	map.serialize(to_append);
 }
 
 // each frame

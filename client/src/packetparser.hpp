@@ -17,7 +17,8 @@ class PacketParser
 	void addMob(sf::Packet packet, Engine& engine);
 	void removeMob(sf::Packet packet, Engine& engine);
 	void parseWorldState(sf::Packet packet, Engine& engine);
-
+	void parseMapSize(sf::Packet packet, Engine& engine);
+	void parseMapChunk(sf::Packet packet, Engine& engine);
 
 
 	void serverShutdown(Engine& engine);

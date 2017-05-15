@@ -43,6 +43,7 @@ void PacketParser::joinServer(Packet& packet, Networking & networking, World & w
 
 	Client client = networking.addClient(mob_id, packet.address, packet.port);
 	networking.sendWorldState(world, client);
+	networking.sendMap(world.getMap(), client);
 }
 
 void PacketParser::disconnectClient(Packet & packet, Networking & networking, World & world)
