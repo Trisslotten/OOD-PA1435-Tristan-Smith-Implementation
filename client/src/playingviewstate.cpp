@@ -29,18 +29,15 @@ std::shared_ptr<PlayerViewState> PlayingViewState::update(Engine& engine)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
 	{
 		//change view state
-<<<<<<< HEAD
 		engine.getNetworking().sendRequestInventory();
 		InventoryViewState* invstate = new InventoryViewState();
 		returnstate = invstate;
-=======
 		return std::make_shared<InventoryViewState>();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) //temporary drop item thing, drops item with global id 0 aka. The Crazy Thing
 	{
 		//change view state
 		engine.getNetworking().sendDropItem(0);
->>>>>>> origin/master
 	}
 
 	return (std::shared_ptr<PlayerViewState>)returnstate;
