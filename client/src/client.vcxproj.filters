@@ -54,7 +54,7 @@
     <ClCompile Include="playingviewstate.cpp">
       <Filter>Source Files\viewstates</Filter>
     </ClCompile>
-    <ClCompile Include="playerviewstate.cpp">
+    <ClCompile Include="inventoryviewstate.cpp">
       <Filter>Source Files\viewstates</Filter>
     </ClCompile>
   </ItemGroup>

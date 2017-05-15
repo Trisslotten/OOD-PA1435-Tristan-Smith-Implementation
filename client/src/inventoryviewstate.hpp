@@ -3,8 +3,6 @@
 class InventoryViewState : public PlayerViewState
 {
 public:
-	virtual PlayerViewState update(Engine* engine)
-	{
-
-	}
+	virtual std::shared_ptr<PlayerViewState> update(Engine& engine);
+	virtual ~InventoryViewState();
 };

@@ -2,6 +2,7 @@
 #include "engine.hpp"
 
 #include "../../shared/definitions.hpp"
+#include "playingviewstate.hpp"
 #include <sstream>
 
 World & Engine::getWorld()
@@ -24,8 +25,8 @@ Engine::Engine()
 
 	auto packets = networking.connect("localhost", SERVER_PORT);
 	packet_parser.parse(packets, *this);
-	PlayingViewState state();
-	viewstate = state;
+	
+	viewstate = std::make_shared<PlayingViewState>();
 }
 
 void Engine::update()
@@ -58,7 +59,11 @@ void Engine::update()
 		networking.sendDropItem(0);
 	}*/
 	
-	this->viewstate = viewstate.update(this);
+	auto new_state = viewstate->update(*this);
+	if (new_state != nullptr)
+	{
+		viewstate = new_state;
+	}
 }
 
 void Engine::receive(sf::Time receive_time)

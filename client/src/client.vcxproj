@@ -119,13 +119,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="engine.cpp" />
+    <ClCompile Include="inventoryviewstate.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="mob.cpp" />
     <ClCompile Include="networking.cpp" />
     <ClCompile Include="packetparser.cpp" />
-    <ClCompile Include="playerviewstate.cpp" />
     <ClCompile Include="playingviewstate.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="uielement.cpp" />

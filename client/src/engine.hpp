@@ -18,7 +18,7 @@ class Engine
 
 	World world;
 
-	PlayerViewState viewstate;
+	std::shared_ptr<PlayerViewState> viewstate;
 public:
 
 	World& getWorld();

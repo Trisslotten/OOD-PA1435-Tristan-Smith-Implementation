@@ -1,9 +1,12 @@
 #pragma once
-#include "engine.hpp"
+
+#include <memory>
+
+class Engine;
 
 class PlayerViewState
 {
 public:
-	virtual PlayerViewState update(Engine* engine) {}
-	PlayerViewState() {}
+	virtual std::shared_ptr<PlayerViewState> update(Engine& engine) = 0;
+	virtual ~PlayerViewState() {}
 };
