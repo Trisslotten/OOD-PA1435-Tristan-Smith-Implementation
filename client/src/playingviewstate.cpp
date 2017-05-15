@@ -2,6 +2,11 @@
 
 #include "engine.hpp"
 
+#include "inventoryviewstate.hpp"
+
+void PlayingViewState::init(Engine& engine)
+{}
+
 std::shared_ptr<PlayerViewState> PlayingViewState::update(Engine& engine)
 {
 	sf::Vector2i vel;
@@ -23,8 +28,8 @@ std::shared_ptr<PlayerViewState> PlayingViewState::update(Engine& engine)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
 	{
 		//change view state
-		engine.getNetworking().sendRequestInventory();
-
+		return std::make_shared<InventoryViewState>();
+		
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) //temporary drop item thing, drops item with global id 0 aka. The Crazy Thing
 	{

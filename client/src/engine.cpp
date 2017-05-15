@@ -63,6 +63,7 @@ void Engine::update()
 	if (new_state != nullptr)
 	{
 		viewstate = new_state;
+		viewstate->init(*this);
 	}
 }
 
