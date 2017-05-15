@@ -12,22 +12,27 @@ void Map::setSize(int _width, int _height)
 
 void Map::render(Renderer & renderer, sf::Vector2i offset)
 {
-	for (int i = 0; i < width*height; i++)
-	{
-		int x = i % width;
-		int y = i / width;
-		char symbol = 0;
-		switch (tiles[i])
+	sf::Vector2i size = renderer.getScreenSizeTiles();
+
+	sf::Vector2i start = offset;
+	sf::Vector2i end = offset + size;
+
+	for(int y = start.y; y < end.y; y++) {
+		for (int x = start.x; x < end.x; x++)
 		{
-		case TILE_GROUND:
-			symbol = '.';
-			break;
-		case TILE_WALL:
-			symbol = '#';
-			break;
+			char symbol = 0;
+			switch (tileAt(x, y))
+			{
+			case TILE_GROUND:
+				symbol = '.';
+				break;
+			case TILE_WALL:
+				symbol = '#';
+				break;
+			}
+			sf::Vector2i pos(x, y);
+			renderer.drawChar(pos - offset, symbol, sf::Color(125, 125, 125));
 		}
-		sf::Vector2i pos(x, y);
-		renderer.drawChar(pos - offset, symbol, sf::Color(125,125,125));
 	}
 }
 

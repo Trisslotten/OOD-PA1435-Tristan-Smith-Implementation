@@ -46,10 +46,14 @@ void PacketParser::joinServer(Packet& packet, Networking & networking, World & w
 
 	Client client = networking.addClient(mob_id, packet.address, packet.port);
 	networking.sendWorldState(world, client);
+<<<<<<< HEAD
 	for (auto&& map_elem : world.getItems())
 	{
 		networking.sendGroundItem(map_elem.second, client);
 	}
+=======
+	networking.sendMap(world.getMap(), client);
+>>>>>>> origin/master
 }
 
 void PacketParser::disconnectClient(Packet & packet, Networking & networking, World & world)

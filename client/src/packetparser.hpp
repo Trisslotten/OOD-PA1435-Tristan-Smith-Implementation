@@ -17,8 +17,15 @@ class PacketParser
 	void addMob(sf::Packet packet, Engine& engine);
 	void removeMob(sf::Packet packet, Engine& engine);
 	void parseWorldState(sf::Packet packet, Engine& engine);
+<<<<<<< HEAD
 	void dropItem(sf::Packet packet, Engine& engine);
 	void removeItem(sf::Packet packet, Engine& engine);
+=======
+	void parseMapSize(sf::Packet packet, Engine& engine);
+	void parseMapChunk(sf::Packet packet, Engine& engine);
+
+
+>>>>>>> origin/master
 	void serverShutdown(Engine& engine);
 	void pickupSuccess(sf::Packet packet, Engine& engine);
 	void pickupFailed(sf::Packet packet, Engine& engine);

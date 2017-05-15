@@ -21,6 +21,7 @@ enum Tile : sf::Int8
 	TILE_NOTHING,
 	TILE_GROUND,
 	TILE_WALL,
+	NUM_TILES,
 };
 
 enum PacketAction
@@ -42,10 +43,15 @@ enum PacketAction
 	TC_REMOVE_MOB,
 	TC_WORLD_STATE,
 	TC_DROP_ITEM,
+<<<<<<< HEAD
 	TC_REMOVE_ITEM,
 	TC_ADD_ITEM_TO_INVENTORY,
 	TC_PICKUP_SUCCESS,
 	TC_PICKUP_FAILED,
+=======
+	TC_MAP_SIZE,
+	TC_MAP_CHUNK,
+>>>>>>> origin/master
 
 	TC_DEBUG_SEND_STRING,
 	TC_DEBUG_SET_POS,

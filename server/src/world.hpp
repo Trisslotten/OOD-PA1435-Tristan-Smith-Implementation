@@ -12,7 +12,7 @@
 
 class World
 {
-	Map map{ 30,30 };
+	Map map{ 100, 100 };
 
 	std::unordered_map<ID, Mob> npcs;
 	std::unordered_map<ID, Player> players;
@@ -25,6 +25,11 @@ class World
 public:
 
 	void init();
+
+	Map& getMap()
+	{
+		return map;
+	}
 
 	void movePlayer(ID mob_id, sf::Vector2i vel);
 

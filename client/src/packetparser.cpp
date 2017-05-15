@@ -37,6 +37,12 @@ void PacketParser::parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engin
 		case TC_WORLD_STATE:
 			parseWorldState(packet, engine);
 			break;
+		case TC_MAP_SIZE:
+			parseMapSize(packet, engine);
+			break;
+		case TC_MAP_CHUNK:
+			parseMapChunk(packet, engine);
+			break;
 		case TC_DEBUG_SET_POS:
 			debugMove(packet, engine);
 			break;
@@ -113,18 +119,27 @@ void PacketParser::parseWorldState(sf::Packet packet, Engine & engine)
 
 		//std::cout << "Adding mob:\n\tmob_id: " << mob_id << "\n\tpos: " << pos.x << ", " << pos.y << "\n";
 	}
+}
 
-	Map& map = engine.getWorld().getMap();
-	int width, height;
-	packet >> width >> height;
-	map.setSize(width, height);
-	for (int i = 0; i < height; i++)
+void PacketParser::parseMapSize(sf::Packet packet, Engine & engine)
+{
+	int width, height, chunk_size;
+	packet >> width >> height >> chunk_size;
+	engine.getWorld().getMap().setSize(width, height);
+}
+
+void PacketParser::parseMapChunk(sf::Packet packet, Engine & engine)
+{
+	std::cout << "RECEIVE: map chunk\n";
+	int x_start, x_end, y_start, y_end;
+	packet >> x_start >> x_end >> y_start >> y_end;
+	for (int y = y_start; y < y_end; y++)
 	{
-		for (int j = 0; j < width; j++)
+		for (int x = x_start; x < x_end; x++)
 		{
-			Tile t;
-			packet >> (sf::Int8&)t;
-			map.setTileAt(j, i, t);
+			sf::Int8 tile;
+			packet >> tile;
+			engine.getWorld().getMap().setTileAt(x, y, (Tile)tile);
 		}
 	}
 }
