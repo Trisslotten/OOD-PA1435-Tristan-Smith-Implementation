@@ -45,6 +45,17 @@ void Engine::update()
 	{
 		networking.sendPickup();
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
+	{
+		//change view state
+		networking.sendRequestInventory();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) //temporary drop item thing, drops item with global id 0 aka. The Crazy Thing
+	{
+		//change view state
+		networking.sendDropItem(0);
+	}
+	
 }
 
 void Engine::receive(sf::Time receive_time)

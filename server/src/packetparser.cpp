@@ -30,6 +30,9 @@ void PacketParser::parse(std::shared_ptr<std::vector<Packet>> packets, Networkin
 		case TS_PICKUP_ITEM:
 			pickupItem(p, networking, world);
 			break;
+		case TS_REQUEST_INVENTORY:
+			requestInventory(p, networking, world);
+			break;
 		default:
 			// error message?
 			break;
@@ -90,10 +93,14 @@ void PacketParser::dropItem(Packet& packet, Networking & networking, World & wor
 	if (mob_id != ID_NOT_FOUND)
 	{
 		Player* player = world.getPlayerById(mob_id);
-		player->removeItem(item_id);
-		Item theitem = player->getItemById(item_id);
-		world.placeItemOnGround(theitem);
-		networking.sendDropItem(theitem);
+		if (player->getInventory().count(item_id) > 0)
+		{
+			Item theitem = player->getItemById(item_id);
+			theitem.setPos(player->getPos());
+			player->removeItem(item_id);
+			world.placeItemOnGround(theitem);
+			networking.sendDropItem(theitem);
+		}
 	}
 }
 
@@ -118,5 +125,17 @@ void PacketParser::pickupItem(Packet& packet, Networking& networking, World& wor
 			picked = true;
 		}
 		networking.sendPickupProgress(picked, client_id, name);
+	}
+}
+
+void PacketParser::requestInventory(Packet& packet, Networking& networking, World& world)
+{
+	ID client_id;
+	packet.packet >> client_id;
+	ID mob_id = networking.mobIDFromClientID(client_id);
+	if (mob_id != ID_NOT_FOUND)
+	{
+		Player* player = world.getPlayerById(mob_id);
+		networking.sendInventory(*player, client_id);
 	}
 }

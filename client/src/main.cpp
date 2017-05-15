@@ -8,7 +8,7 @@ int main()
 
 	sf::Vector2i size = engine.getRenderer().getScreenSize();
 
-	float fps = 60;
+	float fps = 15;
 	sf::RenderWindow window(sf::VideoMode(size.x, size.y), "Hello World!");
 
 

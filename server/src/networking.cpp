@@ -115,7 +115,7 @@ void Networking::sendDropItem(Item item)
 {
 	sf::Packet packet;
 	packet << PROGRAM_ID << TC_DROP_ITEM << item.getItemId() << item.getName() << item.getDescription()
-		<< item.getSymbol() << item.getPos().x << item.getPos().y;
+		<< item.getSymbol() << item.getPos().x << item.getPos().y << item.getColor().r << item.getColor().g << item.getColor().b << item.getColor().a;
 	for (auto&& map_elem : clients)
 	{
 		send(packet, map_elem.second);
@@ -223,5 +223,20 @@ void Networking::sendPickupProgress(bool success, ID client_id, std::string name
 	}
 	else
 		packet << TC_PICKUP_FAILED;
+	send(packet, clients[client_id]);
+}
+
+void Networking::sendInventory(Player player, ID client_id)
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID;
+	packet << TC_INVENTORY;
+	std::unordered_map<ID, Item> inventory = player.getInventory();
+	packet << player.getInventory().size();
+	for (auto&& map_elem : inventory)
+	{
+		Item current = map_elem.second;
+		packet << current.getItemId() << current.getName() << current.getDescription() << (sf::Uint8)current.getSymbol();
+	}
 	send(packet, clients[client_id]);
 }

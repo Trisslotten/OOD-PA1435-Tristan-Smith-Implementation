@@ -18,6 +18,7 @@ class PacketParser
 
 	void debugMove(Packet& packet, Networking& networking, World& world);
 	void pickupItem(Packet& packet, Networking& networking, World& world);
+	void requestInventory(Packet& packet, Networking& networking, World& world);
 public:
 
 	void parse(std::shared_ptr<std::vector<Packet>> packets, Networking& networking, World& world);

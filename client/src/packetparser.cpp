@@ -54,8 +54,12 @@ void PacketParser::parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engin
 			break;
 		case TC_PICKUP_SUCCESS:
 			pickupSuccess(packet, engine);
+			break;
 		case TC_PICKUP_FAILED:
 			pickupFailed(packet, engine);
+			break;
+		case TC_INVENTORY:
+			receiveInventory(packet, engine);
 			break;
 		default:
 			// error message?
@@ -171,10 +175,28 @@ void PacketParser::pickupSuccess(sf::Packet packet, Engine& engine)
 {
 	std::string name;
 	packet >> name;
-	std::cout << "Succesfully picked up item: " << name << "/n";
+	std::cout << "Succesfully picked up item: " << name << "\n";
 }
 
 void PacketParser::pickupFailed(sf::Packet packet, Engine& engine)
 {
-	std::cout << "Failed to pick up item" << "/n";
+	std::cout << "Failed to pick up item" << "\n";
+}
+
+void PacketParser::receiveInventory(sf::Packet packet, Engine& engine)
+{
+	size_t count;
+	packet >> count;
+	std::unordered_map<ID, Item> inventory;
+	std::cout << "  INVENTORY START:   " << "\n";
+	for (int i = 0; i < count; i++)
+	{
+		std::string name, description; ID id; sf::Uint8 symbol;
+		packet >> id >> name >> description >> symbol;
+		Item inv_item(id, name, description, (char)symbol, sf::Vector2i(0, 0), sf::Color(255, 255, 255, 255));
+		inventory[id] = inv_item;
+		//debug
+		std::cout << "id: " << id << ", name: " << name << ", description: " << description << "\n";
+	}
+	std::cout << "  INVENTORY END   " << "\n";
 }

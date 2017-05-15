@@ -35,7 +35,8 @@ void World::init()
 	//test items
 	ID newid = this->item_ids.newID();
 	this->items_on_ground[newid] = Item(newid, "The Crazy Thing", "The craziest thing", 'T', sf::Vector2i(7, 7), QUALITY_EPIC);
-	
+	newid = this->item_ids.newID();
+	this->items_on_ground[newid] = Item(newid, "Frostmourne", "oh shieet", 'F', sf::Vector2i(5, 8), QUALITY_LEGENDARY);
 }
 
 void World::movePlayer(ID mob_id, sf::Vector2i vel)
@@ -119,8 +120,6 @@ ID World::getItemAtPos(sf::Vector2i pos)
 
 void World::pickupItemFromGround(Player* player, ID item_id)
 {
-	//check if there is an item wher player is standing
-	sf::Vector2i pos = player->getPos();
 	if (items_on_ground.count(item_id) > 0)
 	{
 		//place in player's inventory

@@ -137,3 +137,17 @@ void Networking::sendPickup()
 	packet << PROGRAM_ID << TS_PICKUP_ITEM << client_id;
 	send(packet);
 }
+
+void Networking::sendRequestInventory()
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TS_REQUEST_INVENTORY << client_id;
+	send(packet);
+}
+
+void Networking::sendDropItem(ID item_id)
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TS_DROP_ITEM << client_id << item_id;
+	send(packet);
+}

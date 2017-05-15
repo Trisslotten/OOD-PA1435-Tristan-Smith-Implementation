@@ -51,4 +51,6 @@ public:
 	void sendRemoveItemFromGround(ID id);
 
 	void sendPickupProgress(bool success, ID client_id, std::string name);
+	
+	void sendInventory(Player player, ID client_id);
 };

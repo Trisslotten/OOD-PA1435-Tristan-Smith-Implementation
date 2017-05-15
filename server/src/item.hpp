@@ -20,9 +20,9 @@ public:
 	inline char getSymbol() { return symbol; }
 	inline sf::Color getColor() { return color; }
 	inline sf::Vector2i getPos() { return last_ground_pos; }
+	inline void setPos(sf::Vector2i pos) { this->last_ground_pos = pos; }
 
 	Item();
-	Item(ID id, std::string name, std::string description, char symbol, sf::Vector2i pos, sf::Color);
-
+	Item(ID id, std::string name, std::string description, char symbol, sf::Vector2i pos, sf::Color color);
 
 };
