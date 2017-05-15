@@ -32,12 +32,10 @@ public:
 
 	void sendAddMob(ID mob_id, World& world);
 
-<<<<<<< HEAD
-=======
 	void sendMap(const Map& map, Client client);
 
 	void sendAddItem();
->>>>>>> origin/master
+
 	void sendDropItem(Item item);
 	void sendGroundItem(Item item, Client client);
 

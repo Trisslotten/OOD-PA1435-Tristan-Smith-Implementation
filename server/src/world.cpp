@@ -31,14 +31,11 @@ void World::init()
 		}
 		std::cout << '\n';
 	}
-<<<<<<< HEAD
-
+	*/
 	//test items
 	ID newid = this->item_ids.newID();
 	this->items_on_ground[newid] = Item(newid, "The Crazy Thing", "The craziest thing", 'T', sf::Vector2i(7, 7), QUALITY_EPIC);
-=======
-	*/
->>>>>>> origin/master
+	
 }
 
 void World::movePlayer(ID mob_id, sf::Vector2i vel)
