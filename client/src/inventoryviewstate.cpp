@@ -2,6 +2,13 @@
 #include "engine.hpp"
 #include <iostream>
 
+#include "engine.hpp"
+
+void InventoryViewState::init(Engine& engine)
+{
+	engine.getNetworking().sendRequestInventory();
+}
+
 std::shared_ptr<PlayerViewState> InventoryViewState::update(Engine & engine)
 {
 	PlayerViewState* returnstate = nullptr;
