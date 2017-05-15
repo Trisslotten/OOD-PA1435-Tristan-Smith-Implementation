@@ -4,11 +4,11 @@
 
 Renderer::Renderer()
 {
-	if (!tileset.loadFromFile("tileset.png"))
+	if (!tileset.loadFromFile("src/tileset.png"))
 	{
 		std::cerr << "Could not load tileset\n";
 	}
-
+	std::cout << "SUCCESS" << std::endl;
 	tiles.resize(screen_height_tiles*screen_width_tiles);
 	tiles_colors.resize(screen_height_tiles*screen_width_tiles);
 	clear();

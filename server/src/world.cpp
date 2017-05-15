@@ -5,7 +5,7 @@
 
 void World::init()
 {
-	std::shared_ptr<MapGenerator> generator = std::make_shared<TestGenerator>();
+	std::shared_ptr<MapGenerator> generator = std::make_shared<LevelGenerator>();
 	generator->generateMap(map);
 
 

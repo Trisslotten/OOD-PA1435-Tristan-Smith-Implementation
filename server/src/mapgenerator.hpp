@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-
+#include <iostream>
 class Map;
 
 class MapGenerator
@@ -21,4 +21,16 @@ class TestGenerator : public MapGenerator
 public:
 	virtual void setSeed(const std::string& seed);
 	virtual void generateMap(Map& map);
+};
+
+class LevelGenerator : public MapGenerator {
+private:
+	int level = 0;
+	std::string seed;
+public:
+	virtual void setSeed(const std::string& seed);
+	virtual void generateMap(Map& map);
+	void generateRoom(Map& map, int xPos, int yPos, int width, int height);
+	void setLevel(int level);
+	bool checkRoomSpot(Map& map, int xPos, int yPos, int width, int height);
 };

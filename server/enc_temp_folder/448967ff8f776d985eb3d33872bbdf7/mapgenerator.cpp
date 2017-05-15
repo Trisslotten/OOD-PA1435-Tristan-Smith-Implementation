@@ -48,6 +48,11 @@ void LevelGenerator::generateMap(Map & map) {
 
 	std::cout << checkRoomSpot(map, xPos, yPos, width, height) << std::endl;
 	generateRoom(map, xPos, yPos, width, height);
+	std::cout << checkRoomSpot(map, xPos, yPos, width, height) << std::endl;
+	std::cout << checkRoomSpot(map, xPos-1, yPos-1, width, height) << std::endl;
+	std::cout << checkRoomSpot(map, xPos+1, yPos+1, width, height) << std::endl;
+	std::cout << checkRoomSpot(map, xPos-1, yPos-1, width+2, height+2) << std::endl;
+	std::cout << checkRoomSpot(map, xPos+1, yPos+1, width-2, height-2) << std::endl;
 	for (int y = 0; y < map.getHeight(); y++) {
 		for (int x = 0; x < map.getWidth(); x++) {
 			if (map.tileAt(sf::Vector2i(x, y)) == TILE_NOTHING) {
