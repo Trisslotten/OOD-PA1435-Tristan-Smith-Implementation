@@ -29,7 +29,6 @@ std::shared_ptr<PlayerViewState> PlayingViewState::update(Engine& engine)
 	{
 		//change view state
 		return std::make_shared<InventoryViewState>();
-		
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) //temporary drop item thing, drops item with global id 0 aka. The Crazy Thing
 	{
