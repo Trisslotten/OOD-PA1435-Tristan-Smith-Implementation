@@ -35,8 +35,12 @@ void World::init()
 	//test items
 	ID newid = this->item_ids.newID();
 	this->items_on_ground[newid] = Item(newid, "The Crazy Thing", "The craziest thing", 'T', sf::Vector2i(7, 7), QUALITY_EPIC);
-	newid = this->item_ids.newID();
-	this->items_on_ground[newid] = Item(newid, "Frostmourne", "oh shieet", 'F', sf::Vector2i(5, 8), QUALITY_LEGENDARY);
+	
+	for (int i = 0; i < 80; i++)
+	{
+		newid = this->item_ids.newID();
+		this->items_on_ground[newid] = Item(newid, "Frostmourne " + std::to_string(i) , "oh shieet", 'F', sf::Vector2i(5, 8), QUALITY_LEGENDARY);
+	}
 }
 
 void World::update()

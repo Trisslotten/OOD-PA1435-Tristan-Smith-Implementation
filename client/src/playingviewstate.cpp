@@ -4,6 +4,7 @@
 
 std::shared_ptr<PlayerViewState> PlayingViewState::update(Engine& engine)
 {
+	PlayerViewState* returnstate = nullptr;
 	sf::Vector2i vel;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		vel.x += 1;
@@ -24,15 +25,16 @@ std::shared_ptr<PlayerViewState> PlayingViewState::update(Engine& engine)
 	{
 		//change view state
 		engine.getNetworking().sendRequestInventory();
-
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) //temporary drop item thing, drops item with global id 0 aka. The Crazy Thing
-	{
-		//change view state
-		engine.getNetworking().sendDropItem(0);
+		InventoryViewState* invstate = new InventoryViewState();
+		returnstate = invstate;
 	}
 
-	return nullptr;
+	return (std::shared_ptr<PlayerViewState>)returnstate;
+}
+
+void PlayingViewState::render(World& world, Renderer& renderer)
+{
+	world.render(renderer);
 }
 
 PlayingViewState::~PlayingViewState()

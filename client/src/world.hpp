@@ -19,7 +19,7 @@ class World
 	std::unordered_map<ID, Item> items;
 	ID player_id;
 
-
+	std::vector<Item> latest_inventory;
 
 public:
 
@@ -38,4 +38,7 @@ public:
 	void setMobPos(ID mob_id, sf::Vector2i pos);
 	void addItem(Item item);
 	void removeItem(ID id);
+
+	void setLatestInventory(std::vector<Item> inv) { latest_inventory = inv; }
+	std::vector<Item> getLatestInventory() { return latest_inventory; }
 };

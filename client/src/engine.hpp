@@ -19,11 +19,14 @@ class Engine
 	World world;
 
 	std::shared_ptr<PlayerViewState> viewstate;
+
+	std::vector<Item> item;
 public:
 
 	World& getWorld();
 	Networking& getNetworking();
 	const Renderer& getRenderer() const;
+	std::shared_ptr<PlayerViewState> getViewState();
 
 	Engine();
 
@@ -32,5 +35,6 @@ public:
 	void receive(sf::Time receive_time);
 
 	void render(sf::RenderTarget& target);
+
 
 };

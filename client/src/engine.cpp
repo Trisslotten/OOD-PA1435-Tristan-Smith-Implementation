@@ -15,6 +15,11 @@ Networking & Engine::getNetworking()
 	return networking;
 }
 
+std::shared_ptr<PlayerViewState> Engine::getViewState()
+{
+	return viewstate;
+}
+
 const Renderer & Engine::getRenderer() const
 {
 	return renderer;
@@ -74,9 +79,8 @@ void Engine::receive(sf::Time receive_time)
 
 void Engine::render(sf::RenderTarget & target)
 {
-
-	world.render(renderer);
-	
+	//world.render(renderer);
+	viewstate->render(world, renderer);
 	target.draw(renderer);
 	renderer.clear();
 }

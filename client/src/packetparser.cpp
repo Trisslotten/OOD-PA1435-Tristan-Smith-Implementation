@@ -187,16 +187,15 @@ void PacketParser::receiveInventory(sf::Packet packet, Engine& engine)
 {
 	size_t count;
 	packet >> count;
-	std::unordered_map<ID, Item> inventory;
-	std::cout << "  INVENTORY START:   " << "\n";
+	std::vector<Item> inventory;
 	for (int i = 0; i < count; i++)
 	{
 		std::string name, description; ID id; sf::Uint8 symbol;
 		packet >> id >> name >> description >> symbol;
 		Item inv_item(id, name, description, (char)symbol, sf::Vector2i(0, 0), sf::Color(255, 255, 255, 255));
-		inventory[id] = inv_item;
+		inventory.push_back(inv_item);
 		//debug
-		std::cout << "id: " << id << ", name: " << name << ", description: " << description << "\n";
+		//std::cout << "id: " << id << ", name: " << name << ", description: " << description << "\n";
 	}
-	std::cout << "  INVENTORY END   " << "\n";
+	engine.getWorld().setLatestInventory(inventory);
 }
