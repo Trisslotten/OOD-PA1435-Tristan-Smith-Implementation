@@ -2,6 +2,8 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
+
 class Map;
 
 class MapGenerator

@@ -27,6 +27,18 @@ void World::init()
 			case TILE_GROUND:
 				std::cout << '.';
 				break;
+			case TILE_STAIRS_DOWN:
+				std::cout << 'v';
+				break;
+			case TILE_STAIRS_UP:
+				std::cout << '^';
+				break;
+			case TILE_DOOR:
+				std::cout << '|';
+				break;
+			case TILE_INDOOR_GROUND:
+				std::cout << ',';
+				break;
 			}
 		}
 		std::cout << '\n';
