@@ -32,8 +32,8 @@ public:
 
 	void sendAddMob(ID mob_id, World& world);
 
-	void sendAddItem();
 	void sendDropItem(Item item);
+	void sendGroundItem(Item item, Client client);
 
 	void sendWorldState(World& world, Client client);
 
@@ -44,4 +44,7 @@ public:
 
 	ID mobIDFromClientID(ID client_id);
 
+	void sendRemoveItemFromGround(ID id);
+
+	void sendPickupProgress(bool success, ID client_id, std::string name);
 };

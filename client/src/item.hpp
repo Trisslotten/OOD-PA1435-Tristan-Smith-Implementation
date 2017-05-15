@@ -3,8 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-
-
 class Item
 {
 private:
@@ -23,6 +21,4 @@ public:
 
 	Item();
 	Item(ID id, std::string name, std::string description, char symbol, sf::Vector2i pos, sf::Color);
-
-
 };

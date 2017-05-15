@@ -89,11 +89,19 @@ void Networking::sendDropItem(Item item)
 {
 	sf::Packet packet;
 	packet << PROGRAM_ID << TC_DROP_ITEM << item.getItemId() << item.getName() << item.getDescription()
-		<< item.getSymbol();
+		<< item.getSymbol() << item.getPos().x << item.getPos().y;
 	for (auto&& map_elem : clients)
 	{
 		send(packet, map_elem.second);
 	}
+}
+
+void Networking::sendGroundItem(Item item, Client client)
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TC_DROP_ITEM << item.getItemId() << item.getName() << item.getDescription()
+		<< item.getSymbol() << item.getPos().x << item.getPos().y << item.getColor().r << item.getColor().g << item.getColor().b << item.getColor().a;
+	send(packet, client);
 }
 
 
@@ -166,4 +174,28 @@ ID Networking::mobIDFromClientID(ID client_id)
 	{
 		return ID_NOT_FOUND;
 	}
+}
+
+void Networking::sendRemoveItemFromGround(ID id)
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TC_REMOVE_ITEM << id;
+
+	for (auto map_elem : clients)
+	{
+		send(packet, map_elem.second);
+	}
+}
+
+void Networking::sendPickupProgress(bool success, ID client_id, std::string name)
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID;
+	if (success)
+	{
+		packet << TC_PICKUP_SUCCESS << name;
+	}
+	else
+		packet << TC_PICKUP_FAILED;
+	send(packet, clients[client_id]);
 }

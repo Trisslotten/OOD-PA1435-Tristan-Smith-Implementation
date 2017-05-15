@@ -45,6 +45,9 @@
     <ClCompile Include="map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine.hpp">
@@ -75,6 +78,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="map.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="item.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

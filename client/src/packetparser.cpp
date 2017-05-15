@@ -40,6 +40,17 @@ void PacketParser::parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engin
 		case TC_DEBUG_SET_POS:
 			debugMove(packet, engine);
 			break;
+		case TC_DROP_ITEM:
+			dropItem(packet, engine);
+			break;
+		case TC_REMOVE_ITEM:
+			removeItem(packet, engine);
+			break;
+		case TC_PICKUP_SUCCESS:
+			pickupSuccess(packet, engine);
+		case TC_PICKUP_FAILED:
+			pickupFailed(packet, engine);
+			break;
 		default:
 			// error message?
 			break;
@@ -121,4 +132,34 @@ void PacketParser::parseWorldState(sf::Packet packet, Engine & engine)
 void PacketParser::serverShutdown(Engine & engine)
 {
 	// show disconnect message or something
+}
+
+void PacketParser::dropItem(sf::Packet packet, Engine & engine)
+{
+	ID id; std::string name; std::string description; int isymbol; unsigned int x; unsigned int y; sf::Uint8 r, g, b, a;
+	packet >> id >> name >> description >> isymbol >> x >> y >> r >> g >> b >> a;
+	char symbol = (char)isymbol;
+
+	Item new_item(id, name, description, symbol, sf::Vector2i(x,y),sf::Color(r,g,b,a));
+	engine.getWorld().addItem(new_item);
+	std::cout << "RECEIVE: dropped item name: " << name << ", x: "<< x << ", y:" << y << ", r:" << r << ", g:" << g << ", b:" << b << "\n";
+}
+
+void PacketParser::removeItem(sf::Packet packet, Engine& engine)
+{
+	ID id;
+	packet >> id;
+	engine.getWorld().removeItem(id);
+}
+
+void PacketParser::pickupSuccess(sf::Packet packet, Engine& engine)
+{
+	std::string name;
+	packet >> name;
+	std::cout << "Succesfully picked up item: " << name << "/n";
+}
+
+void PacketParser::pickupFailed(sf::Packet packet, Engine& engine)
+{
+	std::cout << "Failed to pick up item" << "/n";
 }

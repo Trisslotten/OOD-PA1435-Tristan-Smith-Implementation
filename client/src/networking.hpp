@@ -39,4 +39,6 @@ public:
 	std::shared_ptr< std::vector<sf::Packet>> receive(sf::Time receive_time);
 
 	void testMove(sf::Vector2i vel);
+
+	void sendPickup();
 };

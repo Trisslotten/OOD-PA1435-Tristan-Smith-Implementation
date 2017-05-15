@@ -41,7 +41,10 @@ void Engine::update()
 	if(vel.y != 0 || vel.x != 0)
 		networking.testMove(vel);
 
-
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+	{
+		networking.sendPickup();
+	}
 }
 
 void Engine::receive(sf::Time receive_time)

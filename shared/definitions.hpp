@@ -1,7 +1,7 @@
 #pragma once
 
 #include <limits>
-
+#include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
 #define ID unsigned int
@@ -42,10 +42,17 @@ enum PacketAction
 	TC_REMOVE_MOB,
 	TC_WORLD_STATE,
 	TC_DROP_ITEM,
-	
+	TC_REMOVE_ITEM,
+	TC_ADD_ITEM_TO_INVENTORY,
+	TC_PICKUP_SUCCESS,
+	TC_PICKUP_FAILED,
 
 	TC_DEBUG_SEND_STRING,
 	TC_DEBUG_SET_POS,
 };
 
-
+#define QUALITY_COMMON sf::Color(200, 200, 200, 255)
+#define QUALITY_UNCOMMON sf::Color(0, 200, 0, 255)
+#define QUALITY_RARE sf::Color(0, 0, 200, 255)
+#define QUALITY_EPIC sf::Color(200, 0, 200, 255)
+#define QUALITY_LEGENDARY sf::Color(200, 50, 0, 255)

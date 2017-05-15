@@ -126,3 +126,10 @@ void Networking::testMove(sf::Vector2i vel)
 	std::cout << "SENDING: test move: " << vel.x << " " << vel.y << std::endl;
 	send(packet);
 }
+
+void Networking::sendPickup()
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TS_PICKUP_ITEM << client_id;
+	send(packet);
+}

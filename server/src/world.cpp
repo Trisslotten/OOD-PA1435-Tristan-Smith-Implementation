@@ -31,6 +31,10 @@ void World::init()
 		}
 		std::cout << '\n';
 	}
+
+	//test items
+	ID newid = this->item_ids.newID();
+	this->items_on_ground[newid] = Item(newid, "The Crazy Thing", "The craziest thing", 'T', sf::Vector2i(7, 7), QUALITY_EPIC);
 }
 
 void World::movePlayer(ID mob_id, sf::Vector2i vel)
@@ -96,4 +100,31 @@ Player* World::getPlayerById(ID id)
 void World::placeItemOnGround(Item item)
 {
 	this->items_on_ground[item.getItemId()] = item;
+}
+
+ID World::getItemAtPos(sf::Vector2i pos)
+{
+	ID retid = ID_NOT_FOUND;
+	//check if there is an item wher player is standing
+
+	for (auto&& map_element : items_on_ground)
+	{
+		if (map_element.second.getPos() == pos)
+		{
+			retid = map_element.second.getItemId();
+		}
+	}
+	return retid;
+}
+
+void World::pickupItemFromGround(Player* player, ID item_id)
+{
+	//check if there is an item wher player is standing
+	sf::Vector2i pos = player->getPos();
+	if (items_on_ground.count(item_id) > 0)
+	{
+		//place in player's inventory
+		player->addItem(items_on_ground[item_id]);
+		items_on_ground.erase(item_id);
+	}
 }
