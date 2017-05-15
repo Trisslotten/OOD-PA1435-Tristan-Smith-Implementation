@@ -41,9 +41,10 @@ void LevelGenerator::setSeed(const std::string & seed)
 void LevelGenerator::generateMap(Map & map) {
 	srand(time(NULL));
 
-	int rooms = (rand() % 2)+2;
+	int rooms = (rand() % 3)+3;
 	std::vector<sf::Vector2i> points;
-	for (int i = 0; i < rooms; i++) {
+	int attempts=0;
+	for (int i = 0; i < rooms && attempts < 100; i++) {
 		int height = (rand()%10) + 3;
 		int width = (rand() % 10) + 3;
 		int xPos = 1 + rand()%(map.getWidth() - width-3);
@@ -55,6 +56,7 @@ void LevelGenerator::generateMap(Map & map) {
 		}
 		else {
 			i--;
+			attempts++;
 		}
 	}
 
@@ -64,7 +66,7 @@ void LevelGenerator::generateMap(Map & map) {
 		int stairsY = rand() % map.getHeight();
 		if (map.tileAt(stairsX, stairsY) == TILE_INDOOR_GROUND) {
 			map.setTileAt(stairsX, stairsY, TILE_STAIRS_DOWN);
-			points.push_back(sf::Vector2i(stairsX, stairsY));
+			//points.push_back(sf::Vector2i(stairsX, stairsY));
 			break;
 		}
 	}
@@ -73,18 +75,18 @@ void LevelGenerator::generateMap(Map & map) {
 		int stairsY = rand() % map.getHeight();
 		if (map.tileAt(stairsX, stairsY) == TILE_INDOOR_GROUND) {
 			map.setTileAt(stairsX, stairsY, TILE_STAIRS_UP);
-			points.push_back(sf::Vector2i(stairsX, stairsY));
+			//points.push_back(sf::Vector2i(stairsX, stairsY));
 			break;
 		}
 	}
 	//connect rooms so that players may progress
 
-	for (sf::Vector2i point1: points) {
-		int x1 = point1.x;
-		int y1 = point1.y;
-		for (sf::Vector2i point2 : points) {
-			int x2 = point2.x;
-			int y2 = point2.y;
+	for (int i = 0; i < points.size(); i++) {
+		int x1 = points.at(i).x;
+		int y1 = points.at(i).y;
+		for (int j = i + 1; j < points.size(); j++) {
+			int x2 = points.at(j).x;
+			int y2 = points.at(j).y;
 
 			while (x2 != x1 || y2 != y1) {//stepper, moving FROM p2 TO p1
 				bool dir = rand() % 2;
@@ -109,6 +111,7 @@ void LevelGenerator::generateMap(Map & map) {
 				}
 			}
 		}
+		points.pop_back();
 	}
 
 	//finalize, reset generator-only values
@@ -119,6 +122,8 @@ void LevelGenerator::generateMap(Map & map) {
 			}
 		}
 	}
+
+	std::cout << points.size() << std::endl;
 }
 bool LevelGenerator::checkRoomSpot(Map& map, int xPos, int yPos, int width, int height) {//check if you can place a room
 	width += 6;
