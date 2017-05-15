@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
-
+#include "playerviewstate.hpp"
 #include "world.hpp"
 #include "renderer.hpp"
 #include "packetparser.hpp"
@@ -18,6 +18,7 @@ class Engine
 
 	World world;
 
+	PlayerViewState viewstate;
 public:
 
 	World& getWorld();

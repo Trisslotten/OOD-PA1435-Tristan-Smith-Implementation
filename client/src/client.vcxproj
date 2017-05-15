@@ -125,6 +125,8 @@
     <ClCompile Include="mob.cpp" />
     <ClCompile Include="networking.cpp" />
     <ClCompile Include="packetparser.cpp" />
+    <ClCompile Include="playerviewstate.cpp" />
+    <ClCompile Include="playingviewstate.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="uielement.cpp" />
     <ClCompile Include="world.cpp" />
@@ -132,11 +134,15 @@
   <ItemGroup>
     <ClInclude Include="..\..\shared\definitions.hpp" />
     <ClInclude Include="engine.hpp" />
+    <ClInclude Include="inventoryviewstate.hpp" />
     <ClInclude Include="item.hpp" />
     <ClInclude Include="map.hpp" />
     <ClInclude Include="mob.hpp" />
     <ClInclude Include="networking.hpp" />
     <ClInclude Include="packetparser.hpp" />
+    <ClInclude Include="playerviewstate.hpp" />
+    <ClInclude Include="playingviewstate.hpp" />
+    <ClInclude Include="pointerviewstate.hpp" />
     <ClInclude Include="renderer.hpp" />
     <ClInclude Include="textlistener.hpp" />
     <ClInclude Include="uielement.hpp" />

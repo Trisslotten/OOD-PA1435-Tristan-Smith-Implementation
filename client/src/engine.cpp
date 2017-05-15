@@ -24,13 +24,15 @@ Engine::Engine()
 
 	auto packets = networking.connect("localhost", SERVER_PORT);
 	packet_parser.parse(packets, *this);
+	PlayingViewState state();
+	viewstate = state;
 }
 
 void Engine::update()
 {
 	
 	sf::Vector2i vel;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		vel.x += 1;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		vel.x -= 1;
@@ -54,8 +56,9 @@ void Engine::update()
 	{
 		//change view state
 		networking.sendDropItem(0);
-	}
+	}*/
 	
+	this->viewstate = viewstate.update(this);
 }
 
 void Engine::receive(sf::Time receive_time)

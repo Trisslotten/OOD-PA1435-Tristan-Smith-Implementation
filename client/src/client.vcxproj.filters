@@ -16,6 +16,9 @@
     <Filter Include="Source Files\network">
       <UniqueIdentifier>{7e921f31-35ca-4133-979b-32e95358bb4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\viewstates">
+      <UniqueIdentifier>{eb6bf1a1-47f4-44bb-a378-847417751a0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -47,6 +50,12 @@
     </ClCompile>
     <ClCompile Include="item.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="playingviewstate.cpp">
+      <Filter>Source Files\viewstates</Filter>
+    </ClCompile>
+    <ClCompile Include="playerviewstate.cpp">
+      <Filter>Source Files\viewstates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +91,18 @@
     </ClInclude>
     <ClInclude Include="item.hpp">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="playerviewstate.hpp">
+      <Filter>Source Files\viewstates</Filter>
+    </ClInclude>
+    <ClInclude Include="playingviewstate.hpp">
+      <Filter>Source Files\viewstates</Filter>
+    </ClInclude>
+    <ClInclude Include="pointerviewstate.hpp">
+      <Filter>Source Files\viewstates</Filter>
+    </ClInclude>
+    <ClInclude Include="inventoryviewstate.hpp">
+      <Filter>Source Files\viewstates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
