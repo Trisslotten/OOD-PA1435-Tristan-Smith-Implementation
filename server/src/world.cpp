@@ -39,13 +39,19 @@ void World::init()
 	this->items_on_ground[newid] = Item(newid, "Frostmourne", "oh shieet", 'F', sf::Vector2i(5, 8), QUALITY_LEGENDARY);
 }
 
+void World::update()
+{
+	for (auto&& map_elem : players)
+	{
+		map_elem.second.update();
+	}
+}
+
 void World::movePlayer(ID mob_id, sf::Vector2i vel)
 {
 	if (players.count(mob_id) > 0)
 	{
-		sf::Vector2i pos = players[mob_id].getPos();
-		pos += vel;
-		players[mob_id].setPos(pos);
+		players[mob_id].setVel(vel);
 	}
 }
 

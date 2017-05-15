@@ -26,6 +26,8 @@ public:
 
 	void init();
 
+	void update();
+
 	Map& getMap()
 	{
 		return map;

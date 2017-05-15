@@ -11,6 +11,7 @@ void Server::init()
 void Server::update()
 {
 	networking.sendSnapshot(world);
+	world.update();
 }
 
 void Server::receive(sf::Time receive_time)
