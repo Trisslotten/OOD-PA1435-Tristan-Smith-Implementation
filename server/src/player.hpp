@@ -13,5 +13,7 @@ public:
 	void removeItem(ID item_id);
 	void addItem(Item item);
 	Item getItemById(ID id);
+
+	inline std::unordered_map<ID, Item> getInventory() { return inventory; }
 	Player(ID id);
 };

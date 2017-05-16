@@ -7,6 +7,7 @@
 
 #include "renderer.hpp"
 #include "map.hpp"
+#include "item.hpp"
 
 class World
 {
@@ -15,10 +16,10 @@ class World
 
 	// players and npcs
 	std::unordered_map<ID, Mob> mobs;
-
+	std::unordered_map<ID, Item> items;
 	ID player_id;
 
-
+	std::vector<Item> latest_inventory;
 
 public:
 
@@ -35,4 +36,9 @@ public:
 	void removeMob(ID mob_id);
 	void moveMob(ID mob_id, sf::Vector2i vel);
 	void setMobPos(ID mob_id, sf::Vector2i pos);
+	void addItem(Item item);
+	void removeItem(ID id);
+
+	void setLatestInventory(std::vector<Item> inv) { latest_inventory = inv; }
+	std::vector<Item> getLatestInventory() { return latest_inventory; }
 };

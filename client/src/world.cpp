@@ -10,6 +10,11 @@ void World::render(Renderer & renderer)
 
 	map.render(renderer, offset);
 
+	for (auto&& map_elem : items)
+	{
+		Item item = map_elem.second;
+		renderer.drawChar(item.getPos() - offset, item.getSymbol(), item.getColor());
+	}
 	for (auto&& map_elem : mobs)
 	{
 		Mob mob = map_elem.second;
@@ -29,6 +34,12 @@ void World::addMob(ID mob_id, sf::Vector2i pos)
 	mob.setSymbol('@');
 	mob.setColor(sf::Color::White);
 	mobs[mob_id] = mob;
+}
+
+void World::addItem(Item item)
+{
+	int id = item.getItemId();
+	items[id] = item;
 }
 
 void World::removeMob(ID mob_id)
@@ -52,5 +63,13 @@ void World::setMobPos(ID mob_id, sf::Vector2i pos)
 	if (mobs.count(mob_id) > 0)
 	{
 		mobs[mob_id].setPos(pos);
+	}
+}
+
+void World::removeItem(ID id)
+{
+	if (items.count(id) > 0)
+	{
+		items.erase(id);
 	}
 }

@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
-
+#include "playerviewstate.hpp"
 #include "world.hpp"
 #include "renderer.hpp"
 #include "packetparser.hpp"
@@ -18,18 +18,25 @@ class Engine
 
 	World world;
 
+	std::shared_ptr<PlayerViewState> viewstate;
+
+	std::vector<Item> item;
 public:
 
 	World& getWorld();
 	Networking& getNetworking();
 	const Renderer& getRenderer() const;
+	std::shared_ptr<PlayerViewState> getViewState();
 
 	Engine();
+
+	void windowEvent(sf::Event event);
 
 	void update();
 
 	void receive(sf::Time receive_time);
 
 	void render(sf::RenderTarget& target);
+
 
 };

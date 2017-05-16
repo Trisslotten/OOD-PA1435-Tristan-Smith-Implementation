@@ -32,8 +32,12 @@ public:
 
 	void sendAddMob(ID mob_id, World& world);
 
+	void sendMap(const Map& map, Client client);
+
 	void sendAddItem();
+
 	void sendDropItem(Item item);
+	void sendGroundItem(Item item, Client client);
 
 	void sendWorldState(World& world, Client client);
 
@@ -44,4 +48,9 @@ public:
 
 	ID mobIDFromClientID(ID client_id);
 
+	void sendRemoveItemFromGround(ID id);
+
+	void sendPickupProgress(bool success, ID client_id, std::string name);
+	
+	void sendInventory(Player player, ID client_id);
 };

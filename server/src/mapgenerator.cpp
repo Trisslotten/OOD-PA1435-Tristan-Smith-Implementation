@@ -14,7 +14,7 @@ void TestGenerator::generateMap(Map & map)
 	{
 		for (int x = 0; x < map.getWidth(); x++)
 		{
-
+			/*
 			if (x >= 3 && map.getWidth() - x - 1 >= 3 && y >= 3 && map.getWidth() - y - 1 >= 3)
 			{
 				if (x == 3 || map.getWidth() - x - 1 == 3 || y == 3 || map.getHeight() - y - 1 == 3)
@@ -30,6 +30,9 @@ void TestGenerator::generateMap(Map & map)
 			{
 				map.setTileAt(x, y, TILE_NOTHING);
 			}
+			*/
+			sf::Int8 asd = (sf::Int8)rand() % NUM_TILES;
+			map.setTileAt(x, y, (Tile)asd);
 		}
 	}
 

@@ -26,6 +26,13 @@ public:
 
 	void init();
 
+	void update();
+
+	Map& getMap()
+	{
+		return map;
+	}
+
 	void movePlayer(ID mob_id, sf::Vector2i vel);
 
 	ID createPlayer();
@@ -39,4 +46,12 @@ public:
 	void serializeSnapshot(sf::Packet& to_append);
 
 	Player* getPlayerById(ID id);
+
+	inline std::unordered_map<ID, Item> getItems() { return items_on_ground; }
+
+	void pickupItemFromGround(Player* player, ID item_id);
+
+	inline Item getItemById(ID id) { return items_on_ground[id]; }
+
+	ID getItemAtPos(sf::Vector2i pos);
 };

@@ -15,11 +15,17 @@ protected:
 	sf::Color color;
 	int health, max_health;
 
+	
+	sf::Clock walk_timer;
 	sf::Vector2i pos;
+	sf::Vector2i vel;
+	sf::Vector2i prev_vel;
 public:
 
 	Mob(ID _id);
 	Mob() {}
+
+	void update();
 
 	inline ID getID() const
 	{
@@ -84,5 +90,9 @@ public:
 	inline void setPos(sf::Vector2i p)
 	{
 		pos = p;
+	}
+	inline void setVel(sf::Vector2i v)
+	{
+		vel = v;
 	}
 };

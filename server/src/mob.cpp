@@ -11,3 +11,25 @@ Mob::Mob(ID id)
 	this->pos = sf::Vector2i(1, 1);
 	this->symbol = '#';
 }
+
+
+void Mob::update()
+{
+	pos += vel;
+	vel = sf::Vector2i();
+
+	/*
+	if (prev_vel.x == 0 && prev_vel.y == 0)
+	{
+		walk_timer.restart();
+	}
+
+	sf::Time t = walk_timer.getElapsedTime();
+	prev_vel = vel;
+	if (t < sf::seconds(0.01) || t > sf::seconds(0.2))
+	{
+		pos += vel;
+		vel = sf::Vector2i();
+	}
+	*/
+}

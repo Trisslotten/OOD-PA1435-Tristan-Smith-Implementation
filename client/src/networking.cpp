@@ -5,6 +5,7 @@
 #include <iostream>
 
 
+
 sf::Socket::Status Networking::receiveTimeout(sf::Packet & packet, sf::IpAddress & ip, Port & port, sf::Time timeout)
 {
 	sf::SocketSelector selector;
@@ -48,8 +49,11 @@ std::shared_ptr<std::vector<sf::Packet>> Networking::connect(sf::IpAddress _serv
 	auto packets = std::make_shared<std::vector<sf::Packet>>();
 	unsigned int num_packets = 0;
 
-	// possibly wrong: could receive snapshot or other non init packets because of udp, works for now :^)
-	while(num_packets < WORLD_STATE_PACKET_COUNT)
+	sf::Clock timer;
+	timer.restart();
+
+	// really bad hack, hope that all packet arrive in time...
+	while (timer.getElapsedTime() < sf::seconds(5));
 	{
 		sf::Packet packet;
 		sf::IpAddress address;
@@ -121,8 +125,29 @@ std::shared_ptr<std::vector<sf::Packet>> Networking::receive(sf::Time receive_ti
 void Networking::testMove(sf::Vector2i vel)
 {
 	sf::Packet packet;
-	packet << PROGRAM_ID << TS_DEBUG_MOVE;
+	packet << PROGRAM_ID << TS_MOVE_PLAYER;
 	packet << client_id << vel.x << vel.y;
 	std::cout << "SENDING: test move: " << vel.x << " " << vel.y << std::endl;
+	send(packet);
+}
+
+void Networking::sendPickup()
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TS_PICKUP_ITEM << client_id;
+	send(packet);
+}
+
+void Networking::sendRequestInventory()
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TS_REQUEST_INVENTORY << client_id;
+	send(packet);
+}
+
+void Networking::sendDropItem(ID item_id)
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TS_DROP_ITEM << client_id << item_id;
 	send(packet);
 }

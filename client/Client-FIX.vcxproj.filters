@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Source Files\viewstates">
+      <UniqueIdentifier>{eb6bf1a1-47f4-44bb-a378-847417751a0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\engine.cpp">
@@ -42,6 +45,21 @@
     <ClCompile Include="src\world.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="playingviewstate.cpp">
+      <Filter>Source Files\viewstates</Filter>
+    </ClCompile>
+    <ClCompile Include="inventoryviewstate.cpp">
+      <Filter>Source Files\viewstates</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pointerviewstate.cpp">
+      <Filter>Source Files\viewstates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine.hpp">
@@ -70,6 +88,24 @@
     </ClInclude>
     <ClInclude Include="src\world.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="item.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="playerviewstate.hpp">
+      <Filter>Source Files\viewstates</Filter>
+    </ClInclude>
+    <ClInclude Include="playingviewstate.hpp">
+      <Filter>Source Files\viewstates</Filter>
+    </ClInclude>
+    <ClInclude Include="pointerviewstate.hpp">
+      <Filter>Source Files\viewstates</Filter>
+    </ClInclude>
+    <ClInclude Include="inventoryviewstate.hpp">
+      <Filter>Source Files\viewstates</Filter>
+    </ClInclude>
+    <ClInclude Include="input.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

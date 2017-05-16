@@ -37,8 +37,29 @@ void PacketParser::parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engin
 		case TC_WORLD_STATE:
 			parseWorldState(packet, engine);
 			break;
+		case TC_MAP_SIZE:
+			parseMapSize(packet, engine);
+			break;
+		case TC_MAP_CHUNK:
+			parseMapChunk(packet, engine);
+			break;
 		case TC_DEBUG_SET_POS:
 			debugMove(packet, engine);
+			break;
+		case TC_DROP_ITEM:
+			dropItem(packet, engine);
+			break;
+		case TC_REMOVE_ITEM:
+			removeItem(packet, engine);
+			break;
+		case TC_PICKUP_SUCCESS:
+			pickupSuccess(packet, engine);
+			break;
+		case TC_PICKUP_FAILED:
+			pickupFailed(packet, engine);
+			break;
+		case TC_INVENTORY:
+			receiveInventory(packet, engine);
 			break;
 		default:
 			// error message?
@@ -102,18 +123,27 @@ void PacketParser::parseWorldState(sf::Packet packet, Engine & engine)
 
 		//std::cout << "Adding mob:\n\tmob_id: " << mob_id << "\n\tpos: " << pos.x << ", " << pos.y << "\n";
 	}
+}
 
-	Map& map = engine.getWorld().getMap();
-	int width, height;
-	packet >> width >> height;
-	map.setSize(width, height);
-	for (int i = 0; i < height; i++)
+void PacketParser::parseMapSize(sf::Packet packet, Engine & engine)
+{
+	int width, height, chunk_size;
+	packet >> width >> height >> chunk_size;
+	engine.getWorld().getMap().setSize(width, height);
+}
+
+void PacketParser::parseMapChunk(sf::Packet packet, Engine & engine)
+{
+	std::cout << "RECEIVE: map chunk\n";
+	int x_start, x_end, y_start, y_end;
+	packet >> x_start >> x_end >> y_start >> y_end;
+	for (int y = y_start; y < y_end; y++)
 	{
-		for (int j = 0; j < width; j++)
+		for (int x = x_start; x < x_end; x++)
 		{
-			Tile t;
-			packet >> (sf::Int8&)t;
-			map.setTileAt(j, i, t);
+			sf::Int8 tile;
+			packet >> tile;
+			engine.getWorld().getMap().setTileAt(x, y, (Tile)tile);
 		}
 	}
 }
@@ -121,4 +151,51 @@ void PacketParser::parseWorldState(sf::Packet packet, Engine & engine)
 void PacketParser::serverShutdown(Engine & engine)
 {
 	// show disconnect message or something
+}
+
+void PacketParser::dropItem(sf::Packet packet, Engine & engine)
+{
+	ID id; std::string name; std::string description; int isymbol; unsigned int x; unsigned int y; sf::Uint8 r, g, b, a;
+	packet >> id >> name >> description >> isymbol >> x >> y >> r >> g >> b >> a;
+	char symbol = (char)isymbol;
+
+	Item new_item(id, name, description, symbol, sf::Vector2i(x,y),sf::Color(r,g,b,a));
+	engine.getWorld().addItem(new_item);
+	std::cout << "RECEIVE: dropped item name: " << name << ", x: "<< x << ", y:" << y << ", r:" << r << ", g:" << g << ", b:" << b << "\n";
+}
+
+void PacketParser::removeItem(sf::Packet packet, Engine& engine)
+{
+	ID id;
+	packet >> id;
+	engine.getWorld().removeItem(id);
+}
+
+void PacketParser::pickupSuccess(sf::Packet packet, Engine& engine)
+{
+	std::string name;
+	packet >> name;
+	std::cout << "Succesfully picked up item: " << name << "\n";
+}
+
+void PacketParser::pickupFailed(sf::Packet packet, Engine& engine)
+{
+	std::cout << "Failed to pick up item" << "\n";
+}
+
+void PacketParser::receiveInventory(sf::Packet packet, Engine& engine)
+{
+	size_t count;
+	packet >> count;
+	std::vector<Item> inventory;
+	for (int i = 0; i < count; i++)
+	{
+		std::string name, description; ID id; sf::Uint8 symbol;
+		packet >> id >> name >> description >> symbol;
+		Item inv_item(id, name, description, (char)symbol, sf::Vector2i(0, 0), sf::Color(255, 255, 255, 255));
+		inventory.push_back(inv_item);
+		//debug
+		//std::cout << "id: " << id << ", name: " << name << ", description: " << description << "\n";
+	}
+	engine.getWorld().setLatestInventory(inventory);
 }

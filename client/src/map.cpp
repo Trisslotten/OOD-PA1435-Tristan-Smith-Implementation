@@ -12,22 +12,27 @@ void Map::setSize(int _width, int _height)
 
 void Map::render(Renderer & renderer, sf::Vector2i offset)
 {
-	for (int i = 0; i < width*height; i++)
-	{
-		int x = i % width;
-		int y = i / width;
-		char symbol = 0;
-		switch (tiles[i])
+	sf::Vector2i size = renderer.getScreenSizeTiles();
+
+	sf::Vector2i start = offset;
+	sf::Vector2i end = offset + size;
+
+	for(int y = start.y; y < end.y; y++) {
+		for (int x = start.x; x < end.x; x++)
 		{
-		case TILE_GROUND:
-			symbol = '.';
-			break;
-		case TILE_WALL:
-			symbol = '#';
-			break;
+			char symbol = 0;
+			switch (tileAt(x, y))
+			{
+			case TILE_GROUND:
+				symbol = '.';
+				break;
+			case TILE_WALL:
+				symbol = '#';
+				break;
+			}
+			sf::Vector2i pos(x, y);
+			renderer.drawChar(pos - offset, symbol, sf::Color(125, 125, 125));
 		}
-		sf::Vector2i pos(x, y);
-		renderer.drawChar(pos - offset, symbol, sf::Color(125,125,125));
 	}
 }
 
@@ -46,6 +51,23 @@ Tile Map::tileAt(int x, int y)
 	{
 		return tiles[x + y*width];
 	}
+}
+
+bool Map::isWallAt(int x, int y)
+{
+	Tile t = tileAt(x, y);
+	if (t == TILE_WALL)
+		return true;
+	else
+		return false;
+}
+bool Map::isGroundAt(int x, int y)
+{
+	Tile t = tileAt(x, y);
+	if (t == TILE_GROUND)
+		return true;
+	else
+		return false;
 }
 
 void Map::setTileAt(sf::Vector2i pos, Tile tile)
