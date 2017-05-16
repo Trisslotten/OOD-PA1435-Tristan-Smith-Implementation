@@ -20,6 +20,8 @@ class PacketParser
 	void pickupItem(Packet& packet, Networking& networking, World& world);
 	void requestInventory(Packet& packet, Networking& networking, World& world);
 	void requestDescriptions(Packet& packet, Networking& networking, World& world);
+	void equipItem(Packet& packet, Networking& networking, World& world);
+	void requestEquipped(Packet& packet, Networking& networking, World& world);
 public:
 
 	void parse(std::shared_ptr<std::vector<Packet>> packets, Networking& networking, World& world);

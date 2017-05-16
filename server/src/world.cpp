@@ -46,12 +46,20 @@ void World::init()
 	*/
 	//test items
 	ID newid = this->item_ids.newID();
-	this->items_on_ground[newid] = Item(newid, "The Crazy Thing", "The craziest thing", 'T', sf::Vector2i(7, 7), QUALITY_EPIC);
+	this->items_on_ground[newid] = Item(newid, "The Crazy Thing", "The craziest thing", 'T', sf::Vector2i(7, 7), QUALITY_EPIC,10);
 	
 	for (int i = 0; i < 80; i++)
 	{
 		newid = this->item_ids.newID();
-		this->items_on_ground[newid] = Item(newid, "Frostmourne " + std::to_string(i) , "oh shieet", 'F', sf::Vector2i(5, 8), QUALITY_LEGENDARY);
+		this->items_on_ground[newid] = Item(newid, "Frostmourne " + std::to_string(i) , "oh shieet", 'F', sf::Vector2i(5, 8), QUALITY_LEGENDARY,20);
+	}
+	for (int x = 0; x < 5; x++)
+	{
+		for (int y = 0; y < 5; y++)
+		{
+			newid = this->mob_ids.newID();
+			this->npcs[newid] = Mob(newid, "Test monster " + std::to_string(x + y), "The craziest boy", sf::Vector2i(-5+x, -5+y), 100, 100);
+		}
 	}
 }
 
@@ -138,13 +146,20 @@ void World::removePlayer(ID mob_id)
 // append map and mob data to packet
 void World::serializeWorldState(sf::Packet& to_append)
 {	// maybe split into different functions for each list (players, npcs, tiles etc)
-	to_append << players.size();
+	to_append << players.size()+npcs.size();
 	for (auto&& map_elem : players)
 	{
 		Mob p = map_elem.second;
 		sf::Vector2i pos = p.getPos();
 		//std::cout << "Appending id: " << map_elem.second.getID() << "\n";
-		to_append << p.getID() << pos.x << pos.y;
+		to_append << p.getID() << pos.x << pos.y << p.getSymbol();
+	}
+	for (auto&& map_elem : npcs)
+	{
+		Mob p = map_elem.second;
+		sf::Vector2i pos = p.getPos();
+		//std::cout << "Appending id: " << map_elem.second.getID() << "\n";
+		to_append << p.getID() << pos.x << pos.y << p.getSymbol();
 	}
 }
 
@@ -196,4 +211,17 @@ void World::pickupItemFromGround(Player* player, ID item_id)
 		player->addItem(items_on_ground[item_id]);
 		items_on_ground.erase(item_id);
 	}
+}
+
+Mob* World::getMobAt(sf::Vector2i pos)
+{
+	Mob* returnmob = nullptr;
+	for (auto&& map_elem : this->npcs)
+	{
+		if (map_elem.second.getPos() == pos)
+		{
+			return &map_elem.second;
+		}
+	}
+	return returnmob;
 }

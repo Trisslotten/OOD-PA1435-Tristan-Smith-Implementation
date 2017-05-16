@@ -56,4 +56,8 @@ public:
 	void sendInventory(Player player, ID client_id);
 
 	void sendDescriptions(World& world, sf::Vector2i pos, ID client_id);
+
+	void sendEquipped(Player player, ID client_id);
+
+	void sendRemoveMob(ID mob_id);
 };

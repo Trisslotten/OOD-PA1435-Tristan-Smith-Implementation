@@ -47,4 +47,8 @@ public:
 	void sendRequestDescriptions(sf::Vector2i pos);
 
 	void sendDropItem(ID item_id);
+
+	void sendEquipItem(ID item_id);
+
+	void sendRequestEquipped();
 };

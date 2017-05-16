@@ -24,6 +24,7 @@ public:
 
 	Mob(ID _id);
 	Mob() {}
+	Mob(ID id,std::string name,std::string description, sf::Vector2i pos, int health, int max_health);
 
 	void update();
 
@@ -94,5 +95,9 @@ public:
 	inline void setVel(sf::Vector2i v)
 	{
 		vel = v;
+	}
+	inline void attack(unsigned int damage)
+	{
+		this->health -= damage;
 	}
 };

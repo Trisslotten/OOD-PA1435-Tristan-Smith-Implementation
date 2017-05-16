@@ -8,6 +8,10 @@ Player::Player(ID id) : Mob(id)
 void Player::removeItem(ID id)
 {
 	inventory.erase(id);
+	if (id == this->equipID)
+	{
+		equipID = ID_NOT_FOUND;
+	}
 }
 
 void Player::addItem(Item item)

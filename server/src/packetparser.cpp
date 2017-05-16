@@ -35,6 +35,10 @@ void PacketParser::parse(std::shared_ptr<std::vector<Packet>> packets, Networkin
 			break;
 		case TS_REQUEST_DESCRIPTIONS:
 			requestDescriptions(p, networking, world);
+		case TS_EQUIP_ITEM:
+			equipItem(p, networking, world);
+		case TS_REQUEST_EQUIPPED:
+			requestEquipped(p, networking, world);
 			break;
 		default:
 			std::cerr << "ERROR: unknown packet action\n";
@@ -84,7 +88,32 @@ void PacketParser::parseMovePlayer(Packet & packet, Networking & networking, Wor
 	{
 		auto pos = world.getPlayerById(mob_id)->getPos();
 		if (!world.getMap().isWallAt(pos + vel))
-			world.movePlayer(mob_id, vel);
+		{
+			Mob* enemy = world.getMobAt(pos+vel);
+			if (enemy != nullptr)
+			{
+				Player* player = world.getPlayerById(mob_id);
+				ID equipped = player->getEquipped();
+				int damage = 1; //default fist damage
+				if (equipped != ID_NOT_FOUND)
+				{
+					damage = player->getInventory()[player->getEquipped()].getDamage();
+				}
+				enemy->attack(damage);
+				if (enemy->getHealth() <= 0)
+				{
+					ID removeid = enemy->getID();
+					networking.sendRemoveMob(removeid);
+					world.removeMob(removeid);
+				}
+			}
+			else
+			{
+				world.movePlayer(mob_id, vel);
+			}
+		}
+			
+
 	}
 }
 
@@ -105,6 +134,7 @@ void PacketParser::dropItem(Packet& packet, Networking & networking, World & wor
 			player->removeItem(item_id);
 			world.placeItemOnGround(theitem);
 			networking.sendDropItem(theitem);
+			networking.sendEquipped(*player, client_id);
 		}
 	}
 }
@@ -153,4 +183,33 @@ void PacketParser::requestDescriptions(Packet & packet, Networking & networking,
 	sf::Vector2i pos;
 	packet.packet >> pos.x >> pos.y;
 	networking.sendDescriptions(world, pos, client_id);
+}
+
+void PacketParser::equipItem(Packet& packet, Networking& networking, World& world)
+{
+	ID client_id;
+	ID item_id;
+	packet.packet >> client_id >> item_id;
+	ID mob_id = networking.mobIDFromClientID(client_id);
+	if (mob_id != ID_NOT_FOUND)
+	{
+		Player* player = world.getPlayerById(mob_id);
+		if (player->getInventory().count(item_id) > 0)
+		{
+			player->equip(item_id);
+			networking.sendEquipped(*player, client_id);
+		}
+	}
+}
+
+void PacketParser::requestEquipped(Packet& packet, Networking& networking, World& world)
+{
+	ID client_id;
+	packet.packet >> client_id;
+	ID mob_id = networking.mobIDFromClientID(client_id);
+	if (mob_id != ID_NOT_FOUND)
+	{
+		Player* player = world.getPlayerById(mob_id);
+		networking.sendEquipped(*player, client_id);
+	}
 }

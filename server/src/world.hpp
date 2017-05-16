@@ -56,4 +56,8 @@ public:
 	inline Item getItemById(ID id) { return items_on_ground[id]; }
 
 	ID getItemAtPos(sf::Vector2i pos);
+
+	Mob* getMobAt(sf::Vector2i pos);
+
+	void removeMob(ID id) { this->npcs.erase(id); }
 };

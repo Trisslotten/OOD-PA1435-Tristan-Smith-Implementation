@@ -30,6 +30,7 @@ class PacketParser
 	void pickupFailed(sf::Packet packet, Engine& engine);
 	void receiveInventory(sf::Packet packet, Engine& engine);
 	void parseDescriptions(sf::Packet packet, Engine& engine);
+	void receiveEquipped(sf::Packet packet, Engine& engine);
 public:
 
 	void parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engine & engine);

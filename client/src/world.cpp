@@ -41,6 +41,16 @@ void World::addMob(ID mob_id, sf::Vector2i pos)
 	mobs[mob_id] = mob;
 }
 
+void World::addMob(ID mob_id, sf::Vector2i pos, char symbol)
+{
+	Mob mob;
+	mob.setID(mob_id);
+	mob.setPos(pos);
+	mob.setSymbol(symbol);
+	mob.setColor(sf::Color::White);
+	mobs[mob_id] = mob;
+}
+
 void World::addItem(Item item)
 {
 	int id = item.getItemId();
@@ -76,5 +86,16 @@ void World::removeItem(ID id)
 	if (items.count(id) > 0)
 	{
 		items.erase(id);
+	}
+}
+
+Item World::getInventoryItemByID(ID id)
+{
+	for (int i = 0; i < this->latest_inventory.size(); i++)
+	{
+		if (latest_inventory[i].getItemId() == id)
+		{
+			return latest_inventory[i];
+		}
 	}
 }

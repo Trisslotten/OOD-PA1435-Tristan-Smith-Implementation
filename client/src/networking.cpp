@@ -159,3 +159,17 @@ void Networking::sendDropItem(ID item_id)
 	packet << PROGRAM_ID << TS_DROP_ITEM << client_id << item_id;
 	send(packet);
 }
+
+void Networking::sendEquipItem(ID item_id)
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TS_EQUIP_ITEM << client_id << item_id;
+	send(packet);
+}
+
+void Networking::sendRequestEquipped()
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TS_REQUEST_EQUIPPED << client_id;
+	send(packet);
+}

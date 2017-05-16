@@ -64,6 +64,9 @@ void PacketParser::parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engin
 		case TC_DESCRIPTIONS:
 			parseDescriptions(packet, engine);
 			break;
+		case TC_EQUIPPED:
+			receiveEquipped(packet, engine);
+			break;
 		default:
 			// error message?
 			break;
@@ -100,7 +103,7 @@ void PacketParser::addMob(sf::Packet packet, Engine & engine)
 {
 	ID mob_id;
 	packet >> mob_id;
-	engine.getWorld().addMob(mob_id, sf::Vector2i());
+	engine.getWorld().addMob(mob_id, sf::Vector2i(0,0));
 	std::cout << "Adding mob:\n\tmob_id: " << mob_id << "\n\tpos: " << 0 << ", " << 0 << "\n";
 }
 
@@ -120,9 +123,11 @@ void PacketParser::parseWorldState(sf::Packet packet, Engine & engine)
 	{
 		ID mob_id;
 		sf::Vector2i pos;
+		int symbol;
 		packet >> mob_id;
 		packet >> pos.x >> pos.y;
-		engine.getWorld().addMob(mob_id, pos);
+		packet >> symbol;
+		engine.getWorld().addMob(mob_id, pos, (char)symbol);
 
 		//std::cout << "Adding mob:\n\tmob_id: " << mob_id << "\n\tpos: " << pos.x << ", " << pos.y << "\n";
 	}
@@ -193,9 +198,9 @@ void PacketParser::receiveInventory(sf::Packet packet, Engine& engine)
 	std::vector<Item> inventory;
 	for (int i = 0; i < count; i++)
 	{
-		std::string name, description; ID id; sf::Uint8 symbol;
-		packet >> id >> name >> description >> symbol;
-		Item inv_item(id, name, description, (char)symbol, sf::Vector2i(0, 0), sf::Color(255, 255, 255, 255));
+		std::string name, description; ID id; sf::Uint8 symbol, r, g, b, a; unsigned int damage = 0;
+		packet >> id >> name >> description >> symbol >> r >> g >> b >> a >> damage;
+		Item inv_item(id, name, description, (char)symbol, sf::Vector2i(0, 0), sf::Color(r, g, b, a), damage);
 		inventory.push_back(inv_item);
 		//debug
 		//std::cout << "id: " << id << ", name: " << name << ", description: " << description << "\n";
@@ -208,4 +213,11 @@ void PacketParser::parseDescriptions(sf::Packet packet, Engine & engine)
 	std::string descs;
 	packet >> descs;
 	engine.getWorld().setLatestDescriptions(descs);
+}
+
+void PacketParser::receiveEquipped(sf::Packet packet, Engine& engine)
+{
+	ID equipped;
+	packet >> equipped;
+	engine.getWorld().setLatestEquipped(equipped);
 }
