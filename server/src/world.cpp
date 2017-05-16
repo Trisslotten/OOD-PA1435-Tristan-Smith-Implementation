@@ -123,7 +123,8 @@ void World::movePlayer(ID mob_id, sf::Vector2i vel)
 {
 	if (players.count(mob_id) > 0)
 	{
-		players[mob_id].setVel(vel);
+		if (!getMap().isWallAt(players[mob_id].getPos() + vel))
+			players[mob_id].setVel(vel);
 	}
 }
 
@@ -178,9 +179,9 @@ void World::serializeSnapshot(sf::Packet & to_append)
 Player* World::getPlayerById(ID id)
 {
 	if (players.count(id) > 0)
-	{
 		return &players[id];
-	}
+	else
+		return nullptr;
 }
 
 void World::placeItemOnGround(Item item)

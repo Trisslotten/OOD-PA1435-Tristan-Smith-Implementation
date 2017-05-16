@@ -72,7 +72,7 @@ void InventoryViewState::render(World& world, Renderer& renderer)
 	sf::Vector2i size = renderer.getScreenSizeTiles();
 
 	std::vector<Item> inv = world.getLatestInventory();
-	int maxpages = (inv.size() / 30)+1;
+	int maxpages = ((int)inv.size() / 30)+1;
 	std::string title = "INVENTORY (PAGE " + std::to_string(page+1) + "/" + std::to_string(maxpages) + ")";
 	renderer.drawString(1, 1, title, sf::Color(255,255,255,255));
 	for (int i = page*30; i < inv.size() && i < 30*page+30; i++)

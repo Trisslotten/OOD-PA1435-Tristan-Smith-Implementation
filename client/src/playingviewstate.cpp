@@ -29,7 +29,7 @@ std::shared_ptr<PlayerViewState> PlayingViewState::update(Engine& engine)
 	
 	*/
 
-	sf::Time walk_wait = sf::seconds(0.2);
+	sf::Time walk_wait = sf::seconds((float)0.2);
 	bool waited = walk_timer.getElapsedTime() > walk_wait;
 	if((
 		key::pressed(sf::Keyboard::Left) 

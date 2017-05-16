@@ -28,7 +28,8 @@ public:
 	const Renderer& getRenderer() const;
 	std::shared_ptr<PlayerViewState> getViewState();
 
-	Engine();
+	Engine(sf::IpAddress ip, Port port);
+	Engine() = delete;
 
 	void windowEvent(sf::Event event);
 
