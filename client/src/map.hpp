@@ -21,6 +21,9 @@ public:
 
 	Tile tileAt(sf::Vector2i pos);
 	Tile tileAt(int x, int y);
+	bool isWallAt(int x, int y);
+	bool isGroundAt(int x, int y);
+
 
 	void setTileAt(sf::Vector2i pos, Tile tile);
 	void setTileAt(int x, int y, Tile tile);

@@ -52,6 +52,38 @@ void Map::serializeChunk(sf::Packet & to_append, int x_start, int x_end, int y_s
 		}
 	}
 }
+bool Map::isWallAt(int x, int y)
+{
+	sf::Int8 t = tileAt(x, y);
+	if (t == TILE_WALL)
+		return true;
+	else
+		return false;
+}
+bool Map::isGroundAt(int x, int y)
+{
+	sf::Int8 t = tileAt(x, y);
+	if (t == TILE_GROUND)
+		return true;
+	else
+		return false;
+}
+bool Map::isWallAt(sf::Vector2i pos)
+{
+	sf::Int8 t = tileAt(pos);
+	if (t == TILE_WALL)
+		return true;
+	else
+		return false;
+}
+bool Map::isGroundAt(sf::Vector2i pos)
+{
+	sf::Int8 t = tileAt(pos);
+	if (t == TILE_GROUND)
+		return true;
+	else
+		return false;
+}
 
 /*
 void Map::serialize(sf::Packet & to_append)

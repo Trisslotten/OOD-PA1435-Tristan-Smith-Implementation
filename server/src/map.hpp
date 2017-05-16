@@ -17,6 +17,11 @@ public:
 
 	sf::Int8 tileAt(sf::Vector2i pos) const;
 	sf::Int8 tileAt(int x, int y) const;
+	bool isWallAt(int x, int y);
+	bool isGroundAt(int x, int y);
+	bool isWallAt(sf::Vector2i pos);
+	bool isGroundAt(sf::Vector2i pos);
+
 
 	void setTileAt(sf::Vector2i pos, Tile tile);
 	void setTileAt(int x, int y, Tile tile);
