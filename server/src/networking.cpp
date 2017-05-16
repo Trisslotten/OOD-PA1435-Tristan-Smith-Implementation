@@ -7,6 +7,7 @@
 
 #include "../../shared/definitions.hpp"
 #include "world.hpp"
+#include <iostream>
 
 void Networking::send(sf::Packet packet, Client client)
 {
@@ -87,6 +88,8 @@ void Networking::sendAddMob(ID mob_id, World & world)
 {
 	sf::Packet packet;
 	packet << PROGRAM_ID << TC_ADD_MOB << mob_id;
+	sf::Vector2i spawn_pos = world.getSpawnPos();
+	packet << spawn_pos.x << spawn_pos.y;
 	for (auto&& map_elem : clients)
 	{
 		send(packet, map_elem.second);

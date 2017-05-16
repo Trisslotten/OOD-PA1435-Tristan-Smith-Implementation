@@ -34,6 +34,8 @@ public:
 		return map;
 	}
 
+	sf::Vector2i getSpawnPos();
+
 	std::string getDescriptions(sf::Vector2i pos);
 
 	void movePlayer(ID mob_id, sf::Vector2i vel);

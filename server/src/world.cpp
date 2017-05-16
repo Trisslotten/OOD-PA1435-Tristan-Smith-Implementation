@@ -71,6 +71,22 @@ void World::update()
 	}
 }
 
+sf::Vector2i World::getSpawnPos()
+{
+	for (int i = 0; i < map.getHeight(); i++)
+	{
+		for (int j = 0; j < map.getWidth(); j++)
+		{
+			sf::Int8 t = map.tileAt(j, i);
+			if (t == TILE_STAIRS_DOWN)
+			{
+				return sf::Vector2i(j, i);
+			}
+		}
+	}
+	return sf::Vector2i(0,0);
+}
+
 std::string World::getDescriptions(sf::Vector2i pos)
 {
 	std::string result;
@@ -133,6 +149,7 @@ ID World::createPlayer()
 	ID new_id = mob_ids.newID();
 
 	Player new_player(new_id);
+	new_player.setPos(getSpawnPos());
 
 	players[new_id] = new_player;
 	return new_id;
