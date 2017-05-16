@@ -36,7 +36,7 @@ private:
 	const int weapons = 11;
 	//tmp
 	std::string mobTypes[12] = {"Rat","Dingo","Kobold","Hobo","Goblin","Orc","Ogre","Basilisk","Minotaur","Giant","Dragon","Hans the pelvis crusher"};
-	std::string mobDesc[12] = {"A larger than usual rat","A wild dog","A small lizard-like creature","Small, green, annoying","A green humanoid, when it is not pillaging villages it works out at the local gym","It is very large and very angry", "A large crocodile-looking lizard, beware it gaze! No wait, that feature is not implemented", "50% human, 50% cow, 100% will kick your ass", "A giant humanoid, you question how he got this far down into the dungon","A large(r) lizard, with wings, and fangs","The crusher of pelvises worldwide. Prepare to enter the ring of pain, brother!"};
+	std::string mobDesc[12] = {"A larger than usual rat","A wild dog","A small lizard-like creature","A homeless person wearing rags","Small, green, annoying","A green humanoid, when it is not pillaging villages it works out at the local gym","It is very large and very angry", "A large crocodile-looking lizard, beware it gaze! No wait, that feature is not implemented", "50% human, 50% cow, 100% will kick your ass", "A giant humanoid, you question how he got this far down into the dungon","A large(r) lizard, with wings, and fangs","The crusher of pelvises worldwide. Prepare to enter the ring of pain, brother!"};
 	int mobHealth[12] = { 5,10,15,20,25,30,50,35,75,150,500,5000 };
 	int mobAttack[12] = { 1,1,2,2,2,3,5,7,8,10,20,50 };
 	char mobChar[12] = {'R','d','K','h','G','o','O','B','M','G','D','H'};
