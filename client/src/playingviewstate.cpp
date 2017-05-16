@@ -2,6 +2,7 @@
 
 #include "engine.hpp"
 
+#include "pointerviewstate.hpp"
 #include "inventoryviewstate.hpp"
 #include "input.hpp"
 
@@ -63,6 +64,10 @@ std::shared_ptr<PlayerViewState> PlayingViewState::update(Engine& engine)
 	{
 		//change view state
 		return std::make_shared<InventoryViewState>();
+	}
+	if (key::pressed(sf::Keyboard::V))
+	{
+		return std::make_shared<PointerViewState>();
 	}
 
 	return nullptr;
