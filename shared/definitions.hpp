@@ -26,7 +26,8 @@ enum Tile : sf::Int8
 	TILE_STAIRS_UP,
 	TILE_STAIRS_DOWN,
 	TILE_DOOR,
-	TILE_INDOOR_GROUND
+	TILE_INDOOR_GROUND,
+	NUM_TILES
 };
 
 enum PacketAction
