@@ -17,15 +17,6 @@ public:
 
 };
 
-
-class TestGenerator : public MapGenerator
-{
-	std::string seed;
-public:
-	virtual void setSeed(const std::string& seed);
-	virtual void generateMap(World& world);
-};
-
 class LevelGenerator : public MapGenerator {
 private:
 	int level = 1;
