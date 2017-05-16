@@ -20,7 +20,7 @@ void Map::render(Renderer & renderer, sf::Vector2i offset)
 	for(int y = start.y; y < end.y; y++) {
 		for (int x = start.x; x < end.x; x++)
 		{
-			char symbol = 0;
+			unsigned char symbol = 0;
 			switch (tileAt(x, y))
 			{
 			case TILE_INDOOR_GROUND:
