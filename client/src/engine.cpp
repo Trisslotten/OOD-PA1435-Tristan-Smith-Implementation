@@ -25,10 +25,10 @@ const Renderer & Engine::getRenderer() const
 	return renderer;
 }
 
-Engine::Engine()
+Engine::Engine(sf::IpAddress ip, Port port)
 {
 
-	auto packets = networking.connect("localhost", SERVER_PORT);
+	auto packets = networking.connect(ip, port);
 	packet_parser.parse(packets, *this);
 	
 	viewstate = std::make_shared<PlayingViewState>();
