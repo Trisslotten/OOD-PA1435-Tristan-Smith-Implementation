@@ -71,7 +71,7 @@ bool Map::isGroundAt(int x, int y)
 bool Map::isWallAt(sf::Vector2i pos)
 {
 	sf::Int8 t = tileAt(pos);
-	if (t == TILE_WALL)
+	if (t == TILE_WALL || t == TILE_NOTHING)
 		return true;
 	else
 		return false;
