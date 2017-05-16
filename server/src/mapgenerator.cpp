@@ -44,7 +44,7 @@ void LevelGenerator::generateMap(World & world) {
 	std::cout << "generator starting" << std::endl;
 	srand(time(NULL));
 
-	int rooms = (rand() % 3)+2;
+	int rooms = (rand() % 3)+3;
 	std::vector<sf::Vector2i> points;
 	int attempts=0;
 	for (int i = 0; i < rooms && attempts < 100; i++) {

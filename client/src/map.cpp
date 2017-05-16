@@ -29,6 +29,15 @@ void Map::render(Renderer & renderer, sf::Vector2i offset)
 			case TILE_WALL:
 				symbol = '#';
 				break;
+			case TILE_DOOR:
+				symbol = '|';
+				break;
+			case TILE_STAIRS_UP:
+				symbol = '^';
+				break;
+			case TILE_STAIRS_DOWN:
+				symbol = 'v';
+			break;
 			}
 			sf::Vector2i pos(x, y);
 			renderer.drawChar(pos - offset, symbol, sf::Color(125, 125, 125));
