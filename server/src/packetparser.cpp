@@ -87,7 +87,6 @@ void PacketParser::parseMovePlayer(Packet & packet, Networking & networking, Wor
 	if (mob_id != ID_NOT_FOUND)
 	{
 		auto pos = world.getPlayerById(mob_id)->getPos();
-<<<<<<< HEAD
 		if (!world.getMap().isWallAt(pos + vel))
 		{
 			Mob* enemy = world.getMobAt(pos+vel);
@@ -113,12 +112,6 @@ void PacketParser::parseMovePlayer(Packet & packet, Networking & networking, Wor
 				world.movePlayer(mob_id, vel);
 			}
 		}
-			
-
-=======
-		//if (!world.getMap().isWallAt(pos + vel))
-			world.movePlayer(mob_id, vel);
->>>>>>> origin/master
 	}
 }
 
