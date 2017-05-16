@@ -61,6 +61,9 @@ void PacketParser::parse(std::shared_ptr<std::vector<sf::Packet>> packets, Engin
 		case TC_INVENTORY:
 			receiveInventory(packet, engine);
 			break;
+		case TC_DESCRIPTIONS:
+			parseDescriptions(packet, engine);
+			break;
 		default:
 			// error message?
 			break;
@@ -198,4 +201,11 @@ void PacketParser::receiveInventory(sf::Packet packet, Engine& engine)
 		//std::cout << "id: " << id << ", name: " << name << ", description: " << description << "\n";
 	}
 	engine.getWorld().setLatestInventory(inventory);
+}
+
+void PacketParser::parseDescriptions(sf::Packet packet, Engine & engine)
+{
+	std::string descs;
+	packet >> descs;
+	engine.getWorld().setLatestDescriptions(descs);
 }

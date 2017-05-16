@@ -26,6 +26,11 @@ void World::setPlayerID(ID id)
 	player_id = id;
 }
 
+sf::Vector2i World::getPlayerPos()
+{
+	return mobs[player_id].getPos();
+}
+
 void World::addMob(ID mob_id, sf::Vector2i pos)
 {
 	Mob mob;

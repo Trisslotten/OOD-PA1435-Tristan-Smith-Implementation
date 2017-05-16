@@ -33,8 +33,11 @@ void PacketParser::parse(std::shared_ptr<std::vector<Packet>> packets, Networkin
 		case TS_REQUEST_INVENTORY:
 			requestInventory(p, networking, world);
 			break;
+		case TS_REQUEST_DESCRIPTIONS:
+			requestDescriptions(p, networking, world);
+			break;
 		default:
-			// error message?
+			std::cerr << "ERROR: unknown packet action\n";
 			break;
 		}
 	}
@@ -140,4 +143,14 @@ void PacketParser::requestInventory(Packet& packet, Networking& networking, Worl
 		Player* player = world.getPlayerById(mob_id);
 		networking.sendInventory(*player, client_id);
 	}
+}
+
+void PacketParser::requestDescriptions(Packet & packet, Networking & networking, World & world)
+{
+	//std::cout << "RECEIVE: request descriptions\n";
+	ID client_id;
+	packet.packet >> client_id;
+	sf::Vector2i pos;
+	packet.packet >> pos.x >> pos.y;
+	networking.sendDescriptions(world, pos, client_id);
 }

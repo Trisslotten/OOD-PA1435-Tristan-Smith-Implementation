@@ -33,6 +33,8 @@ public:
 		return map;
 	}
 
+	std::string getDescriptions(sf::Vector2i pos);
+
 	void movePlayer(ID mob_id, sf::Vector2i vel);
 
 	ID createPlayer();

@@ -63,6 +63,8 @@ InventoryViewState::~InventoryViewState()
 
 void InventoryViewState::render(World& world, Renderer& renderer)
 {
+	sf::Vector2i size = renderer.getScreenSizeTiles();
+
 	std::vector<Item> inv = world.getLatestInventory();
 	int maxpages = (inv.size() / 30)+1;
 	std::string title = "INVENTORY (PAGE " + std::to_string(page+1) + "/" + std::to_string(maxpages) + ")";
@@ -77,6 +79,6 @@ void InventoryViewState::render(World& world, Renderer& renderer)
 	renderer.drawString(40, 1, "Description", sf::Color(255, 255, 255, 255));
 	if(inv.size() > 0)
 		renderer.drawString(40, 2, inv[currentItem + page * 30].getDescription(), sf::Color(150, 150, 150, 255));
-	renderer.drawString(1, 40, "UP/DOWN item select, LEFT/RIGHT page select. 30 items per page.", sf::Color(150, 150, 150, 255));
-	renderer.drawString(1, 41, "Press D to drop item, E to equip.", sf::Color(150, 150, 150, 255));
+	renderer.drawString(1, size.y - 4, "UP/DOWN item select, LEFT/RIGHT page select. 30 items per page.", sf::Color(150, 150, 150, 255));
+	renderer.drawString(1, size.y - 3, "Press D to drop item, E to equip, I to exit", sf::Color(150, 150, 150, 255));
 }

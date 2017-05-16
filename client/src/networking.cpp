@@ -145,6 +145,14 @@ void Networking::sendRequestInventory()
 	send(packet);
 }
 
+void Networking::sendRequestDescriptions(sf::Vector2i pos)
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TS_REQUEST_DESCRIPTIONS << client_id;
+	packet << pos.x << pos.y;
+	send(packet);
+}
+
 void Networking::sendDropItem(ID item_id)
 {
 	sf::Packet packet;

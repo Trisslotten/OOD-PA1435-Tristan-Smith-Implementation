@@ -20,6 +20,7 @@ class World
 	ID player_id;
 
 	std::vector<Item> latest_inventory;
+	std::string latest_descriptions;
 
 public:
 
@@ -31,6 +32,8 @@ public:
 	{
 		return map;
 	}
+	
+	sf::Vector2i getPlayerPos();
 
 	void addMob(ID mob_id, sf::Vector2i pos);
 	void removeMob(ID mob_id);
@@ -39,6 +42,9 @@ public:
 	void addItem(Item item);
 	void removeItem(ID id);
 
+
+	void setLatestDescriptions(const std::string& descs) { latest_descriptions = descs; }
+	std::string getLatestDescriptions() { return latest_descriptions; }
 	void setLatestInventory(std::vector<Item> inv) { latest_inventory = inv; }
 	std::vector<Item> getLatestInventory() { return latest_inventory; }
 };

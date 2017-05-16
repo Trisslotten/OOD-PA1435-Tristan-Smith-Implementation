@@ -63,6 +63,54 @@ void World::update()
 	}
 }
 
+std::string World::getDescriptions(sf::Vector2i pos)
+{
+	std::string result;
+	for (auto i : items_on_ground)
+	{
+		if (i.second.getPos() == pos)
+		{
+			result += i.second.getName() + "\n" + i.second.getDescription() + "\n";
+		}
+	}
+	for (auto i : players)
+	{
+		if (i.second.getPos() == pos)
+		{
+			result += i.second.getName() + "\n" + i.second.getDescription() + "\n";
+		}
+	}
+	for (auto i : npcs)
+	{
+		if (i.second.getPos() == pos)
+		{
+			result += i.second.getName() + "\n" + i.second.getDescription() + "\n";
+		}
+	}
+	switch (map.tileAt(pos))
+	{
+	case TILE_WALL:
+		result += "Wall\n";
+		break;
+	case TILE_DOOR:
+		result += "Door\n";
+		break;
+	case TILE_GROUND:
+		result += "Ground\n";
+		break;
+	case TILE_INDOOR_GROUND:
+		result += "Floor\n";
+		break;
+	case TILE_STAIRS_DOWN:
+		result += "Stairs down\n";
+		break;
+	case TILE_STAIRS_UP:
+		result += "Stairs up\n";
+		break;
+	}
+	return result;
+}
+
 void World::movePlayer(ID mob_id, sf::Vector2i vel)
 {
 	if (players.count(mob_id) > 0)
