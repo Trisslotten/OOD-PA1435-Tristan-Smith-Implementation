@@ -48,9 +48,27 @@ void World::init()
 		std::cout << '\n';
 	}
 
+
 	std::cout << "len: " << items_on_ground.size() << std::endl;
 	for (int i = 0; i < items_on_ground.size(); i++) {
 		std::cout << items_on_ground[i].getName() << " " << (int)items_on_ground[i].getColor().r << " " << (int)items_on_ground[i].getColor().g << " " << (int)items_on_ground[i].getColor().b << std::endl;
+	}
+	//test items
+	ID newid = this->item_ids.newID();
+	this->items_on_ground[newid] = Item(newid, "The Crazy Thing", "The craziest thing", 'T', sf::Vector2i(7, 7), QUALITY_EPIC,10);
+	
+	for (int i = 0; i < 80; i++)
+	{
+		newid = this->item_ids.newID();
+		this->items_on_ground[newid] = Item(newid, "Frostmourne " + std::to_string(i) , "oh shieet", 'F', sf::Vector2i(5, 8), QUALITY_LEGENDARY,20);
+	}
+	for (int x = 0; x < 5; x++)
+	{
+		for (int y = 0; y < 5; y++)
+		{
+			newid = this->mob_ids.newID();
+			this->npcs[newid] = Mob(newid, "Test monster " + std::to_string(x + y), "The craziest boy", sf::Vector2i(-5+x, -5+y), 100, 100);
+		}
 	}
 }
 
@@ -62,11 +80,60 @@ void World::update()
 	}
 }
 
+std::string World::getDescriptions(sf::Vector2i pos)
+{
+	std::string result;
+	for (auto i : items_on_ground)
+	{
+		if (i.second.getPos() == pos)
+		{
+			result += i.second.getName() + "\n" + i.second.getDescription() + "\n";
+		}
+	}
+	for (auto i : players)
+	{
+		if (i.second.getPos() == pos)
+		{
+			result += i.second.getName() + "\n" + i.second.getDescription() + "\n";
+		}
+	}
+	for (auto i : npcs)
+	{
+		if (i.second.getPos() == pos)
+		{
+			result += i.second.getName() + "\n" + i.second.getDescription() + "\n";
+		}
+	}
+	switch (map.tileAt(pos))
+	{
+	case TILE_WALL:
+		result += "Wall\n";
+		break;
+	case TILE_DOOR:
+		result += "Door\n";
+		break;
+	case TILE_GROUND:
+		result += "Ground\n";
+		break;
+	case TILE_INDOOR_GROUND:
+		result += "Floor\n";
+		break;
+	case TILE_STAIRS_DOWN:
+		result += "Stairs down\n";
+		break;
+	case TILE_STAIRS_UP:
+		result += "Stairs up\n";
+		break;
+	}
+	return result;
+}
+
 void World::movePlayer(ID mob_id, sf::Vector2i vel)
 {
 	if (players.count(mob_id) > 0)
 	{
-		players[mob_id].setVel(vel);
+		if (!getMap().isWallAt(players[mob_id].getPos() + vel))
+			players[mob_id].setVel(vel);
 	}
 }
 
@@ -89,13 +156,20 @@ void World::removePlayer(ID mob_id)
 // append map and mob data to packet
 void World::serializeWorldState(sf::Packet& to_append)
 {	// maybe split into different functions for each list (players, npcs, tiles etc)
-	to_append << players.size();
+	to_append << players.size()+npcs.size();
 	for (auto&& map_elem : players)
 	{
 		Mob p = map_elem.second;
 		sf::Vector2i pos = p.getPos();
 		//std::cout << "Appending id: " << map_elem.second.getID() << "\n";
-		to_append << p.getID() << pos.x << pos.y;
+		to_append << p.getID() << pos.x << pos.y << p.getSymbol();
+	}
+	for (auto&& map_elem : npcs)
+	{
+		Mob p = map_elem.second;
+		sf::Vector2i pos = p.getPos();
+		//std::cout << "Appending id: " << map_elem.second.getID() << "\n";
+		to_append << p.getID() << pos.x << pos.y << p.getSymbol();
 	}
 }
 
@@ -114,9 +188,9 @@ void World::serializeSnapshot(sf::Packet & to_append)
 Player* World::getPlayerById(ID id)
 {
 	if (players.count(id) > 0)
-	{
 		return &players[id];
-	}
+	else
+		return nullptr;
 }
 
 void World::placeItemOnGround(Item item)
@@ -156,3 +230,17 @@ IDCreator World::getItem_ids() {
 std::unordered_map<ID, Item> World::getItems_on_ground() {
 	return this->items_on_ground;
 }
+
+Mob* World::getMobAt(sf::Vector2i pos)
+{
+	Mob* returnmob = nullptr;
+	for (auto&& map_elem : this->npcs)
+	{
+		if (map_elem.second.getPos() == pos)
+		{
+			return &map_elem.second;
+		}
+	}
+	return returnmob;
+}
+

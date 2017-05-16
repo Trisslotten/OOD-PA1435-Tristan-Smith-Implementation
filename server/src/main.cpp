@@ -6,12 +6,21 @@
 
 int main(int argc, char *argv[])
 {
-	for (int i = 0; i < argc; i++)
+	Port port = SERVER_PORT;
+	if (argc >= 2)
 	{
-		std::cout << argv[i] << "\n";
+		std::string str_port = argv[1];
+		try
+		{
+			Port param_port = std::stoi(str_port, nullptr, 10);
+			port = param_port;
+		} catch (std::invalid_argument e)
+		{
+			std::cerr << "Parameter not a number. Using default port: " << port << "\n";
+		}
 	}
-
-	Server server{ 8778 };
+	std::cout << "Starting server on port: " << port << "\n";
+	Server server{ port };
 
 	server.init();
 

@@ -16,7 +16,8 @@ class Networking
 
 	sf::UdpSocket socket;
 
-	void send(sf::Packet, Client client);
+	void send(sf::Packet, Client);
+	void send(sf::Packet, ID client_id);
 
 	// use this instead of socket.receive(...)
 	sf::Socket::Status receiveTimeout(Packet& packet, sf::Time timeout);
@@ -53,4 +54,10 @@ public:
 	void sendPickupProgress(bool success, ID client_id, std::string name);
 	
 	void sendInventory(Player player, ID client_id);
+
+	void sendDescriptions(World& world, sf::Vector2i pos, ID client_id);
+
+	void sendEquipped(Player player, ID client_id);
+
+	void sendRemoveMob(ID mob_id);
 };

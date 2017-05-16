@@ -7,10 +7,11 @@ Item::Item()
 	description = "none";
 	symbol = '#';
 	last_ground_pos = sf::Vector2i(0, 0);
+	damage = 1;
 }
 
-Item::Item(ID id, std::string name, std::string description, char symbol, sf::Vector2i pos, sf::Color color)
+Item::Item(ID id, std::string name, std::string description, char symbol, sf::Vector2i pos, sf::Color color, unsigned int damage)
 {
-	this->id = id; this->name = name; this->description = description; this->symbol = symbol; this->last_ground_pos = pos;
+	this->id = id; this->name = name; this->description = description; this->symbol = symbol; this->last_ground_pos = pos; this->damage = damage;
 	this->color = color;
 }

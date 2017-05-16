@@ -4,9 +4,38 @@
 #include <iostream>
 #include "input.hpp"
 
-int main()
+int main(int argc, char *argv[])
 {
-	Engine engine;
+	sf::IpAddress ip = "localhost";
+	Port port = SERVER_PORT;
+	if (argc >= 2)
+	{
+		ip = argv[1];
+		if (ip == sf::IpAddress::None)
+		{
+			std::cerr << "Not a valid ip: " << argv[1] << ", Parsed as: " << ip.toString() << "\n";
+			std::cerr << "Exiting";
+			exit(EXIT_FAILURE);
+		}
+	}
+	if (argc >= 3)
+	{
+		std::string str_port = argv[1];
+		try
+		{
+			Port param_port = std::stoi(str_port, nullptr, 10);
+			port = param_port;
+		} catch (std::invalid_argument e)
+		{
+			std::cerr << "Not a valid port: " << argv[2] << ", Using default port: " << port << "\n";
+		}
+	}
+	else
+	{
+		std::cout << "Using default port: " << port << "\n";
+	}
+
+	Engine engine(ip, port);
 
 	sf::Vector2i size = engine.getRenderer().getScreenSize();
 

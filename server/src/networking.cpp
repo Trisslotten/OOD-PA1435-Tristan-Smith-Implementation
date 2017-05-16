@@ -13,6 +13,14 @@ void Networking::send(sf::Packet packet, Client client)
 	socket.send(packet, client.address, client.port);
 }
 
+void Networking::send(sf::Packet packet, ID client_id)
+{
+	if (clients.count(client_id) > 0)
+	{
+		send(packet, clients[client_id]);
+	}
+}
+
 sf::Socket::Status Networking::receiveTimeout(Packet& packet, sf::Time timeout)
 {
 	sf::SocketSelector selector;
@@ -223,7 +231,7 @@ void Networking::sendPickupProgress(bool success, ID client_id, std::string name
 	}
 	else
 		packet << TC_PICKUP_FAILED;
-	send(packet, clients[client_id]);
+	send(packet, client_id);
 }
 
 void Networking::sendInventory(Player player, ID client_id)
@@ -236,7 +244,34 @@ void Networking::sendInventory(Player player, ID client_id)
 	for (auto&& map_elem : inventory)
 	{
 		Item current = map_elem.second;
-		packet << current.getItemId() << current.getName() << current.getDescription() << (sf::Uint8)current.getSymbol();
+		packet << current.getItemId() << current.getName() << current.getDescription() << (sf::Uint8)current.getSymbol() << current.getColor().r << current.getColor().g << current.getColor().b << current.getColor().a << current.getDamage();
 	}
-	send(packet, clients[client_id]);
+	send(packet, client_id);
+}
+
+void Networking::sendDescriptions(World & world, sf::Vector2i pos, ID client_id)
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TC_DESCRIPTIONS;
+	std::string descs = world.getDescriptions(pos);
+	packet << descs;
+	send(packet, client_id);
+}
+
+void Networking::sendEquipped(Player player, ID client_id)
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TC_EQUIPPED << player.getEquipped();
+	send(packet, client_id);
+}
+
+void Networking::sendRemoveMob(ID mob_id)
+{
+	sf::Packet packet;
+	packet << PROGRAM_ID << TC_REMOVE_MOB << mob_id;
+
+	for (auto map_elem : clients)
+	{
+		send(packet, map_elem.second);
+	}
 }

@@ -34,6 +34,8 @@ public:
 		return map;
 	}
 
+	std::string getDescriptions(sf::Vector2i pos);
+
 	void movePlayer(ID mob_id, sf::Vector2i vel);
 
 	ID createPlayer();
@@ -56,6 +58,12 @@ public:
 
 	ID getItemAtPos(sf::Vector2i pos);
 
+
 	IDCreator getItem_ids();
 	std::unordered_map<ID, Item> getItems_on_ground();
+
+	Mob* getMobAt(sf::Vector2i pos);
+
+	void removeMob(ID id) { this->npcs.erase(id); }
+
 };

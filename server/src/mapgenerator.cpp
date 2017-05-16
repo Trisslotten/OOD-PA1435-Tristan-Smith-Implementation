@@ -141,22 +141,28 @@ void LevelGenerator::generateMap(World & world) {
 			int wep = rand() % weapons;
 			ID newid = world.item_ids.newID();
 
+			int attackModifier = 0;
+
 			sf::Color quality = QUALITY_COMMON;
 			int roll = (rand() % 1000) + 1;
 			if (roll<200) {
 				quality = QUALITY_UNCOMMON;
+				attackModifier++;
 				if (roll<100) {
 					quality = QUALITY_RARE;
+					attackModifier++;
 					if (roll<50) {
 						quality = QUALITY_EPIC;
+						attackModifier+=2;
 						if (roll == 1) {
 							quality = QUALITY_LEGENDARY;
+							attackModifier+=4;
 						}
 					}
 				}
 			}
 
-			world.items_on_ground[newid] = Item(newid, weaponsTitle[wep], weaponsDesc[wep], 'I', sf::Vector2i(x, y), quality);
+			world.items_on_ground[newid] = Item(newid, weaponsTitle[wep], weaponsDesc[wep], 'I', sf::Vector2i(x, y), quality, attackModifier + level + rand() % 5);
 		}
 		else {
 			i--;

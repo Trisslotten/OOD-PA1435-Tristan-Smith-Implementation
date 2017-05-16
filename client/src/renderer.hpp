@@ -29,7 +29,7 @@ public:
 	void clear();
 	void clear(char symbol);
 	
-	void drawChar(int x, int y, unsigned char symbol, sf::Color color = sf::Color::White);
+	void drawChar(unsigned x, unsigned y, unsigned char symbol, sf::Color color = sf::Color::White);
 	void drawChar(sf::Vector2i pos, unsigned char symbol, sf::Color color = sf::Color::White);
 
 	void drawString(int x, int y, const std::string& str, sf::Color color = sf::Color::White);

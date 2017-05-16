@@ -4,7 +4,7 @@
 
 Renderer::Renderer()
 {
-	if (!tileset.loadFromFile("src/tileset.png"))
+	if (!tileset.loadFromFile("tileset.png"))
 	{
 		std::cerr << "Could not load tileset\n";
 	}
@@ -33,9 +33,9 @@ void Renderer::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	sf::Sprite sprite;
 	sprite.setTexture(tileset);
-	for (int i = 0; i < screen_height_tiles; i++)
+	for (unsigned i = 0; i < screen_height_tiles; i++)
 	{
-		for (int j = 0; j < screen_width_tiles; j++)
+		for (unsigned j = 0; j < screen_width_tiles; j++)
 		{
 			unsigned char current_tile = tiles[j + i*screen_width_tiles];
 			int x_index = current_tile % tileset_width;
@@ -48,7 +48,7 @@ void Renderer::draw(sf::RenderTarget & target, sf::RenderStates states) const
 			rect.height = tile_size;
 			sprite.setTextureRect(rect);
 
-			sprite.setPosition(j*tile_size, i*tile_size);
+			sprite.setPosition((float)(j*tile_size), (float)(i*tile_size));
 
 			sf::Color current_color = tiles_colors[j + i*screen_width_tiles];
 			sprite.setColor(current_color);
@@ -57,7 +57,7 @@ void Renderer::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	}
 }
 
-void Renderer::drawChar(int x, int y, unsigned char symbol, sf::Color color)
+void Renderer::drawChar(unsigned x, unsigned y, unsigned char symbol, sf::Color color)
 {
 	if (x < 0 || x >= screen_width_tiles || y < 0 || y >= screen_height_tiles)
 	{

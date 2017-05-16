@@ -12,6 +12,17 @@ Mob::Mob(ID id)
 	this->symbol = '#';
 }
 
+Mob::Mob(ID id,std::string name, std::string description, sf::Vector2i pos, int health, int max_health)
+{
+	this->id = id;
+	this->color = sf::Color(255, 255, 255, 255);
+	this->name = name;
+	this->description = description;
+	this->health = health;
+	this->max_health = max_health;
+	this->pos = pos;
+	this->symbol = '#';
+}
 
 void Mob::update()
 {
