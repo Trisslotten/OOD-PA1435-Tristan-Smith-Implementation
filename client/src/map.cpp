@@ -53,6 +53,23 @@ Tile Map::tileAt(int x, int y)
 	}
 }
 
+bool Map::isWallAt(int x, int y)
+{
+	Tile t = tileAt(x, y);
+	if (t == TILE_WALL)
+		return true;
+	else
+		return false;
+}
+bool Map::isGroundAt(int x, int y)
+{
+	Tile t = tileAt(x, y);
+	if (t == TILE_GROUND)
+		return true;
+	else
+		return false;
+}
+
 void Map::setTileAt(sf::Vector2i pos, Tile tile)
 {
 	setTileAt(pos.x, pos.y, tile);

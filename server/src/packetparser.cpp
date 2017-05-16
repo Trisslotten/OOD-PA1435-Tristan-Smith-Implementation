@@ -79,7 +79,9 @@ void PacketParser::parseMovePlayer(Packet & packet, Networking & networking, Wor
 	ID mob_id = networking.mobIDFromClientID(client_id);
 	if (mob_id != ID_NOT_FOUND)
 	{
-		world.movePlayer(mob_id, vel);
+		auto pos = world.getPlayerById(mob_id)->getPos();
+		if (!world.getMap().isWallAt(pos + vel))
+			world.movePlayer(mob_id, vel);
 	}
 }
 
