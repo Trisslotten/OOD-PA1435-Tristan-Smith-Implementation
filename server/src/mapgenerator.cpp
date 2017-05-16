@@ -41,6 +41,7 @@ void LevelGenerator::setSeed(const std::string & seed)
 	this->seed = seed;
 }
 void LevelGenerator::generateMap(World & world) {
+	std::cout << "generator starting" << std::endl;
 	srand(time(NULL));
 
 	int rooms = (rand() % 3)+2;
@@ -168,13 +169,20 @@ void LevelGenerator::generateMap(World & world) {
 			i--;
 		}
 	}
-
-	int mobNum = 3 + rand() % 7;
+	std::cout << "mob generator starting" << std::endl;
+	int mobNum = 3 + rand() % 4;
 	for (int i = 0; i < mobNum; i++) {
 		int x = rand() % world.getMap().getWidth();
 		int y = rand() % world.getMap().getHeight();
 		if (world.getMap().tileAt(sf::Vector2i(x, y)) == TILE_GROUND || world.getMap().tileAt(sf::Vector2i(x, y)) == TILE_INDOOR_GROUND) {
 			
+			int roll = level + rand() % 3;
+			if (roll >= mobs) {
+				roll = mobs - 1;
+			}
+
+			ID newid = world.mob_ids.newID();
+			world.npcs[newid] = Mob(newid, mobTypes[roll], mobDesc[roll], sf::Vector2i(x, y), mobHealth[roll], mobHealth[roll]);
 		}
 		else {
 			i--;

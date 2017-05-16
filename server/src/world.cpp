@@ -15,6 +15,9 @@ void World::init()
 		for (int j = 0; j < map.getWidth(); j++)
 		{
 			sf::Int8 t = map.tileAt(i, j);
+			if (getMobAt(sf::Vector2i(i, j)) != nullptr) {
+				std::cout << 'E';
+			}else
 			if (getItemAtPos(sf::Vector2i(i, j)) != ID_NOT_FOUND) {
 				std::cout << 'I';
 			}
@@ -53,23 +56,11 @@ void World::init()
 	for (int i = 0; i < items_on_ground.size(); i++) {
 		std::cout << items_on_ground[i].getName() << " " << (int)items_on_ground[i].getColor().r << " " << (int)items_on_ground[i].getColor().g << " " << (int)items_on_ground[i].getColor().b << std::endl;
 	}
+	std::cout << "len: " << npcs.size() << std::endl;
+	for (int i = 0; i < npcs.size(); i++) {
+		std::cout << npcs[i].getName() << std::endl;
+	}
 	//test items
-	ID newid = this->item_ids.newID();
-	this->items_on_ground[newid] = Item(newid, "The Crazy Thing", "The craziest thing", 'T', sf::Vector2i(7, 7), QUALITY_EPIC,10);
-	
-	for (int i = 0; i < 80; i++)
-	{
-		newid = this->item_ids.newID();
-		this->items_on_ground[newid] = Item(newid, "Frostmourne " + std::to_string(i) , "oh shieet", 'F', sf::Vector2i(5, 8), QUALITY_LEGENDARY,20);
-	}
-	for (int x = 0; x < 5; x++)
-	{
-		for (int y = 0; y < 5; y++)
-		{
-			newid = this->mob_ids.newID();
-			this->npcs[newid] = Mob(newid, "Test monster " + std::to_string(x + y), "The craziest boy", sf::Vector2i(-5+x, -5+y), 100, 100);
-		}
-	}
 }
 
 void World::update()
