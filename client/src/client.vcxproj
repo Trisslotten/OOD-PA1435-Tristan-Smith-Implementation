@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F1DDABDE-6F1A-498F-A9D4-334961A7A6F1}</ProjectGuid>
     <RootNamespace>project</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -119,6 +119,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="engine.cpp" />
+    <ClCompile Include="input.cpp" />
     <ClCompile Include="inventoryviewstate.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
@@ -134,6 +135,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\shared\definitions.hpp" />
     <ClInclude Include="engine.hpp" />
+    <ClInclude Include="input.hpp" />
     <ClInclude Include="inventoryviewstate.hpp" />
     <ClInclude Include="item.hpp" />
     <ClInclude Include="map.hpp" />

@@ -125,7 +125,7 @@ std::shared_ptr<std::vector<sf::Packet>> Networking::receive(sf::Time receive_ti
 void Networking::testMove(sf::Vector2i vel)
 {
 	sf::Packet packet;
-	packet << PROGRAM_ID << TS_DEBUG_MOVE;
+	packet << PROGRAM_ID << TS_MOVE_PLAYER;
 	packet << client_id << vel.x << vel.y;
 	std::cout << "SENDING: test move: " << vel.x << " " << vel.y << std::endl;
 	send(packet);

@@ -13,7 +13,7 @@ const Port SERVER_PORT = 8778;
 
 const unsigned int PROGRAM_ID = 2874393505;
 
-const float TICK_RATE = 30;
+const float TICK_RATE = 20;
 
 // number of packets the server sends to a joining client
 const unsigned int WORLD_STATE_PACKET_COUNT = 2;
@@ -34,9 +34,9 @@ enum PacketAction
 	TS_DROP_ITEM,
 	TS_PICKUP_ITEM,
 	TS_REQUEST_INVENTORY,
+	TS_MOVE_PLAYER,
 
 	TS_DEBUG_SEND_STRING,
-	TS_DEBUG_MOVE,
 
 
 	// TC: to client

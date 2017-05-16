@@ -34,6 +34,11 @@ Engine::Engine()
 	viewstate = std::make_shared<PlayingViewState>();
 }
 
+void Engine::windowEvent(sf::Event event)
+{
+	viewstate->windowEvent(event, *this);
+}
+
 void Engine::update()
 {
 	

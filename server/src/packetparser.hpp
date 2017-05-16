@@ -16,7 +16,7 @@ class PacketParser
 	void disconnectClient(Packet& packet, Networking& networking, World& world);
 	void dropItem(Packet& packet, Networking& networking, World& world);
 
-	void debugMove(Packet& packet, Networking& networking, World& world);
+	void parseMovePlayer(Packet& packet, Networking& networking, World& world);
 	void pickupItem(Packet& packet, Networking& networking, World& world);
 	void requestInventory(Packet& packet, Networking& networking, World& world);
 public:

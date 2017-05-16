@@ -15,6 +15,10 @@ Mob::Mob(ID id)
 
 void Mob::update()
 {
+	pos += vel;
+	vel = sf::Vector2i();
+
+	/*
 	if (prev_vel.x == 0 && prev_vel.y == 0)
 	{
 		walk_timer.restart();
@@ -27,4 +31,5 @@ void Mob::update()
 		pos += vel;
 		vel = sf::Vector2i();
 	}
+	*/
 }

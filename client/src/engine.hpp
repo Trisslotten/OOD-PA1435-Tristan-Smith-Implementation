@@ -30,6 +30,8 @@ public:
 
 	Engine();
 
+	void windowEvent(sf::Event event);
+
 	void update();
 
 	void receive(sf::Time receive_time);

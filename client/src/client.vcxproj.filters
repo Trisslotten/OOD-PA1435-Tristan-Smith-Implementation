@@ -57,6 +57,9 @@
     <ClCompile Include="inventoryviewstate.cpp">
       <Filter>Source Files\viewstates</Filter>
     </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine.hpp">
@@ -103,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="inventoryviewstate.hpp">
       <Filter>Source Files\viewstates</Filter>
+    </ClInclude>
+    <ClInclude Include="input.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

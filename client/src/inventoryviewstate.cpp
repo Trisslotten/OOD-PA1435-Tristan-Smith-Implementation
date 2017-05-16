@@ -1,7 +1,7 @@
 #include "inventoryviewstate.hpp"
 #include "engine.hpp"
 #include <iostream>
-
+#include "input.hpp"
 #include "engine.hpp"
 
 void InventoryViewState::init(Engine& engine)
@@ -9,35 +9,35 @@ void InventoryViewState::init(Engine& engine)
 	engine.getNetworking().sendRequestInventory();
 }
 
+void InventoryViewState::windowEvent(sf::Event event, Engine& engine)
+{}
+
 std::shared_ptr<PlayerViewState> InventoryViewState::update(Engine & engine)
 {
-	PlayerViewState* returnstate = nullptr;
 	sf::Vector2i vel;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
+	if (key::pressed(sf::Keyboard::I))
 	{
 		//exit inventory
-		PlayingViewState* playstate = new PlayingViewState();
-		returnstate = playstate;
+		return std::make_shared<PlayingViewState>();
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) //temporary drop item thing, drops item with global id 0 aka. The Crazy Thing
+	if (key::pressed(sf::Keyboard::D)) //temporary drop item thing, drops item with global id 0 aka. The Crazy Thing
 	{
-		PlayingViewState* playstate = new PlayingViewState();
-		returnstate = playstate;
 		engine.getNetworking().sendDropItem(engine.getWorld().getLatestInventory()[currentItem + page * 30].getItemId());
+		return std::make_shared<PlayingViewState>();
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if (key::down(sf::Keyboard::Up))
 	{
 		if (currentItem - 1 >= 0)
 			currentItem = currentItem - 1;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	if (key::down(sf::Keyboard::Down))
 	{
 		if (currentItem + page * 30 + 1 < engine.getWorld().getLatestInventory().size() && currentItem +1 <30)
 		{
 			currentItem = currentItem + 1;
 		}
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	if (key::pressed(sf::Keyboard::Left))
 	{
 		if (page - 1 >= 0)
 		{
@@ -46,7 +46,7 @@ std::shared_ptr<PlayerViewState> InventoryViewState::update(Engine & engine)
 		}
 			
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	if (key::pressed(sf::Keyboard::Right))
 	{
 		if ((page + 1) * 30 < engine.getWorld().getLatestInventory().size())
 		{
@@ -55,7 +55,7 @@ std::shared_ptr<PlayerViewState> InventoryViewState::update(Engine & engine)
 		}
 	}
 
-	return (std::shared_ptr<PlayerViewState>)returnstate;
+	return nullptr;
 }
 
 InventoryViewState::~InventoryViewState()

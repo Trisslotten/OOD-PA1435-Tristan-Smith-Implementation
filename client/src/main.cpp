@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "engine.hpp"
+#include <iostream>
+#include "input.hpp"
 
 int main()
 {
@@ -25,13 +27,20 @@ int main()
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
+			switch (event.type)
+			{
+			case sf::Event::Closed:
 				window.close();
+				break;
+			default:
+				engine.windowEvent(event);
+			}		
 		}
 
 		accum += update_timer.restart();
 		while (accum > sf::seconds(1 / TICK_RATE))
 		{
+			key::update();
 			// TODO: create seperate handleInput function
 			if (window.hasFocus())
 				engine.update();
