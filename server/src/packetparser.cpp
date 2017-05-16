@@ -83,7 +83,7 @@ void PacketParser::parseMovePlayer(Packet & packet, Networking & networking, Wor
 	if (mob_id != ID_NOT_FOUND)
 	{
 		auto pos = world.getPlayerById(mob_id)->getPos();
-		if (!world.getMap().isWallAt(pos + vel))
+		//if (!world.getMap().isWallAt(pos + vel))
 			world.movePlayer(mob_id, vel);
 	}
 }
