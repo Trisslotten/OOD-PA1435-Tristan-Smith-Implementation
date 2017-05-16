@@ -4,7 +4,7 @@
 
 Renderer::Renderer()
 {
-	if (!tileset.loadFromFile("src/tileset.png"))
+	if (!tileset.loadFromFile("tileset.png"))
 	{
 		std::cerr << "Could not load tileset\n";
 	}

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -119,6 +119,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="engine.cpp" />
+    <ClCompile Include="input.cpp" />
     <ClCompile Include="inventoryviewstate.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="main.cpp" />
@@ -127,6 +128,7 @@
     <ClCompile Include="networking.cpp" />
     <ClCompile Include="packetparser.cpp" />
     <ClCompile Include="playingviewstate.cpp" />
+    <ClCompile Include="pointerviewstate.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="uielement.cpp" />
     <ClCompile Include="world.cpp" />
@@ -134,6 +136,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\shared\definitions.hpp" />
     <ClInclude Include="engine.hpp" />
+    <ClInclude Include="input.hpp" />
     <ClInclude Include="inventoryviewstate.hpp" />
     <ClInclude Include="item.hpp" />
     <ClInclude Include="map.hpp" />
