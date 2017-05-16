@@ -103,7 +103,9 @@ void PacketParser::addMob(sf::Packet packet, Engine & engine)
 {
 	ID mob_id;
 	packet >> mob_id;
-	engine.getWorld().addMob(mob_id, sf::Vector2i(0,0));
+	sf::Vector2i spawn_pos;
+	packet >> spawn_pos.x >> spawn_pos.y;
+	engine.getWorld().addMob(mob_id, spawn_pos);
 	std::cout << "Adding mob:\n\tmob_id: " << mob_id << "\n\tpos: " << 0 << ", " << 0 << "\n";
 }
 
