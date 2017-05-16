@@ -23,6 +23,9 @@ void Map::render(Renderer & renderer, sf::Vector2i offset)
 			char symbol = 0;
 			switch (tileAt(x, y))
 			{
+			case TILE_INDOOR_GROUND:
+				symbol = 11 * 16;
+				break;
 			case TILE_GROUND:
 				symbol = '.';
 				break;
