@@ -6,52 +6,51 @@
 void World::init()
 {
 	std::shared_ptr<MapGenerator> generator = std::make_shared<LevelGenerator>();
-	generator->generateMap(map);
+	generator->generateMap(*this);
 
-	/*
+	
 	// debug
 	for (int i = 0; i < map.getHeight(); i++)
 	{
 		for (int j = 0; j < map.getWidth(); j++)
 		{
 			sf::Int8 t = map.tileAt(i, j);
-
-			switch (t)
-			{
-			case TILE_NOTHING:
-				std::cout << ' ';
-				break;
-			case TILE_WALL:
-				std::cout << '#';
-				break;
-			case TILE_GROUND:
-				std::cout << '.';
-				break;
-			case TILE_STAIRS_DOWN:
-				std::cout << 'v';
-				break;
-			case TILE_STAIRS_UP:
-				std::cout << '^';
-				break;
-			case TILE_DOOR:
-				std::cout << '|';
-				break;
-			case TILE_INDOOR_GROUND:
-				std::cout << ',';
-				break;
+			if (getItemAtPos(sf::Vector2i(i, j)) != ID_NOT_FOUND) {
+				std::cout << 'I';
+			}
+			else {
+				switch (t)
+				{
+				case TILE_NOTHING:
+					std::cout << ' ';
+					break;
+				case TILE_WALL:
+					std::cout << '#';
+					break;
+				case TILE_GROUND:
+					std::cout << '.';
+					break;
+				case TILE_STAIRS_DOWN:
+					std::cout << 'v';
+					break;
+				case TILE_STAIRS_UP:
+					std::cout << '^';
+					break;
+				case TILE_DOOR:
+					std::cout << '|';
+					break;
+				case TILE_INDOOR_GROUND:
+					std::cout << ',';
+					break;
+				}
 			}
 		}
 		std::cout << '\n';
 	}
-	*/
-	//test items
-	ID newid = this->item_ids.newID();
-	this->items_on_ground[newid] = Item(newid, "The Crazy Thing", "The craziest thing", 'T', sf::Vector2i(7, 7), QUALITY_EPIC);
-	
-	for (int i = 0; i < 80; i++)
-	{
-		newid = this->item_ids.newID();
-		this->items_on_ground[newid] = Item(newid, "Frostmourne " + std::to_string(i) , "oh shieet", 'F', sf::Vector2i(5, 8), QUALITY_LEGENDARY);
+
+	std::cout << "len: " << items_on_ground.size() << std::endl;
+	for (int i = 0; i < items_on_ground.size(); i++) {
+		std::cout << items_on_ground[i].getName() << " " << (int)items_on_ground[i].getColor().r << " " << (int)items_on_ground[i].getColor().g << " " << (int)items_on_ground[i].getColor().b << std::endl;
 	}
 }
 
@@ -148,4 +147,12 @@ void World::pickupItemFromGround(Player* player, ID item_id)
 		player->addItem(items_on_ground[item_id]);
 		items_on_ground.erase(item_id);
 	}
+}
+
+IDCreator World::getItem_ids() {
+	return this->item_ids;
+}
+
+std::unordered_map<ID, Item> World::getItems_on_ground() {
+	return this->items_on_ground;
 }

@@ -14,15 +14,16 @@ class World
 {
 	Map map{ 50,50 };
 
-	std::unordered_map<ID, Mob> npcs;
 	std::unordered_map<ID, Player> players;
 	// one for both since one list on client
-	IDCreator mob_ids;
+	
+public:
 
 	std::unordered_map<ID, Item> items_on_ground;
 	IDCreator item_ids;
-	
-public:
+
+	std::unordered_map<ID, Mob> npcs;
+	IDCreator mob_ids;
 
 	void init();
 
@@ -54,4 +55,7 @@ public:
 	inline Item getItemById(ID id) { return items_on_ground[id]; }
 
 	ID getItemAtPos(sf::Vector2i pos);
+
+	IDCreator getItem_ids();
+	std::unordered_map<ID, Item> getItems_on_ground();
 };

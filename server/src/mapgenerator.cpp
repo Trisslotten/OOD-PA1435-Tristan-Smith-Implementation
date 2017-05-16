@@ -1,18 +1,17 @@
 #include "mapgenerator.hpp"
+#include "world.hpp"
 
-#include "map.hpp"
 
 void TestGenerator::setSeed(const std::string & seed)
 {
 	this->seed = seed;
 }
 
-void TestGenerator::generateMap(Map & map)
+void TestGenerator::generateMap(World& world)
 {
-	
-	for (int y = 0; y < map.getHeight(); y++)
+	for (int y = 0; y < world.getMap().getHeight(); y++)
 	{
-		for (int x = 0; x < map.getWidth(); x++)
+		for (int x = 0; x < world.getMap().getWidth(); x++)
 		{
 			/*
 			if (x >= 3 && map.getWidth() - x - 1 >= 3 && y >= 3 && map.getWidth() - y - 1 >= 3)
@@ -32,7 +31,7 @@ void TestGenerator::generateMap(Map & map)
 			}
 			*/
 			sf::Int8 asd = (sf::Int8)rand() % NUM_TILES;
-			map.setTileAt(x, y, (Tile)asd);
+			world.getMap().setTileAt(x, y, (Tile)asd);
 		}
 	}
 
@@ -41,7 +40,7 @@ void LevelGenerator::setSeed(const std::string & seed)
 {
 	this->seed = seed;
 }
-void LevelGenerator::generateMap(Map & map) {
+void LevelGenerator::generateMap(World & world) {
 	srand(time(NULL));
 
 	int rooms = (rand() % 3)+2;
@@ -52,11 +51,11 @@ void LevelGenerator::generateMap(Map & map) {
 		int height = (rand() % 15) + 5;
 		int width = (rand() % 15) + 5;
 
-		int xPos = 1 + rand()%(map.getWidth() - width-3);
-		int yPos = 1 + rand() % (map.getHeight() - height-3);
+		int xPos = 1 + rand()%(world.getMap().getWidth() - width-3);
+		int yPos = 1 + rand() % (world.getMap().getHeight() - height-3);
 
-		if (checkRoomSpot(map, xPos, yPos, width, height)) {
-			generateRoom(map, xPos, yPos, width, height);
+		if (checkRoomSpot(world, xPos, yPos, width, height)) {
+			generateRoom(world, xPos, yPos, width, height);
 			points.push_back(sf::Vector2i(xPos + width/2, yPos + height/2));
 		}
 		else {
@@ -67,18 +66,18 @@ void LevelGenerator::generateMap(Map & map) {
 
 	//add up/down stairs to access new levels of the dungeon
 	while (true) {//shit code
-		int stairsX = rand() % map.getWidth();
-		int stairsY = rand() % map.getHeight();
-		if (map.tileAt(stairsX, stairsY) == TILE_INDOOR_GROUND) {
-			map.setTileAt(stairsX, stairsY, TILE_STAIRS_DOWN);
+		int stairsX = rand() % world.getMap().getWidth();
+		int stairsY = rand() % world.getMap().getHeight();
+		if (world.getMap().tileAt(stairsX, stairsY) == TILE_INDOOR_GROUND) {
+			world.getMap().setTileAt(stairsX, stairsY, TILE_STAIRS_DOWN);
 			break;
 		}
 	}
 	while (true) {
-		int stairsX = rand() % map.getWidth();
-		int stairsY = rand() % map.getHeight();
-		if (map.tileAt(stairsX, stairsY) == TILE_INDOOR_GROUND) {
-			map.setTileAt(stairsX, stairsY, TILE_STAIRS_UP);
+		int stairsX = rand() % world.getMap().getWidth();
+		int stairsY = rand() % world.getMap().getHeight();
+		if (world.getMap().tileAt(stairsX, stairsY) == TILE_INDOOR_GROUND) {
+			world.getMap().setTileAt(stairsX, stairsY, TILE_STAIRS_UP);
 			break;
 		}
 	}
@@ -113,18 +112,18 @@ void LevelGenerator::generateMap(Map & map) {
 						y2--;
 					}
 				}
-				if (map.tileAt(sf::Vector2i(x2, y2)) != TILE_WALL && map.tileAt(sf::Vector2i(x2, y2)) != TILE_DOOR) {
+				if (world.getMap().tileAt(sf::Vector2i(x2, y2)) != TILE_WALL && world.getMap().tileAt(sf::Vector2i(x2, y2)) != TILE_DOOR) {
 					insideWall = false;
 				}
 				if (insideWall) {
 					x2 = oldX2;
 					y2 = oldY2;
 				}
-				if (map.tileAt(sf::Vector2i(x2, y2)) == TILE_NOTHING) {
-					map.setTileAt(x2, y2, TILE_GROUND);
+				if (world.getMap().tileAt(sf::Vector2i(x2, y2)) == TILE_NOTHING) {
+					world.getMap().setTileAt(x2, y2, TILE_GROUND);
 				}
-				if (map.tileAt(sf::Vector2i(x2, y2)) == TILE_WALL && !insideWall) {
-					map.setTileAt(x2, y2, TILE_DOOR);
+				if (world.getMap().tileAt(sf::Vector2i(x2, y2)) == TILE_WALL && !insideWall) {
+					world.getMap().setTileAt(x2, y2, TILE_DOOR);
 					insideWall = true;
 				}
 				attempts++;
@@ -133,18 +132,52 @@ void LevelGenerator::generateMap(Map & map) {
 		points.pop_back();
 	}
 
-	//finalize, reset generator-only values
-	for (int y = 0; y < map.getHeight(); y++) {//fill code
-		for (int x = 0; x < map.getWidth(); x++) {
-			if (map.tileAt(sf::Vector2i(x, y)) == TILE_INDOOR_GROUND) {
-				map.setTileAt(sf::Vector2i(x, y), TILE_GROUND);
+	//place loot in level
+	int lootNum = 3 + rand() % 7;
+	for (int i = 0; i < lootNum; i++) {
+		int x = rand() % world.getMap().getWidth();
+		int y = rand() % world.getMap().getHeight();
+		if (world.getMap().tileAt(sf::Vector2i(x, y)) == TILE_INDOOR_GROUND) {
+			int wep = rand() % weapons;
+			ID newid = world.item_ids.newID();
+
+			sf::Color quality = QUALITY_COMMON;
+			int roll = (rand() % 1000) + 1;
+			if (roll<200) {
+				quality = QUALITY_UNCOMMON;
+				if (roll<100) {
+					quality = QUALITY_RARE;
+					if (roll<50) {
+						quality = QUALITY_EPIC;
+						if (roll == 1) {
+							quality = QUALITY_LEGENDARY;
+						}
+					}
+				}
 			}
+
+			world.items_on_ground[newid] = Item(newid, weaponsTitle[wep], weaponsDesc[wep], 'I', sf::Vector2i(x, y), quality);
+		}
+		else {
+			i--;
 		}
 	}
 
-	std::cout << points.size() << std::endl;
+	int mobNum = 3 + rand() % 7;
+	for (int i = 0; i < mobNum; i++) {
+		int x = rand() % world.getMap().getWidth();
+		int y = rand() % world.getMap().getHeight();
+		if (world.getMap().tileAt(sf::Vector2i(x, y)) == TILE_GROUND || world.getMap().tileAt(sf::Vector2i(x, y)) == TILE_INDOOR_GROUND) {
+			
+		}
+		else {
+			i--;
+		}
+	}
+
+	std::cout << "map generation done!" << std::endl;
 }
-bool LevelGenerator::checkRoomSpot(Map& map, int xPos, int yPos, int width, int height) {//check if you can place a room
+bool LevelGenerator::checkRoomSpot(World& world, int xPos, int yPos, int width, int height) {//check if you can place a room
 	width += 6;
 	height += 6;
 
@@ -152,14 +185,14 @@ bool LevelGenerator::checkRoomSpot(Map& map, int xPos, int yPos, int width, int 
 	xPos -= 3;
 	for (int y = yPos; y < yPos+height; y++) {
 		for (int x = xPos; x < xPos+width; x++) {
-			if (map.tileAt(x, y) != TILE_NOTHING) {
+			if (world.getMap().tileAt(x, y) != TILE_NOTHING) {
 				return false;
 			}
 		}
 	}
 	return true;
 }
-void LevelGenerator::generateRoom(Map& map, int xPos, int yPos, int width, int height) {//place room
+void LevelGenerator::generateRoom(World& world, int xPos, int yPos, int width, int height) {//place room
 	width += 2;
 	height += 2;
 
@@ -171,12 +204,12 @@ void LevelGenerator::generateRoom(Map& map, int xPos, int yPos, int width, int h
 
 	for (int y = yPos; y < yPos + height; y++) {
 		for (int x = xPos; x < xPos + width; x++) {
-			map.setTileAt(sf::Vector2i(x, y), TILE_INDOOR_GROUND);
+			world.getMap().setTileAt(sf::Vector2i(x, y), TILE_INDOOR_GROUND);
 			if (x == xPos|| x == xPos + width - 1) {
-				map.setTileAt(sf::Vector2i(x, y), TILE_WALL);
+				world.getMap().setTileAt(sf::Vector2i(x, y), TILE_WALL);
 			}
 			if (y == yPos|| y == yPos + height - 1) {
-				map.setTileAt(sf::Vector2i(x, y), TILE_WALL);
+				world.getMap().setTileAt(sf::Vector2i(x, y), TILE_WALL);
 			}
 		}
 	}
