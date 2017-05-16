@@ -130,7 +130,6 @@
     <ClCompile Include="playingviewstate.cpp" />
     <ClCompile Include="pointerviewstate.cpp" />
     <ClCompile Include="renderer.cpp" />
-    <ClCompile Include="uielement.cpp" />
     <ClCompile Include="world.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -147,8 +146,6 @@
     <ClInclude Include="playingviewstate.hpp" />
     <ClInclude Include="pointerviewstate.hpp" />
     <ClInclude Include="renderer.hpp" />
-    <ClInclude Include="textlistener.hpp" />
-    <ClInclude Include="uielement.hpp" />
     <ClInclude Include="world.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
