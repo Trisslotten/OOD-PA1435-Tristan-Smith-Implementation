@@ -81,8 +81,9 @@ void InventoryViewState::render(World& world, Renderer& renderer)
 	{
 		sf::Color color = inv[i].getColor();
 		if (i == currentItem+page*30)
-			color = sf::Color(0, 255, 200, 200);
-		renderer.drawString(1, (i%30)+2, inv[i].getName(), color);
+			renderer.drawString(1, (i % 30) + 2, ">" + inv[i].getName(), color);
+		else
+			renderer.drawString(1, (i%30)+2, inv[i].getName(), color);
 	}
 	renderer.drawString(40, 1, "Description", sf::Color(255, 255, 255, 255));
 	if(inv.size() > 0)
