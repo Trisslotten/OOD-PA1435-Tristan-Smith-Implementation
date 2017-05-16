@@ -170,12 +170,12 @@ void LevelGenerator::generateMap(World & world) {
 		}
 	}
 	std::cout << "mob generator starting" << std::endl;
-	int mobNum = 3 + rand() % 4;
+	int mobNum = 8 + rand() % 8;
 	for (int i = 0; i < mobNum; i++) {
 		int x = rand() % world.getMap().getWidth();
 		int y = rand() % world.getMap().getHeight();
 		if (world.getMap().tileAt(sf::Vector2i(x, y)) == TILE_GROUND || world.getMap().tileAt(sf::Vector2i(x, y)) == TILE_INDOOR_GROUND) {
-			
+			level = 9;
 			int roll = level + rand() % 3;
 			if (roll >= mobs) {
 				roll = mobs - 1;
@@ -183,6 +183,7 @@ void LevelGenerator::generateMap(World & world) {
 
 			ID newid = world.mob_ids.newID();
 			world.npcs[newid] = Mob(newid, mobTypes[roll], mobDesc[roll], sf::Vector2i(x, y), mobHealth[roll], mobHealth[roll]);
+			world.npcs[newid].setSymbol(mobChar[roll]);
 		}
 		else {
 			i--;
