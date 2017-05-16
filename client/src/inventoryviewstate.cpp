@@ -24,11 +24,13 @@ std::shared_ptr<PlayerViewState> InventoryViewState::update(Engine & engine)
 	if (key::pressed(sf::Keyboard::E))
 	{
 		//equip item
-		engine.getNetworking().sendEquipItem(engine.getWorld().getLatestInventory()[currentItem + page * 30].getItemId());
+		if(currentItem + page * 30 >= 0 && currentItem + page * 30 < engine.getWorld().getLatestInventory().size())
+			engine.getNetworking().sendEquipItem(engine.getWorld().getLatestInventory()[currentItem + page * 30].getItemId());
 	}
 	if (key::pressed(sf::Keyboard::D)) //temporary drop item thing, drops item with global id 0 aka. The Crazy Thing
 	{
-		engine.getNetworking().sendDropItem(engine.getWorld().getLatestInventory()[currentItem + page * 30].getItemId());
+		if (currentItem + page * 30 >= 0 && currentItem + page * 30 < engine.getWorld().getLatestInventory().size())
+			engine.getNetworking().sendDropItem(engine.getWorld().getLatestInventory()[currentItem + page * 30].getItemId());
 		return std::make_shared<PlayingViewState>();
 	}
 	if (key::down(sf::Keyboard::Up))

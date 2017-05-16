@@ -71,11 +71,11 @@ void PointerViewState::render(World & world, Renderer & renderer)
 		if (i % 2 == 0) 
 		{ // name
 
-			renderer.drawString(size.x - 30, 3 + 3 * (i / 2), line);
+			renderer.drawString(3, 3 + 3 * (i / 2), line);
 		}
 		else
 		{ // description
-			renderer.drawString(size.x - 30, 4 + 3 * (i / 2), line);
+			renderer.drawString(3, 4 + 3 * (i / 2), line);
 		}
 		i++;
 	}
