@@ -55,7 +55,7 @@ void Map::serializeChunk(sf::Packet & to_append, int x_start, int x_end, int y_s
 bool Map::isWallAt(int x, int y)
 {
 	sf::Int8 t = tileAt(x, y);
-	if (t == TILE_WALL)
+	if (t == TILE_WALL || t == TILE_NOTHING)
 		return true;
 	else
 		return false;
