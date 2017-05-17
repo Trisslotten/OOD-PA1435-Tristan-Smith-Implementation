@@ -16,14 +16,15 @@ class World
 
 	std::unordered_map<ID, Player> players;
 	// one for both since one list on client
-	
-public:
 
 	std::unordered_map<ID, Item> items_on_ground;
 	IDCreator item_ids;
 
 	std::unordered_map<ID, Mob> npcs;
 	IDCreator mob_ids;
+
+public:
+
 
 	void init();
 
