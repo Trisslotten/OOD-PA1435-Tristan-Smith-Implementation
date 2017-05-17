@@ -1,41 +1,6 @@
 #include "mapgenerator.hpp"
 #include "world.hpp"
 
-
-void TestGenerator::setSeed(const std::string & seed)
-{
-	this->seed = seed;
-}
-
-void TestGenerator::generateMap(World& world)
-{
-	for (int y = 0; y < world.getMap().getHeight(); y++)
-	{
-		for (int x = 0; x < world.getMap().getWidth(); x++)
-		{
-			/*
-			if (x >= 3 && map.getWidth() - x - 1 >= 3 && y >= 3 && map.getWidth() - y - 1 >= 3)
-			{
-				if (x == 3 || map.getWidth() - x - 1 == 3 || y == 3 || map.getHeight() - y - 1 == 3)
-				{
-					map.setTileAt(x, y, TILE_WALL);
-				}
-				else
-				{
-					map.setTileAt(x, y, TILE_GROUND);
-				}
-			}
-			else
-			{
-				map.setTileAt(x, y, TILE_NOTHING);
-			}
-			*/
-			sf::Int8 asd = (sf::Int8)rand() % NUM_TILES;
-			world.getMap().setTileAt(x, y, (Tile)asd);
-		}
-	}
-
-}
 void LevelGenerator::setSeed(const std::string & seed)
 {
 	this->seed = seed;
