@@ -11,6 +11,7 @@ class Renderer : public sf::Drawable
 	unsigned int tileset_height = 16;
 
 
+
 	unsigned int screen_width_tiles = 1280 / tile_size;
 	unsigned int screen_height_tiles = 720 / tile_size;
 
@@ -35,6 +36,8 @@ public:
 	void drawString(int x, int y, const std::string& str, sf::Color color = sf::Color::White);
 	void drawString(sf::Vector2i pos, const std::string& str, sf::Color color = sf::Color::White);
 
+
+	unsigned char tileAt(int x, int y) const;
 
 	inline sf::Vector2i getScreenSize() const
 	{

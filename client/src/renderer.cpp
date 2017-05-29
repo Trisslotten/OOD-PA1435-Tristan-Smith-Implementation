@@ -29,6 +29,13 @@ void Renderer::clear(char symbol)
 }
 
 
+unsigned char Renderer::tileAt(int x, int y) const
+{
+	if (x < 0 || y < 0 || x >= tileset_width || y >= tileset_height)
+		return 0;
+	return x + y*tileset_width;
+}
+
 void Renderer::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	sf::Sprite sprite;

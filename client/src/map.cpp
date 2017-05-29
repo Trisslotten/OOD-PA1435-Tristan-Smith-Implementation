@@ -10,6 +10,51 @@ void Map::setSize(int _width, int _height)
 	tiles.resize(width*height);
 }
 
+
+unsigned char Map::getWallSymbol(const Renderer& renderer, int x, int y)
+{
+	bool left = false, right = false, top = false, bottom = false;
+	left =		tileAt(x - 1, y) == TILE_WALL || tileAt(x - 1, y) == TILE_DOOR;
+	right =		tileAt(x + 1, y) == TILE_WALL || tileAt(x + 1, y) == TILE_DOOR;
+	top =		tileAt(x, y - 1) == TILE_WALL || tileAt(x, y - 1) == TILE_DOOR;
+	bottom =	tileAt(x, y + 1) == TILE_WALL || tileAt(x, y + 1) == TILE_DOOR;
+	if (left && right && top && bottom)
+		return renderer.tileAt(14, 12);
+	if (!left && right && top && bottom)
+		return renderer.tileAt(12, 12);
+	if (left && !right && top && bottom)
+		return renderer.tileAt(9, 11);
+	if (!left && !right && top && bottom)
+		return renderer.tileAt(10, 11);
+	if (left && right && !top && bottom)
+		return renderer.tileAt(11, 12);
+	if (!left && right && !top && bottom)
+		return renderer.tileAt(9, 12);
+	if (left && !right && !top && bottom)
+		return renderer.tileAt(11, 11);
+	if (!left && !right && !top && bottom)
+		return renderer.tileAt(10, 11);
+
+	if (left && right && top && !bottom)
+		return renderer.tileAt(10, 12);
+	if (!left && right && top && !bottom)
+		return renderer.tileAt(8, 12);
+	if (left && !right && top && !bottom)
+		return renderer.tileAt(12, 11);
+	if (!left && !right && top && !bottom)
+		return renderer.tileAt(10, 11);
+	if (left && right && !top && !bottom)
+		return renderer.tileAt(13, 12);
+	if (!left && right && !top && !bottom)
+		return renderer.tileAt(13, 12);
+	if (left && !right && !top && !bottom)
+		return renderer.tileAt(13, 12);
+	if (!left && !right && !top && !bottom)
+		return '#';
+
+	return '#';
+}
+
 void Map::render(Renderer & renderer, sf::Vector2i offset)
 {
 	sf::Vector2i size = renderer.getScreenSizeTiles();
@@ -24,13 +69,13 @@ void Map::render(Renderer & renderer, sf::Vector2i offset)
 			switch (tileAt(x, y))
 			{
 			case TILE_INDOOR_GROUND:
-				symbol = 11 * 16;
+				symbol = (unsigned char)11 * 16;
 				break;
 			case TILE_GROUND:
 				symbol = '.';
 				break;
 			case TILE_WALL:
-				symbol = '#';
+				symbol = getWallSymbol(renderer, x, y);
 				break;
 			case TILE_DOOR:
 				symbol = '|';

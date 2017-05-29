@@ -12,10 +12,14 @@ class Map
 	// maybe later change to chunks or rooms?
 	std::vector<Tile> tiles;
 
+	unsigned char getWallSymbol(const Renderer& renderer, int x, int y);
+
 public:
 	Map() {}
 
 	void setSize(int _width, int _height);
+
+	
 
 	void render(Renderer& renderer, sf::Vector2i offset);
 
