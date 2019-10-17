@@ -1,4 +1,4 @@
-# Multiplayer dungeon crawler
+# Multiplayer Dungeon Crawler
 Group project for course in object oriented design.
 
 ## Screenshots
