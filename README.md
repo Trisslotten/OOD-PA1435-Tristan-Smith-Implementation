@@ -1,5 +1,5 @@
 # Multiplayer dungeon crawler
-Group project in object oriented design course.
+Group project for course in object oriented design.
 
 ## Screenshots
 ![Screenshot](ood1.png)
